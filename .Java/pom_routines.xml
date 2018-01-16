@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.talend.master.mysql_elasticsearch</groupId>
+    <groupId>org.talend.master.ruleengine_elasticsearch</groupId>
     <artifactId>code.Master</artifactId>
     <version>6.4.1</version>
     <relativePath>./pom.xml</relativePath>
   </parent>
-  <groupId>org.talend.code.mysql_elasticsearch</groupId>
+  <groupId>org.talend.code.ruleengine_elasticsearch</groupId>
   <artifactId>routines</artifactId>
   <version>6.4.1</version>
-  <name>MYSQL_ELASTICSEARCH Routines</name>
+  <name>RULEENGINE_ELASTICSEARCH Routines</name>
   <properties>
     <talend.codes.package>routines</talend.codes.package>
   </properties>

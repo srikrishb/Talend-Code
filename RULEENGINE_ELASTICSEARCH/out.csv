@@ -1,0 +1,5 @@
+ruleid;rule_execution_id;id;result;salary;tax;gross_sal;email
+1;;3;false;3000;300;3500;
+1;;4;false;3000;300;3500;
+2;;2;false;;;;asda ad@asd.ee
+2;;3;false;;;;peter#exusia.com

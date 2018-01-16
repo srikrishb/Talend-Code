@@ -2,16 +2,15 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.talend.master.mysql_elasticsearch</groupId>
+  <groupId>org.talend.master.ruleengine_elasticsearch</groupId>
   <artifactId>code.Master</artifactId>
   <version>6.4.1</version>
   <packaging>pom</packaging>
-  <name>MYSQL_ELASTICSEARCH Codes Master</name>
+  <name>RULEENGINE_ELASTICSEARCH Codes Master</name>
   <url>http://www.talend.org/</url>
   <modules>
     <module>pom_routines.xml</module>
-    <module>pom_step_genericloadElasticsearch_0.1.xml</module>
-    <module>pom_step_extractDataMySQL_0.1.xml</module>
+    <module>pom_step2_genericloadElasticsearch_0.1.xml</module>
   </modules>
   <properties>
     <encoding>UTF-8</encoding>
@@ -145,11 +144,6 @@
     <dependency>
       <groupId>org.talend.libraries</groupId>
       <artifactId>log4j-1.2.16</artifactId>
-      <version>6.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.talend.libraries</groupId>
-      <artifactId>mysql-connector-java-5.1.30-bin</artifactId>
       <version>6.0.0</version>
     </dependency>
     <dependency>
@@ -326,6 +320,16 @@
       <groupId>org.talend.libraries</groupId>
       <artifactId>xmlsec-2.0.8</artifactId>
       <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
+      <artifactId>talend_file_enhanced_20070724</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
+      <artifactId>talendcsv</artifactId>
+      <version>6.0.0</version>
     </dependency>
   </dependencies>
   <build>

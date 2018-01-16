@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-hadoopcluster.token.records={"LOCAL_PROJECT"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"MYSQL_ELASTICSEARCH"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"NEWTEST"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"TEST"\:{"HADOOPCLUSTER"\:{"types"\:{}}}}
+hadoopcluster.token.records={"LOCAL_PROJECT"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"MYSQL_ELASTICSEARCH"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"NEWTEST"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"RULEENGINE_ELASTICSEARCH"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"TEST"\:{"HADOOPCLUSTER"\:{"types"\:{}}}}
