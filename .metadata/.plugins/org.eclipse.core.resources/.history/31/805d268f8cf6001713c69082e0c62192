@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendProperties="http://www.talend.org/properties">
+  <TalendProperties:Property xmi:id="_U_PnwvXHEeeFntyWCsid_g" id="_U_HE4PXHEeeFntyWCsid_g" label="Context1" creationDate="2018-01-10T00:30:11.387-0500" modificationDate="2018-01-10T00:48:17.934-0500" version="0.1" statusCode="" item="_U_PnxPXHEeeFntyWCsid_g" displayName="Context1">
+    <author href="../talend.project#_ZAi4sPTEEeeYj9bgTI_zzg"/>
+  </TalendProperties:Property>
+  <TalendProperties:ItemState xmi:id="_U_Pnw_XHEeeFntyWCsid_g" path="" locked="true" lockDate="2018-01-11T00:01:52.907-0500">
+    <locker href="../talend.project#_ZAi4sPTEEeeYj9bgTI_zzg"/>
+  </TalendProperties:ItemState>
+  <TalendProperties:ContextItem xmi:id="_U_PnxPXHEeeFntyWCsid_g" property="_U_PnwvXHEeeFntyWCsid_g" state="_U_Pnw_XHEeeFntyWCsid_g" defaultContext="Default">
+    <context href="Context1_0.1.item#_U_PAsPXHEeeFntyWCsid_g"/>
+  </TalendProperties:ContextItem>
+</xmi:XMI>

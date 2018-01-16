@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010">
+  <TalendMetadata:GenericSchemaConnection xmi:id="_ABhksvaYEee2cdInFRUFnw" comment="connectionComment" label="connectionLabel" dataPackage="_ABhks_aYEee2cdInFRUFnw" mappingTypeUsed="true" mappingTypeId="mysql_id"/>
+  <TalendMetadata:GenericPackage xmi:id="_ABhks_aYEee2cdInFRUFnw" dataManager="_ABhksvaYEee2cdInFRUFnw">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_ABhktPaYEee2cdInFRUFnw" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_ABhktfaYEee2cdInFRUFnw" name="actor_id" id="2562" label="actor_id" length="5" sourceType="INT" talendType="id_Integer" nullable="false">
+        <initialValue xmi:id="_ABhktvaYEee2cdInFRUFnw" body=""/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_ABhkt_aYEee2cdInFRUFnw" name="first_name" id="2563" label="first_name" length="45" sourceType="VARCHAR" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_ABhkuPaYEee2cdInFRUFnw"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_ABhkufaYEee2cdInFRUFnw" name="last_name" id="2564" label="last_name" length="45" sourceType="VARCHAR" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_ABhkuvaYEee2cdInFRUFnw"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_ABhku_aYEee2cdInFRUFnw" name="last_update" id="2565" label="last_update" length="19" sourceType="DATETIME" talendType="id_Date" nullable="false">
+        <initialValue xmi:id="_ABhkvPaYEee2cdInFRUFnw"/>
+      </feature>
+    </ownedElement>
+  </TalendMetadata:GenericPackage>
+</xmi:XMI>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendProperties="http://www.talend.org/properties">
+  <TalendProperties:Property xmi:id="_JZAlEPVyEee98NLS0AquuQ" id="_JF9SQPabEee2cdInFRUFnw" label="step1_genericloadElasticsearch" creationDate="2018-01-09T14:20:26.336-0500" modificationDate="2018-01-11T01:48:09.453-0500" version="0.1" statusCode="" item="_JZAlEvVyEee98NLS0AquuQ" displayName="step1_genericloadElasticsearch">
+    <author href="../talend.project#_ZAi4sPTEEeeYj9bgTI_zzg"/>
+  </TalendProperties:Property>
+  <TalendProperties:ItemState xmi:id="_JF_ugPabEee2cdInFRUFnw" path=""/>
+  <TalendProperties:ProcessItem xmi:id="_JZAlEvVyEee98NLS0AquuQ" property="_JZAlEPVyEee98NLS0AquuQ" state="_JF_ugPabEee2cdInFRUFnw">
+    <process href="step1_genericloadElasticsearch_0.1.item#/"/>
+  </TalendProperties:ProcessItem>
+</xmi:XMI>
