@@ -11,6 +11,8 @@
   <modules>
     <module>pom_routines.xml</module>
     <module>pom_step2_genericloadElasticsearch_0.1.xml</module>
+    <module>pom_step1_loadElasticsearch_0.1.xml</module>
+    <module>pom_step0_extractDataNormalizedOut_0.1.xml</module>
   </modules>
   <properties>
     <encoding>UTF-8</encoding>
@@ -283,6 +285,16 @@
     </dependency>
     <dependency>
       <groupId>org.talend.libraries</groupId>
+      <artifactId>talend_file_enhanced_20070724</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
+      <artifactId>talendcsv</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
       <artifactId>woodstox-core-asl-4.4.1</artifactId>
       <version>6.0.0</version>
     </dependency>
@@ -320,16 +332,6 @@
       <groupId>org.talend.libraries</groupId>
       <artifactId>xmlsec-2.0.8</artifactId>
       <version>6.0.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.talend.libraries</groupId>
-      <artifactId>talend_file_enhanced_20070724</artifactId>
-      <version>6.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.talend.libraries</groupId>
-      <artifactId>talendcsv</artifactId>
-      <version>6.0.0</version>
     </dependency>
   </dependencies>
   <build>

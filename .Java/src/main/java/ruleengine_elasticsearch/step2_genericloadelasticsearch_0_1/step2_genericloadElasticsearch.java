@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 package ruleengine_elasticsearch.step2_genericloadelasticsearch_0_1;
 
 import routines.Numeric;
@@ -40,11 +41,18 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.util.Comparator;
+ 
 
-//the import part of tJavaRow_1
-//import java.util.List;
+
+
+
+	//the import part of tJavaRow_1
+	//import java.util.List;
+
+
 
 @SuppressWarnings("unused")
+
 /**
  * Job: step2_genericloadElasticsearch Purpose: <br>
  * Description:  <br>
@@ -53,6 +61,8 @@ import java.util.Comparator;
  * @status 
  */
 public class step2_genericloadElasticsearch implements TalendJob {
+
+
 
 	public final Object obj = new Object();
 
@@ -66,2611 +76,2914 @@ public class step2_genericloadElasticsearch implements TalendJob {
 	public void setValueObject(Object valueObject) {
 		this.valueObject = valueObject;
 	}
+	
+	private final static String defaultCharset = java.nio.charset.Charset.defaultCharset().name();
 
-	private final static String defaultCharset = java.nio.charset.Charset
-			.defaultCharset().name();
-
+	
 	private final static String utf8Charset = "UTF-8";
-
-	// contains type for every context property
+	//contains type for every context property
 	public class PropertiesWithType extends java.util.Properties {
 		private static final long serialVersionUID = 1L;
-		private java.util.Map<String, String> propertyTypes = new java.util.HashMap<>();
-
-		public PropertiesWithType(java.util.Properties properties) {
+		private java.util.Map<String,String> propertyTypes = new java.util.HashMap<>();
+		
+		public PropertiesWithType(java.util.Properties properties){
 			super(properties);
 		}
-
-		public PropertiesWithType() {
+		public PropertiesWithType(){
 			super();
 		}
-
+		
 		public void setContextType(String key, String type) {
-			propertyTypes.put(key, type);
+			propertyTypes.put(key,type);
 		}
-
+	
 		public String getContextType(String key) {
 			return propertyTypes.get(key);
 		}
 	}
-
+	
 	// create and load default properties
 	private java.util.Properties defaultProps = new java.util.Properties();
-
 	// create application properties with default
 	public class ContextProperties extends PropertiesWithType {
 
 		private static final long serialVersionUID = 1L;
 
-		public ContextProperties(java.util.Properties properties) {
+		public ContextProperties(java.util.Properties properties){
 			super(properties);
 		}
-
-		public ContextProperties() {
+		public ContextProperties(){
 			super();
 		}
 
-		public void synchronizeContext() {
-
-			if (indexName != null) {
-
-				this.setProperty("indexName", indexName.toString());
-
+		public void synchronizeContext(){
+			
+			if(indexName != null){
+				
+					this.setProperty("indexName", indexName.toString());
+				
 			}
-
-			if (indexType != null) {
-
-				this.setProperty("indexType", indexType.toString());
-
+			
+			if(indexType != null){
+				
+					this.setProperty("indexType", indexType.toString());
+				
 			}
-
-			if (fileName != null) {
-
-				this.setProperty("fileName", fileName.toString());
-
+			
+			if(fileName != null){
+				
+					this.setProperty("fileName", fileName.toString());
+				
 			}
-
-			if (URL != null) {
-
-				this.setProperty("URL", URL.toString());
-
-			}
-
+			
 		}
 
-		public String indexName;
-
-		public String getIndexName() {
-			return this.indexName;
-		}
-
-		public String indexType;
-
-		public String getIndexType() {
-			return this.indexType;
-		}
-
-		public String fileName;
-
-		public String getFileName() {
-			return this.fileName;
-		}
-
-		public String URL;
-
-		public String getURL() {
-			return this.URL;
-		}
+public String indexName;
+public String getIndexName(){
+	return this.indexName;
+}
+public String indexType;
+public String getIndexType(){
+	return this.indexType;
+}
+public String fileName;
+public String getFileName(){
+	return this.fileName;
+}
 	}
-
 	private ContextProperties context = new ContextProperties();
-
 	public ContextProperties getContext() {
 		return this.context;
 	}
-
 	private final String jobVersion = "0.1";
 	private final String jobName = "step2_genericloadElasticsearch";
 	private final String projectName = "RULEENGINE_ELASTICSEARCH";
 	public Integer errorCode = null;
 	private String currentComponent = "";
+	
+		private final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
+        private final static java.util.Map<String, Object> junitGlobalMap = new java.util.HashMap<String, Object>();
+	
+		private final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
+		private final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
+		private final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
+		public  final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
+	
 
-	private final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
-	private final static java.util.Map<String, Object> junitGlobalMap = new java.util.HashMap<String, Object>();
-
-	private final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
-	private final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
-	private final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
-	public final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
-
-	private RunStat runStat = new RunStat();
+private RunStat runStat = new RunStat();
 
 	// OSGi DataSource
 	private final static String KEY_DB_DATASOURCES = "KEY_DB_DATASOURCES";
 
-	public void setDataSources(
-			java.util.Map<String, javax.sql.DataSource> dataSources) {
+	public void setDataSources(java.util.Map<String, javax.sql.DataSource> dataSources) {
 		java.util.Map<String, routines.system.TalendDataSource> talendDataSources = new java.util.HashMap<String, routines.system.TalendDataSource>();
-		for (java.util.Map.Entry<String, javax.sql.DataSource> dataSourceEntry : dataSources
-				.entrySet()) {
-			talendDataSources.put(
-					dataSourceEntry.getKey(),
-					new routines.system.TalendDataSource(dataSourceEntry
-							.getValue()));
+		for (java.util.Map.Entry<String, javax.sql.DataSource> dataSourceEntry : dataSources.entrySet()) {
+			talendDataSources.put(dataSourceEntry.getKey(), new routines.system.TalendDataSource(dataSourceEntry.getValue()));
 		}
 		globalMap.put(KEY_DB_DATASOURCES, talendDataSources);
 	}
 
-	private final java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-	private final java.io.PrintStream errorMessagePS = new java.io.PrintStream(
-			new java.io.BufferedOutputStream(baos));
 
-	public String getExceptionStackTrace() {
-		if ("failure".equals(this.getStatus())) {
-			errorMessagePS.flush();
-			return baos.toString();
-		}
-		return null;
+private final java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+private final java.io.PrintStream errorMessagePS = new java.io.PrintStream(new java.io.BufferedOutputStream(baos));
+
+public String getExceptionStackTrace() {
+	if ("failure".equals(this.getStatus())) {
+		errorMessagePS.flush();
+		return baos.toString();
+	}
+	return null;
+}
+
+private Exception exception;
+
+public Exception getException() {
+	if ("failure".equals(this.getStatus())) {
+		return this.exception;
+	}
+	return null;
+}
+
+private class TalendException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+
+	private java.util.Map<String, Object> globalMap = null;
+	private Exception e = null;
+	private String currentComponent = null;
+	private String virtualComponentName = null;
+	
+	public void setVirtualComponentName (String virtualComponentName){
+		this.virtualComponentName = virtualComponentName;
 	}
 
-	private Exception exception;
+	private TalendException(Exception e, String errorComponent, final java.util.Map<String, Object> globalMap) {
+		this.currentComponent= errorComponent;
+		this.globalMap = globalMap;
+		this.e = e;
+	}
 
 	public Exception getException() {
-		if ("failure".equals(this.getStatus())) {
-			return this.exception;
-		}
-		return null;
+		return this.e;
 	}
 
-	private class TalendException extends Exception {
+	public String getCurrentComponent() {
+		return this.currentComponent;
+	}
 
-		private static final long serialVersionUID = 1L;
+	
+    public String getExceptionCauseMessage(Exception e){
+        Throwable cause = e;
+        String message = null;
+        int i = 10;
+        while (null != cause && 0 < i--) {
+            message = cause.getMessage();
+            if (null == message) {
+                cause = cause.getCause();
+            } else {
+                break;          
+            }
+        }
+        if (null == message) {
+            message = e.getClass().getName();
+        }   
+        return message;
+    }
 
-		private java.util.Map<String, Object> globalMap = null;
-		private Exception e = null;
-		private String currentComponent = null;
-		private String virtualComponentName = null;
-
-		public void setVirtualComponentName(String virtualComponentName) {
-			this.virtualComponentName = virtualComponentName;
+	@Override
+	public void printStackTrace() {
+		if (!(e instanceof TalendException || e instanceof TDieException)) {
+			if(virtualComponentName!=null && currentComponent.indexOf(virtualComponentName+"_")==0){
+				globalMap.put(virtualComponentName+"_ERROR_MESSAGE",getExceptionCauseMessage(e));
+			}
+			globalMap.put(currentComponent+"_ERROR_MESSAGE",getExceptionCauseMessage(e));
+			System.err.println("Exception in component " + currentComponent + " (" + jobName + ")");
 		}
-
-		private TalendException(Exception e, String errorComponent,
-				final java.util.Map<String, Object> globalMap) {
-			this.currentComponent = errorComponent;
-			this.globalMap = globalMap;
-			this.e = e;
+		if (!(e instanceof TDieException)) {
+			if(e instanceof TalendException){
+				e.printStackTrace();
+			} else {
+				e.printStackTrace();
+				e.printStackTrace(errorMessagePS);
+				step2_genericloadElasticsearch.this.exception = e;
+			}
 		}
-
-		public Exception getException() {
-			return this.e;
-		}
-
-		public String getCurrentComponent() {
-			return this.currentComponent;
-		}
-
-		public String getExceptionCauseMessage(Exception e) {
-			Throwable cause = e;
-			String message = null;
-			int i = 10;
-			while (null != cause && 0 < i--) {
-				message = cause.getMessage();
-				if (null == message) {
-					cause = cause.getCause();
-				} else {
+		if (!(e instanceof TalendException)) {
+		try {
+			for (java.lang.reflect.Method m : this.getClass().getEnclosingClass().getMethods()) {
+				if (m.getName().compareTo(currentComponent + "_error") == 0) {
+					m.invoke(step2_genericloadElasticsearch.this, new Object[] { e , currentComponent, globalMap});
 					break;
 				}
 			}
-			if (null == message) {
-				message = e.getClass().getName();
-			}
-			return message;
-		}
 
-		@Override
-		public void printStackTrace() {
-			if (!(e instanceof TalendException || e instanceof TDieException)) {
-				if (virtualComponentName != null
-						&& currentComponent.indexOf(virtualComponentName + "_") == 0) {
-					globalMap.put(virtualComponentName + "_ERROR_MESSAGE",
-							getExceptionCauseMessage(e));
-				}
-				globalMap.put(currentComponent + "_ERROR_MESSAGE",
-						getExceptionCauseMessage(e));
-				System.err.println("Exception in component " + currentComponent
-						+ " (" + jobName + ")");
+			if(!(e instanceof TDieException)){
 			}
-			if (!(e instanceof TDieException)) {
-				if (e instanceof TalendException) {
-					e.printStackTrace();
+		} catch (Exception e) {
+			this.e.printStackTrace();
+		}
+		}
+	}
+}
+
+			public void tFileInputJSON_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tJavaRow_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tMap_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tRESTClient_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tLogRow_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tLogRow_3_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tFileInputJSON_2_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+
+resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
+
+			}
+		
+
+
+
+
+
+
+public static class row5Struct implements routines.system.IPersistableRow<row5Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public Integer statusCode;
+
+				public Integer getStatusCode () {
+					return this.statusCode;
+				}
+				
+			    public routines.system.Document body;
+
+				public routines.system.Document getBody () {
+					return this.body;
+				}
+				
+			    public String string;
+
+				public String getString () {
+					return this.string;
+				}
+				
+
+
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
 				} else {
-					e.printStackTrace();
-					e.printStackTrace(errorMessagePS);
-					step2_genericloadElasticsearch.this.exception = e;
-				}
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
 			}
-			if (!(e instanceof TalendException)) {
-				try {
-					for (java.lang.reflect.Method m : this.getClass()
-							.getEnclosingClass().getMethods()) {
-						if (m.getName().compareTo(currentComponent + "_error") == 0) {
-							m.invoke(step2_genericloadElasticsearch.this,
-									new Object[] { e, currentComponent,
-											globalMap });
-							break;
-						}
-					}
-
-					if (!(e instanceof TDieException)) {
-					}
-				} catch (Exception e) {
-					this.e.printStackTrace();
-				}
-			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
 		}
+		return strReturn;
 	}
 
-	public void tFileInputJSON_2_error(Exception exception,
-			String errorComponent, final java.util.Map<String, Object> globalMap)
-			throws TalendException {
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
 
-		end_Hash.put(errorComponent, System.currentTimeMillis());
+    public void readData(ObjectInputStream dis) {
 
-		status = "failure";
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
 
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
+        	try {
 
-	public void tJavaRow_1_error(Exception exception, String errorComponent,
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		end_Hash.put(errorComponent, System.currentTimeMillis());
-
-		status = "failure";
-
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
-
-	public void tMap_1_error(Exception exception, String errorComponent,
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		end_Hash.put(errorComponent, System.currentTimeMillis());
-
-		status = "failure";
-
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
-
-	public void tRESTClient_1_error(Exception exception, String errorComponent,
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		end_Hash.put(errorComponent, System.currentTimeMillis());
-
-		status = "failure";
-
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
-
-	public void tLogRow_2_error(Exception exception, String errorComponent,
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		end_Hash.put(errorComponent, System.currentTimeMillis());
-
-		status = "failure";
-
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
-
-	public void tLogRow_3_error(Exception exception, String errorComponent,
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		end_Hash.put(errorComponent, System.currentTimeMillis());
-
-		status = "failure";
-
-		tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
-	}
-
-	public void tFileInputJSON_2_onSubJobError(Exception exception,
-			String errorComponent, final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-
-		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread
-				.currentThread().getId() + "", "FATAL", "",
-				exception.getMessage(),
-				ResumeUtil.getExceptionStackTrace(exception), "");
-
-	}
-
-	public static class row5Struct implements
-			routines.system.IPersistableRow<row5Struct> {
-		final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-		static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-
-		public Integer statusCode;
-
-		public Integer getStatusCode() {
-			return this.statusCode;
-		}
-
-		public routines.system.Document body;
-
-		public routines.system.Document getBody() {
-			return this.body;
-		}
-
-		public String string;
-
-		public String getString() {
-			return this.string;
-		}
-
-		private Integer readInteger(ObjectInputStream dis) throws IOException {
-			Integer intReturn;
-			int length = 0;
-			length = dis.readByte();
-			if (length == -1) {
-				intReturn = null;
-			} else {
-				intReturn = dis.readInt();
-			}
-			return intReturn;
-		}
-
-		private void writeInteger(Integer intNum, ObjectOutputStream dos)
-				throws IOException {
-			if (intNum == null) {
-				dos.writeByte(-1);
-			} else {
-				dos.writeByte(0);
-				dos.writeInt(intNum);
-			}
-		}
-
-		private String readString(ObjectInputStream dis) throws IOException {
-			String strReturn = null;
-			int length = 0;
-			length = dis.readInt();
-			if (length == -1) {
-				strReturn = null;
-			} else {
-				if (length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-					if (length < 1024
-							&& commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-					} else {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-					}
-				}
-				dis.readFully(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length);
-				strReturn = new String(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length, utf8Charset);
-			}
-			return strReturn;
-		}
-
-		private void writeString(String str, ObjectOutputStream dos)
-				throws IOException {
-			if (str == null) {
-				dos.writeInt(-1);
-			} else {
-				byte[] byteArray = str.getBytes(utf8Charset);
-				dos.writeInt(byteArray.length);
-				dos.write(byteArray);
-			}
-		}
-
-		public void readData(ObjectInputStream dis) {
-
-			synchronized (commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-				try {
-
-					int length = 0;
-
-					this.statusCode = readInteger(dis);
-
-					this.body = (routines.system.Document) dis.readObject();
-
+        		int length = 0;
+		
+						this.statusCode = readInteger(dis);
+					
+						this.body = (routines.system.Document) dis.readObject();
+					
 					this.string = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
 
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+		
+			} catch(ClassNotFoundException eCNFE) {
+				 throw new RuntimeException(eCNFE);
+		
 
-				} catch (ClassNotFoundException eCNFE) {
-					throw new RuntimeException(eCNFE);
+        }
 
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// Integer
+				
+						writeInteger(this.statusCode,dos);
+					
+					// Document
+				
+       			    	dos.writeObject(this.body);
+					
+					// String
+				
+						writeString(this.string,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("statusCode="+String.valueOf(statusCode));
+		sb.append(",body="+String.valueOf(body));
+		sb.append(",string="+string);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row5Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row6Struct implements routines.system.IPersistableRow<row6Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public Integer errorCode;
+
+				public Integer getErrorCode () {
+					return this.errorCode;
 				}
+				
+			    public String errorMessage;
 
-			}
+				public String getErrorMessage () {
+					return this.errorMessage;
+				}
+				
 
+
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
 		}
-
-		public void writeData(ObjectOutputStream dos) {
-			try {
-
-				// Integer
-
-				writeInteger(this.statusCode, dos);
-
-				// Document
-
-				dos.writeObject(this.body);
-
-				// String
-
-				writeString(this.string, dos);
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-
-		}
-
-		public String toString() {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-			sb.append("statusCode=" + String.valueOf(statusCode));
-			sb.append(",body=" + String.valueOf(body));
-			sb.append(",string=" + string);
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(row5Struct other) {
-
-			int returnValue = -1;
-
-			return returnValue;
-		}
-
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(),
-						object2.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
-
-			return returnValue;
-		}
-
-		private int compareStrings(String string1, String string2) {
-			return string1.compareTo(string2);
-		}
-
+		return intReturn;
 	}
 
-	public static class row6Struct implements
-			routines.system.IPersistableRow<row6Struct> {
-		final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-		static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
 
-		public Integer errorCode;
-
-		public Integer getErrorCode() {
-			return this.errorCode;
-		}
-
-		public String errorMessage;
-
-		public String getErrorMessage() {
-			return this.errorMessage;
-		}
-
-		private Integer readInteger(ObjectInputStream dis) throws IOException {
-			Integer intReturn;
-			int length = 0;
-			length = dis.readByte();
-			if (length == -1) {
-				intReturn = null;
-			} else {
-				intReturn = dis.readInt();
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
 			}
-			return intReturn;
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
 		}
+		return strReturn;
+	}
 
-		private void writeInteger(Integer intNum, ObjectOutputStream dos)
-				throws IOException {
-			if (intNum == null) {
-				dos.writeByte(-1);
-			} else {
-				dos.writeByte(0);
-				dos.writeInt(intNum);
-			}
-		}
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
 
-		private String readString(ObjectInputStream dis) throws IOException {
-			String strReturn = null;
-			int length = 0;
-			length = dis.readInt();
-			if (length == -1) {
-				strReturn = null;
-			} else {
-				if (length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-					if (length < 1024
-							&& commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-					} else {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-					}
-				}
-				dis.readFully(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length);
-				strReturn = new String(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length, utf8Charset);
-			}
-			return strReturn;
-		}
+    public void readData(ObjectInputStream dis) {
 
-		private void writeString(String str, ObjectOutputStream dos)
-				throws IOException {
-			if (str == null) {
-				dos.writeInt(-1);
-			} else {
-				byte[] byteArray = str.getBytes(utf8Charset);
-				dos.writeInt(byteArray.length);
-				dos.write(byteArray);
-			}
-		}
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
 
-		public void readData(ObjectInputStream dis) {
+        	try {
 
-			synchronized (commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-				try {
-
-					int length = 0;
-
-					this.errorCode = readInteger(dis);
-
+        		int length = 0;
+		
+						this.errorCode = readInteger(dis);
+					
 					this.errorMessage = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
 
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+		
 
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// Integer
+				
+						writeInteger(this.errorCode,dos);
+					
+					// String
+				
+						writeString(this.errorMessage,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("errorCode="+String.valueOf(errorCode));
+		sb.append(",errorMessage="+errorMessage);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row6Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class outputStruct implements routines.system.IPersistableRow<outputStruct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public routines.system.Document body;
+
+				public routines.system.Document getBody () {
+					return this.body;
 				}
+				
+			    public String string;
 
+				public String getString () {
+					return this.string;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
 			}
-
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
 		}
-
-		public void writeData(ObjectOutputStream dos) {
-			try {
-
-				// Integer
-
-				writeInteger(this.errorCode, dos);
-
-				// String
-
-				writeString(this.errorMessage, dos);
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-
-		}
-
-		public String toString() {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-			sb.append("errorCode=" + String.valueOf(errorCode));
-			sb.append(",errorMessage=" + errorMessage);
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(row6Struct other) {
-
-			int returnValue = -1;
-
-			return returnValue;
-		}
-
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(),
-						object2.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
-
-			return returnValue;
-		}
-
-		private int compareStrings(String string1, String string2) {
-			return string1.compareTo(string2);
-		}
-
+		return strReturn;
 	}
 
-	public static class outputStruct implements
-			routines.system.IPersistableRow<outputStruct> {
-		final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-		static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
 
-		public routines.system.Document body;
+    public void readData(ObjectInputStream dis) {
 
-		public routines.system.Document getBody() {
-			return this.body;
-		}
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
 
-		public String string;
+        	try {
 
-		public String getString() {
-			return this.string;
-		}
-
-		private String readString(ObjectInputStream dis) throws IOException {
-			String strReturn = null;
-			int length = 0;
-			length = dis.readInt();
-			if (length == -1) {
-				strReturn = null;
-			} else {
-				if (length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-					if (length < 1024
-							&& commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-					} else {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-					}
-				}
-				dis.readFully(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length);
-				strReturn = new String(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length, utf8Charset);
-			}
-			return strReturn;
-		}
-
-		private void writeString(String str, ObjectOutputStream dos)
-				throws IOException {
-			if (str == null) {
-				dos.writeInt(-1);
-			} else {
-				byte[] byteArray = str.getBytes(utf8Charset);
-				dos.writeInt(byteArray.length);
-				dos.write(byteArray);
-			}
-		}
-
-		public void readData(ObjectInputStream dis) {
-
-			synchronized (commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-				try {
-
-					int length = 0;
-
-					this.body = (routines.system.Document) dis.readObject();
-
+        		int length = 0;
+		
+						this.body = (routines.system.Document) dis.readObject();
+					
 					this.string = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
 
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+		
+			} catch(ClassNotFoundException eCNFE) {
+				 throw new RuntimeException(eCNFE);
+		
 
-				} catch (ClassNotFoundException eCNFE) {
-					throw new RuntimeException(eCNFE);
+        }
 
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// Document
+				
+       			    	dos.writeObject(this.body);
+					
+					// String
+				
+						writeString(this.string,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("body="+String.valueOf(body));
+		sb.append(",string="+string);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(outputStruct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public String dataList;
+
+				public String getDataList () {
+					return this.dataList;
 				}
+				
 
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
 			}
-
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
 		}
-
-		public void writeData(ObjectOutputStream dos) {
-			try {
-
-				// Document
-
-				dos.writeObject(this.body);
-
-				// String
-
-				writeString(this.string, dos);
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-
-		}
-
-		public String toString() {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-			sb.append("body=" + String.valueOf(body));
-			sb.append(",string=" + string);
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(outputStruct other) {
-
-			int returnValue = -1;
-
-			return returnValue;
-		}
-
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(),
-						object2.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
-
-			return returnValue;
-		}
-
-		private int compareStrings(String string1, String string2) {
-			return string1.compareTo(string2);
-		}
-
+		return strReturn;
 	}
 
-	public static class row1Struct implements
-			routines.system.IPersistableRow<row1Struct> {
-		final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-		static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
 
-		public String dataList;
+    public void readData(ObjectInputStream dis) {
 
-		public String getDataList() {
-			return this.dataList;
-		}
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
 
-		private String readString(ObjectInputStream dis) throws IOException {
-			String strReturn = null;
-			int length = 0;
-			length = dis.readInt();
-			if (length == -1) {
-				strReturn = null;
-			} else {
-				if (length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-					if (length < 1024
-							&& commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-					} else {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-					}
-				}
-				dis.readFully(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length);
-				strReturn = new String(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length, utf8Charset);
-			}
-			return strReturn;
-		}
+        	try {
 
-		private void writeString(String str, ObjectOutputStream dos)
-				throws IOException {
-			if (str == null) {
-				dos.writeInt(-1);
-			} else {
-				byte[] byteArray = str.getBytes(utf8Charset);
-				dos.writeInt(byteArray.length);
-				dos.write(byteArray);
-			}
-		}
-
-		public void readData(ObjectInputStream dis) {
-
-			synchronized (commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-				try {
-
-					int length = 0;
-
+        		int length = 0;
+		
 					this.dataList = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
 
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+		
 
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.dataList,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("dataList="+dataList);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row1Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public String dataList;
+
+				public String getDataList () {
+					return this.dataList;
 				}
+				
 
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
 			}
-
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
 		}
-
-		public void writeData(ObjectOutputStream dos) {
-			try {
-
-				// String
-
-				writeString(this.dataList, dos);
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-
-		}
-
-		public String toString() {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-			sb.append("dataList=" + dataList);
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(row1Struct other) {
-
-			int returnValue = -1;
-
-			return returnValue;
-		}
-
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(),
-						object2.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
-
-			return returnValue;
-		}
-
-		private int compareStrings(String string1, String string2) {
-			return string1.compareTo(string2);
-		}
-
+		return strReturn;
 	}
 
-	public static class row3Struct implements
-			routines.system.IPersistableRow<row3Struct> {
-		final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-		static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
 
-		public String dataList;
+    public void readData(ObjectInputStream dis) {
 
-		public String getDataList() {
-			return this.dataList;
-		}
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
 
-		private String readString(ObjectInputStream dis) throws IOException {
-			String strReturn = null;
-			int length = 0;
-			length = dis.readInt();
-			if (length == -1) {
-				strReturn = null;
-			} else {
-				if (length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-					if (length < 1024
-							&& commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-					} else {
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-					}
-				}
-				dis.readFully(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length);
-				strReturn = new String(
-						commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch,
-						0, length, utf8Charset);
-			}
-			return strReturn;
-		}
+        	try {
 
-		private void writeString(String str, ObjectOutputStream dos)
-				throws IOException {
-			if (str == null) {
-				dos.writeInt(-1);
-			} else {
-				byte[] byteArray = str.getBytes(utf8Charset);
-				dos.writeInt(byteArray.length);
-				dos.write(byteArray);
-			}
-		}
-
-		public void readData(ObjectInputStream dis) {
-
-			synchronized (commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-				try {
-
-					int length = 0;
-
+        		int length = 0;
+		
 					this.dataList = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
 
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+		
 
-				}
+        }
 
-			}
+		
 
-		}
+      }
 
-		public void writeData(ObjectOutputStream dos) {
-			try {
 
-				// String
+    }
 
-				writeString(this.dataList, dos);
+    public void writeData(ObjectOutputStream dos) {
+        try {
 
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+		
+					// String
+				
+						writeString(this.dataList,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
 
-		}
 
-		public String toString() {
+    }
 
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-			sb.append("dataList=" + dataList);
-			sb.append("]");
 
-			return sb.toString();
-		}
+    public String toString() {
 
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(row3Struct other) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("dataList="+dataList);
+	    sb.append("]");
 
-			int returnValue = -1;
+	    return sb.toString();
+    }
 
-			return returnValue;
-		}
+    /**
+     * Compare keys
+     */
+    public int compareTo(row3Struct other) {
 
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(),
-						object2.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
 
-			return returnValue;
-		}
 
-		private int compareStrings(String string1, String string2) {
-			return string1.compareTo(string2);
-		}
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
 
-	}
+        return returnValue;
+    }
 
-	public void tFileInputJSON_2Process(
-			final java.util.Map<String, Object> globalMap)
-			throws TalendException {
-		globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", 0);
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
 
-		final boolean execStat = this.execStat;
 
+}
+public void tFileInputJSON_2Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+	globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", 0);
+
+ final boolean execStat = this.execStat;
+	
 		String iterateId = "";
+	
+	
+	String currentComponent = "";
+	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
 
-		String currentComponent = "";
-		java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+	try {
 
-		try {
-
-			String currentMethodName = new java.lang.Exception()
-					.getStackTrace()[0].getMethodName();
+			String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
 			boolean resumeIt = currentMethodName.equals(resumeEntryMethodName);
-			if (resumeEntryMethodName == null || resumeIt || globalResumeTicket) {// start
-																					// the
-																					// resume
+			if( resumeEntryMethodName == null || resumeIt || globalResumeTicket){//start the resume
 				globalResumeTicket = true;
 
-				row3Struct row3 = new row3Struct();
-				row1Struct row1 = new row1Struct();
-				outputStruct output = new outputStruct();
-				row5Struct row5 = new row5Struct();
-				row6Struct row6 = new row6Struct();
 
-				/**
-				 * [tLogRow_2 begin ] start
-				 */
 
-				ok_Hash.put("tLogRow_2", false);
-				start_Hash.put("tLogRow_2", System.currentTimeMillis());
+		row3Struct row3 = new row3Struct();
+row1Struct row1 = new row1Struct();
+outputStruct output = new outputStruct();
+row5Struct row5 = new row5Struct();
+row6Struct row6 = new row6Struct();
 
-				currentComponent = "tLogRow_2";
 
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null) {
 
+
+
+
+
+	
+	/**
+	 * [tLogRow_2 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tLogRow_2", false);
+		start_Hash.put("tLogRow_2", System.currentTimeMillis());
+		
+	
+	currentComponent="tLogRow_2";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
 						runStat.updateStatOnConnection("row5" + iterateId, 0, 0);
-
-					}
+					
 				}
+			} 
 
-				int tos_count_tLogRow_2 = 0;
+		
+		int tos_count_tLogRow_2 = 0;
+		
+    	class BytesLimit65535_tLogRow_2{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tLogRow_2().limitLog4jByte();
 
-				class BytesLimit65535_tLogRow_2 {
-					public void limitLog4jByte() throws Exception {
+	///////////////////////
+	
+		final String OUTPUT_FIELD_SEPARATOR_tLogRow_2 = "|";
+		java.io.PrintStream consoleOut_tLogRow_2 = null;	
 
-					}
-				}
+ 		StringBuilder strBuffer_tLogRow_2 = null;
+		int nb_line_tLogRow_2 = 0;
+///////////////////////    			
 
-				new BytesLimit65535_tLogRow_2().limitLog4jByte();
 
-				// /////////////////////
 
-				final String OUTPUT_FIELD_SEPARATOR_tLogRow_2 = "|";
-				java.io.PrintStream consoleOut_tLogRow_2 = null;
+ 
 
-				StringBuilder strBuffer_tLogRow_2 = null;
-				int nb_line_tLogRow_2 = 0;
-				// /////////////////////
 
-				/**
-				 * [tLogRow_2 begin ] stop
-				 */
 
-				/**
-				 * [tLogRow_3 begin ] start
-				 */
+/**
+ * [tLogRow_2 begin ] stop
+ */
 
-				ok_Hash.put("tLogRow_3", false);
-				start_Hash.put("tLogRow_3", System.currentTimeMillis());
 
-				currentComponent = "tLogRow_3";
 
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null) {
 
+	
+	/**
+	 * [tLogRow_3 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tLogRow_3", false);
+		start_Hash.put("tLogRow_3", System.currentTimeMillis());
+		
+	
+	currentComponent="tLogRow_3";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
 						runStat.updateStatOnConnection("row6" + iterateId, 0, 0);
-
-					}
+					
 				}
+			} 
 
-				int tos_count_tLogRow_3 = 0;
+		
+		int tos_count_tLogRow_3 = 0;
+		
+    	class BytesLimit65535_tLogRow_3{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tLogRow_3().limitLog4jByte();
 
-				class BytesLimit65535_tLogRow_3 {
-					public void limitLog4jByte() throws Exception {
+	///////////////////////
+	
+		final String OUTPUT_FIELD_SEPARATOR_tLogRow_3 = "|";
+		java.io.PrintStream consoleOut_tLogRow_3 = null;	
 
-					}
+ 		StringBuilder strBuffer_tLogRow_3 = null;
+		int nb_line_tLogRow_3 = 0;
+///////////////////////    			
+
+
+
+ 
+
+
+
+/**
+ * [tLogRow_3 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tRESTClient_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tRESTClient_1", false);
+		start_Hash.put("tRESTClient_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tRESTClient_1";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
+						runStat.updateStatOnConnection("output" + iterateId, 0, 0);
+					
 				}
+			} 
 
-				new BytesLimit65535_tLogRow_3().limitLog4jByte();
+		
+		int tos_count_tRESTClient_1 = 0;
+		
+    	class BytesLimit65535_tRESTClient_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tRESTClient_1().limitLog4jByte();
 
-				// /////////////////////
+ 
 
-				final String OUTPUT_FIELD_SEPARATOR_tLogRow_3 = "|";
-				java.io.PrintStream consoleOut_tLogRow_3 = null;
 
-				StringBuilder strBuffer_tLogRow_3 = null;
-				int nb_line_tLogRow_3 = 0;
-				// /////////////////////
 
-				/**
-				 * [tLogRow_3 begin ] stop
-				 */
+/**
+ * [tRESTClient_1 begin ] stop
+ */
 
-				/**
-				 * [tRESTClient_1 begin ] start
-				 */
 
-				ok_Hash.put("tRESTClient_1", false);
-				start_Hash.put("tRESTClient_1", System.currentTimeMillis());
 
-				currentComponent = "tRESTClient_1";
+	
+	/**
+	 * [tMap_1 begin ] start
+	 */
 
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null) {
+	
 
-						runStat.updateStatOnConnection("output" + iterateId, 0,
-								0);
+	
+		
+		ok_Hash.put("tMap_1", false);
+		start_Hash.put("tMap_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tMap_1";
 
-					}
-				}
-
-				int tos_count_tRESTClient_1 = 0;
-
-				class BytesLimit65535_tRESTClient_1 {
-					public void limitLog4jByte() throws Exception {
-
-					}
-				}
-
-				new BytesLimit65535_tRESTClient_1().limitLog4jByte();
-
-				/**
-				 * [tRESTClient_1 begin ] stop
-				 */
-
-				/**
-				 * [tMap_1 begin ] start
-				 */
-
-				ok_Hash.put("tMap_1", false);
-				start_Hash.put("tMap_1", System.currentTimeMillis());
-
-				currentComponent = "tMap_1";
-
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null) {
-
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
 						runStat.updateStatOnConnection("row1" + iterateId, 0, 0);
-
-					}
+					
 				}
+			} 
 
-				int tos_count_tMap_1 = 0;
+		
+		int tos_count_tMap_1 = 0;
+		
+    	class BytesLimit65535_tMap_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tMap_1().limitLog4jByte();
 
-				class BytesLimit65535_tMap_1 {
-					public void limitLog4jByte() throws Exception {
 
-					}
-				}
 
-				new BytesLimit65535_tMap_1().limitLog4jByte();
 
-				// ###############################
-				// # Lookup's keys initialization
-				// ###############################
+// ###############################
+// # Lookup's keys initialization
+// ###############################        
 
-				// ###############################
-				// # Vars initialization
-				class Var__tMap_1__Struct {
-				}
-				Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
-				// ###############################
+// ###############################
+// # Vars initialization
+class  Var__tMap_1__Struct  {
+}
+Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
+// ###############################
 
-				// ###############################
-				// # Outputs initialization
-				outputStruct output_tmp = new outputStruct();
-				// ###############################
+// ###############################
+// # Outputs initialization
+outputStruct output_tmp = new outputStruct();
+// ###############################
 
-				/**
-				 * [tMap_1 begin ] stop
-				 */
+        
+        
 
-				/**
-				 * [tJavaRow_1 begin ] start
-				 */
 
-				ok_Hash.put("tJavaRow_1", false);
-				start_Hash.put("tJavaRow_1", System.currentTimeMillis());
 
-				currentComponent = "tJavaRow_1";
+        
 
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null) {
 
+
+
+
+
+
+
+
+ 
+
+
+
+/**
+ * [tMap_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tJavaRow_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tJavaRow_1", false);
+		start_Hash.put("tJavaRow_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tJavaRow_1";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
 						runStat.updateStatOnConnection("row3" + iterateId, 0, 0);
-
-					}
+					
 				}
+			} 
 
-				int tos_count_tJavaRow_1 = 0;
+		
+		int tos_count_tJavaRow_1 = 0;
+		
+    	class BytesLimit65535_tJavaRow_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tJavaRow_1().limitLog4jByte();
 
-				class BytesLimit65535_tJavaRow_1 {
-					public void limitLog4jByte() throws Exception {
+int nb_line_tJavaRow_1 = 0;
 
-					}
+ 
+
+
+
+/**
+ * [tJavaRow_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tFileInputJSON_2 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tFileInputJSON_2", false);
+		start_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
+		
+	
+	currentComponent="tFileInputJSON_2";
+
+	
+		int tos_count_tFileInputJSON_2 = 0;
+		
+    	class BytesLimit65535_tFileInputJSON_2{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tFileInputJSON_2().limitLog4jByte();
+
+	
+  class JSONUtil_tFileInputJSON_2{
+      public int getData(String query,javax.script.Invocable invocableEngine,java.util.List<org.json.simple.JSONArray> jsonResultList,int recordMaxSize){
+          try{
+              //only 2 types: String/Boolean
+              String resultObj = invocableEngine.invokeFunction("jsonPath",query).toString();
+              if(!"false".equals(resultObj)){
+	              org.json.simple.JSONArray resultArray= (org.json.simple.JSONArray)org.json.simple.JSONValue.parse(resultObj);
+	              jsonResultList.add(resultArray);
+	              if(recordMaxSize != -1 && recordMaxSize != resultArray.size()){
+		             //just give an error, don't stop
+					
+		              System.err.println("The Json resource datas maybe have some problems, please make sure the data structure with the same fields.");
+	               }
+	               recordMaxSize = Math.max(recordMaxSize, resultArray.size());
+               }else{
+					
+	               System.err.println("Can't find any data with JSONPath " + query);
+	               //add null to take a place in List(buffer)
+	               jsonResultList.add(null); 
+               }
+          }catch(java.lang.Exception e){
+				
+              e.printStackTrace();
+          }
+          return recordMaxSize;
+      }
+
+	                   void setRowValue_0(row3Struct row3, java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2, int nbResultArray_tFileInputJSON_2) throws java.io.UnsupportedEncodingException{
+							        if(JSONResultList_tFileInputJSON_2.get(0) != null && nbResultArray_tFileInputJSON_2<JSONResultList_tFileInputJSON_2.get(0).size() && JSONResultList_tFileInputJSON_2.get(0).get(nbResultArray_tFileInputJSON_2)!=null){		
+			                                row3.dataList = JSONResultList_tFileInputJSON_2.get(0).get(nbResultArray_tFileInputJSON_2).toString();
+							        }else{
+
+		                                    row3.dataList = null;
+		
+		                             }
+                    }
+  }
+int nb_line_tFileInputJSON_2 = 0;
+java.lang.Object jsonText_tFileInputJSON_2 = null;
+JSONUtil_tFileInputJSON_2 jsonUtil_tFileInputJSON_2=new JSONUtil_tFileInputJSON_2();
+java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2 = new java.util.ArrayList<org.json.simple.JSONArray>();
+int recordMaxSize_tFileInputJSON_2 = -1;
+
+//init js json engine
+javax.script.ScriptEngineManager scriptEngineMgr_tFileInputJSON_2 = new javax.script.ScriptEngineManager();
+javax.script.ScriptEngine jsEngine_tFileInputJSON_2 = scriptEngineMgr_tFileInputJSON_2.getEngineByName("JavaScript");
+if (jsEngine_tFileInputJSON_2 == null) {
+	
+    System.err.println("No script engine found for JavaScript");
+} else {
+    java.net.URL jsonjsUrl_tFileInputJSON_2 = com.jsonpath.test.ReadJar.class.getResource("json.js");
+    if(jsonjsUrl_tFileInputJSON_2!=null) {
+    	jsEngine_tFileInputJSON_2.eval(new java.io.BufferedReader(new java.io.InputStreamReader(jsonjsUrl_tFileInputJSON_2.openStream())));
+    }
+    
+    java.net.URL jsonpathjsUrl_tFileInputJSON_2 = com.jsonpath.test.ReadJar.class.getResource("jsonpath.js");
+    if(jsonpathjsUrl_tFileInputJSON_2!=null) {
+		jsEngine_tFileInputJSON_2.eval(new java.io.BufferedReader(new java.io.InputStreamReader(jsonpathjsUrl_tFileInputJSON_2.openStream())));
+	}
+
+	java.io.BufferedReader fr_tFileInputJSON_2 = null;
+	try{
+	
+		fr_tFileInputJSON_2 = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream("K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json"),"UTF-8"));
+	
+		jsonText_tFileInputJSON_2 = org.json.simple.JSONValue.parse(fr_tFileInputJSON_2);
+		if(jsonText_tFileInputJSON_2 == null) {
+			throw new RuntimeException("fail to parse the json file : " +  "K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json" );
+		}
+	} catch(java.lang.Exception e_tFileInputJSON_2) {
+	
+		
+ 		System.err.println(e_tFileInputJSON_2.getMessage());
+	
+	} finally {
+		if(fr_tFileInputJSON_2 != null ) {
+			fr_tFileInputJSON_2.close();
+		}
+    }
+
+	if(jsonText_tFileInputJSON_2!=null) {
+		jsEngine_tFileInputJSON_2.eval("var obj="+jsonText_tFileInputJSON_2.toString());
+
+		javax.script.Invocable invocableEngine_tFileInputJSON_2 = (javax.script.Invocable)jsEngine_tFileInputJSON_2;
+
+
+recordMaxSize_tFileInputJSON_2=jsonUtil_tFileInputJSON_2.getData("$.data[*]",invocableEngine_tFileInputJSON_2,JSONResultList_tFileInputJSON_2,recordMaxSize_tFileInputJSON_2);
+
+	}
+}
+	for(int nbResultArray_tFileInputJSON_2 = 0; nbResultArray_tFileInputJSON_2 < recordMaxSize_tFileInputJSON_2; nbResultArray_tFileInputJSON_2++){
+	
+		nb_line_tFileInputJSON_2++;
+					row3 = null;			
+                	boolean whetherReject_tFileInputJSON_2 = false;
+                	row3 = new row3Struct();
+                	try{
+                            jsonUtil_tFileInputJSON_2.setRowValue_0(row3,JSONResultList_tFileInputJSON_2,nbResultArray_tFileInputJSON_2);
+                    } catch (java.lang.Exception e) {
+                        whetherReject_tFileInputJSON_2 = true;
+                                System.err.println(e.getMessage());
+                                row3 = null;
+                    }
+
+ 
+
+
+
+/**
+ * [tFileInputJSON_2 begin ] stop
+ */
+	
+	/**
+	 * [tFileInputJSON_2 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileInputJSON_2";
+
+	
+
+ 
+
+
+	tos_count_tFileInputJSON_2++;
+
+/**
+ * [tFileInputJSON_2 main ] stop
+ */
+// Start of branch "row3"
+if(row3 != null) { 
+
+
+
+	
+	/**
+	 * [tJavaRow_1 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJavaRow_1";
+
+	
+
+			//row3
+			//row3
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row3"+iterateId,1, 1);
+				} 
+			
+
+		
+
+    // Iterate through input row 
+row1.dataList = row3.dataList;
+    nb_line_tJavaRow_1++;   
+
+ 
+
+
+	tos_count_tJavaRow_1++;
+
+/**
+ * [tJavaRow_1 main ] stop
+ */
+
+	
+	/**
+	 * [tMap_1 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_1";
+
+	
+
+			//row1
+			//row1
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
+				} 
+			
+
+		
+
+		
+		
+		boolean hasCasePrimitiveKeyWithNull_tMap_1 = false;
+		
+        // ###############################
+        // # Input tables (lookups)
+		  boolean rejectedInnerJoin_tMap_1 = false;
+		  boolean mainRowRejected_tMap_1 = false;
+            				    								  
+		// ###############################
+        { // start of Var scope
+        
+	        // ###############################
+        	// # Vars tables
+        
+Var__tMap_1__Struct Var = Var__tMap_1;// ###############################
+        // ###############################
+        // # Output tables
+
+output = null;
+
+
+// # Output table : 'output'
+output_tmp.body = null;
+output_tmp.string = row1.dataList ;
+output = output_tmp;
+// ###############################
+
+} // end of Var scope
+
+rejectedInnerJoin_tMap_1 = false;
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+	tos_count_tMap_1++;
+
+/**
+ * [tMap_1 main ] stop
+ */
+// Start of branch "output"
+if(output != null) { 
+
+
+
+	
+	/**
+	 * [tRESTClient_1 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tRESTClient_1";
+
+	
+
+			//output
+			//output
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("output"+iterateId,1, 1);
+				} 
+			
+
+		
+	row6 = null;	row5 = null;
+
+// expected response body
+Object responseDoc_tRESTClient_1 = null;
+
+try {
+	// request body
+	org.dom4j.Document requestDoc_tRESTClient_1 = null;
+	String requestString_tRESTClient_1 = null;
+			if (null != output.body) {
+				requestDoc_tRESTClient_1 = output.body.getDocument();
+			}
+			requestString_tRESTClient_1 = output.string;
+
+	Object requestBody_tRESTClient_1 = requestDoc_tRESTClient_1 != null ? requestDoc_tRESTClient_1 : requestString_tRESTClient_1;
+
+	
+
+    //resposne class name
+	Class<?> responseClass_tRESTClient_1
+		= org.dom4j.Document.class;
+
+	// create web client instance
+	org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean factoryBean_tRESTClient_1 =
+			new org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean();
+
+	boolean inOSGi = false;
+	try {
+		inOSGi = (null != factoryBean_tRESTClient_1.getBus().getExtension(Class.forName("org.osgi.framework.BundleContext")));
+	} catch (ClassNotFoundException e_tRESTClient_1) {
+		; // ignore
+	}
+
+	final java.util.List<org.apache.cxf.feature.Feature> features_tRESTClient_1 =
+			new java.util.ArrayList<org.apache.cxf.feature.Feature>();
+
+	
+		String url = "http://localhost:9200/"+context.indexName+"/"+context.indexType+"/";
+		// {baseUri}tRESTClient
+		factoryBean_tRESTClient_1.setServiceName(new javax.xml.namespace.QName(url, "tRESTClient"));
+		factoryBean_tRESTClient_1.setAddress(url);
+	
+
+	
+
+	
+
+	
+
+	factoryBean_tRESTClient_1.setFeatures(features_tRESTClient_1);
+
+
+	java.util.List<Object> providers_tRESTClient_1 = new java.util.ArrayList<Object>();
+	providers_tRESTClient_1.add(new org.apache.cxf.jaxrs.provider.dom4j.DOM4JProvider() {
+		// workaround for https://jira.talendforge.org/browse/TESB-7276
+		public org.dom4j.Document readFrom(Class<org.dom4j.Document> cls,
+											java.lang.reflect.Type type,
+											java.lang.annotation.Annotation[] anns,
+											javax.ws.rs.core.MediaType mt,
+											javax.ws.rs.core.MultivaluedMap<String, String> headers,
+											java.io.InputStream is)
+				throws IOException, javax.ws.rs.WebApplicationException {
+			String contentLength = headers.getFirst("Content-Length");
+			if (!org.apache.cxf.common.util.StringUtils.isEmpty(contentLength)
+					&& Integer.valueOf(contentLength) <= 0) {
+				try {
+					return org.dom4j.DocumentHelper.parseText("<root/>");
+				} catch (org.dom4j.DocumentException e_tRESTClient_1) {
+					e_tRESTClient_1.printStackTrace();
 				}
+				return null;
+			}
+			return super.readFrom(cls, type, anns, mt, headers, is);
+		}
+	});
+	org.apache.cxf.jaxrs.provider.json.JSONProvider jsonProvider_tRESTClient_1 =
+			new org.apache.cxf.jaxrs.provider.json.JSONProvider();
+		jsonProvider_tRESTClient_1.setIgnoreNamespaces(true);
+		jsonProvider_tRESTClient_1.setAttributesToElements(true);
+	
+	
+		jsonProvider_tRESTClient_1.setSupportUnwrapped(true);
+		jsonProvider_tRESTClient_1.setWrapperName("root");
+	
+	
+		jsonProvider_tRESTClient_1.setDropRootElement(false);
+		jsonProvider_tRESTClient_1.setConvertTypesToStrings(false);
+	providers_tRESTClient_1.add(jsonProvider_tRESTClient_1);
+	factoryBean_tRESTClient_1.setProviders(providers_tRESTClient_1);
+	factoryBean_tRESTClient_1.setTransportId("http://cxf.apache.org/transports/http");
 
-				new BytesLimit65535_tJavaRow_1().limitLog4jByte();
+	boolean use_auth_tRESTClient_1 = false;
+	if (use_auth_tRESTClient_1 && "SAML".equals("BASIC")) {
+		if (!inOSGi) {
+			throw new IllegalArgumentException("SAML based security scenarios are not supported in Studio (standalone)");
+		}
+		// set SAML Token authentication
+		
+		 
+	final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
 
-				int nb_line_tJavaRow_1 = 0;
+		org.apache.cxf.ws.security.trust.STSClient stsClient =
+			org.talend.esb.security.saml.STSClientUtils.createSTSClient(factoryBean_tRESTClient_1.getBus(),
+				"username", decryptedPassword_tRESTClient_1);
+		
+		org.talend.esb.security.saml.SAMLRESTUtils.configureClient(factoryBean_tRESTClient_1, stsClient);
+	}
 
-				/**
-				 * [tJavaRow_1 begin ] stop
-				 */
+	org.apache.cxf.jaxrs.client.WebClient webClient_tRESTClient_1 = factoryBean_tRESTClient_1.createWebClient();
 
-				/**
-				 * [tFileInputJSON_2 begin ] start
-				 */
+	// set request path
+	webClient_tRESTClient_1.path("");
 
-				ok_Hash.put("tFileInputJSON_2", false);
-				start_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
+	// set connection properties
+	org.apache.cxf.jaxrs.client.ClientConfiguration clientConfig_tRESTClient_1 = org.apache.cxf.jaxrs.client.WebClient.getConfig(webClient_tRESTClient_1);
+	org.apache.cxf.transport.http.HTTPConduit conduit_tRESTClient_1 = clientConfig_tRESTClient_1.getHttpConduit();
 
-				currentComponent = "tFileInputJSON_2";
+    if (clientConfig_tRESTClient_1.getEndpoint() != null
+            && clientConfig_tRESTClient_1.getEndpoint().getEndpointInfo() != null) {
+        clientConfig_tRESTClient_1.getEndpoint().getEndpointInfo().setProperty("enable.webclient.operation.reporting",
+                                                                          true);
+    }
 
-				int tos_count_tFileInputJSON_2 = 0;
+	
 
-				class BytesLimit65535_tFileInputJSON_2 {
-					public void limitLog4jByte() throws Exception {
+	if (use_auth_tRESTClient_1 && "BASIC".equals("BASIC")) {
+		// set BASIC auth
+		
+		 
+	final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
 
-					}
-				}
+		org.apache.cxf.configuration.security.AuthorizationPolicy authPolicy_tRESTClient_1 = new org.apache.cxf.configuration.security.AuthorizationPolicy();
+			authPolicy_tRESTClient_1.setAuthorizationType("Basic");
+			authPolicy_tRESTClient_1.setUserName("username");
+			authPolicy_tRESTClient_1.setPassword(decryptedPassword_tRESTClient_1);
+		conduit_tRESTClient_1.setAuthorization(authPolicy_tRESTClient_1);
+	} else if (use_auth_tRESTClient_1 && "HTTP Digest".equals("BASIC")) {
+		// set Digest auth
+		
+		 
+	final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
 
-				new BytesLimit65535_tFileInputJSON_2().limitLog4jByte();
+		org.apache.cxf.configuration.security.AuthorizationPolicy authPolicy_tRESTClient_1 = new org.apache.cxf.configuration.security.AuthorizationPolicy();
+		authPolicy_tRESTClient_1.setAuthorizationType("Digest");
+		authPolicy_tRESTClient_1.setUserName("username");
+		authPolicy_tRESTClient_1.setPassword(decryptedPassword_tRESTClient_1);
+		conduit_tRESTClient_1.setAuthorization(authPolicy_tRESTClient_1);
+	}
 
-				class JSONUtil_tFileInputJSON_2 {
-					public int getData(
-							String query,
-							javax.script.Invocable invocableEngine,
-							java.util.List<org.json.simple.JSONArray> jsonResultList,
-							int recordMaxSize) {
-						try {
-							// only 2 types: String/Boolean
-							String resultObj = invocableEngine.invokeFunction(
-									"jsonPath", query).toString();
-							if (!"false".equals(resultObj)) {
-								org.json.simple.JSONArray resultArray = (org.json.simple.JSONArray) org.json.simple.JSONValue
-										.parse(resultObj);
-								jsonResultList.add(resultArray);
-								if (recordMaxSize != -1
-										&& recordMaxSize != resultArray.size()) {
-									// just give an error, don't stop
+	if (!inOSGi) {
+		conduit_tRESTClient_1.getClient().setReceiveTimeout((long)(60 * 1000L));
+		conduit_tRESTClient_1.getClient().setConnectionTimeout((long)(30 * 1000L));
+		boolean use_proxy_tRESTClient_1 = false;
+		if (use_proxy_tRESTClient_1) {
+			
+			 
+	final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil.decryptPassword("f4f7aba1746784ea");
 
-									System.err
-											.println("The Json resource datas maybe have some problems, please make sure the data structure with the same fields.");
-								}
-								recordMaxSize = Math.max(recordMaxSize,
-										resultArray.size());
-							} else {
+			conduit_tRESTClient_1.getClient().setProxyServer("61.163.92.4");
+			conduit_tRESTClient_1.getClient().setProxyServerPort(Integer.valueOf(8080));
+			conduit_tRESTClient_1.getProxyAuthorization().setUserName("");
+			conduit_tRESTClient_1.getProxyAuthorization().setPassword(decryptedPassword_tRESTClient_1);
+		}
+	}
 
-								System.err
-										.println("Can't find any data with JSONPath "
-												+ query);
-								// add null to take a place in List(buffer)
-								jsonResultList.add(null);
-							}
-						} catch (java.lang.Exception e) {
+	
 
-							e.printStackTrace();
-						}
-						return recordMaxSize;
-					}
+	
 
-					void setRowValue_0(
-							row3Struct row3,
-							java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2,
-							int nbResultArray_tFileInputJSON_2)
-							throws java.io.UnsupportedEncodingException {
-						if (JSONResultList_tFileInputJSON_2.get(0) != null
-								&& nbResultArray_tFileInputJSON_2 < JSONResultList_tFileInputJSON_2
-										.get(0).size()
-								&& JSONResultList_tFileInputJSON_2.get(0).get(
-										nbResultArray_tFileInputJSON_2) != null) {
-							row3.dataList = JSONResultList_tFileInputJSON_2
-									.get(0).get(nbResultArray_tFileInputJSON_2)
-									.toString();
-						} else {
+	
+		// set Content-Type
+		webClient_tRESTClient_1.type("application/json");
+	
 
-							row3.dataList = null;
+	
+		// set Accept-Type
+		webClient_tRESTClient_1.accept("application/json");
+	
 
-						}
-					}
-				}
-				int nb_line_tFileInputJSON_2 = 0;
-				java.lang.Object jsonText_tFileInputJSON_2 = null;
-				JSONUtil_tFileInputJSON_2 jsonUtil_tFileInputJSON_2 = new JSONUtil_tFileInputJSON_2();
-				java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2 = new java.util.ArrayList<org.json.simple.JSONArray>();
-				int recordMaxSize_tFileInputJSON_2 = -1;
+	
+		// set optional query and header properties if any
+	
+	if (use_auth_tRESTClient_1 && "OAUTH2_BEARER".equals("BASIC")) {
+		// set oAuth2 bearer token
+		webClient_tRESTClient_1.header("Authorization", "Bearer " + "");
+	}
+	
+	if (use_auth_tRESTClient_1 && "OIDC_PASSWORD_GRANT".equals("BASIC")) {
+ 
+	final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
 
-				// init js json engine
-				javax.script.ScriptEngineManager scriptEngineMgr_tFileInputJSON_2 = new javax.script.ScriptEngineManager();
-				javax.script.ScriptEngine jsEngine_tFileInputJSON_2 = scriptEngineMgr_tFileInputJSON_2
-						.getEngineByName("JavaScript");
-				if (jsEngine_tFileInputJSON_2 == null) {
+        String username_tRESTClient_1 = "username";
+        String password_tRESTClient_1 = decryptedPassword_tRESTClient_1;
 
-					System.err.println("No script engine found for JavaScript");
+        String bearerHeader_tRESTClient_1 = null;
+
+        try {
+			if (!inOSGi) {
+				org.springframework.context.support.ClassPathXmlApplicationContext context_tRESTClient_1 =
+					new org.springframework.context.support.ClassPathXmlApplicationContext("META-INF/tesb/oidc-context.xml");
+				org.talend.esb.security.oidc.OidcConfiguration oidcConfiguration_tRESTClient_1 = context_tRESTClient_1.getBean(org.talend.esb.security.oidc.OidcConfiguration.class);
+				bearerHeader_tRESTClient_1 = org.talend.esb.security.oidc.OidcClientUtils.oidcClientBearer(username_tRESTClient_1, password_tRESTClient_1, oidcConfiguration_tRESTClient_1);
+			}else{
+				bearerHeader_tRESTClient_1 = org.talend.esb.security.oidc.OidcClientUtils.oidcClientBearer(username_tRESTClient_1, password_tRESTClient_1);
+			}
+		} catch (Exception ex) {
+            throw new javax.ws.rs.WebApplicationException("Failed to get OIDC access token: ", ex);
+        }
+
+		webClient_tRESTClient_1.header("Authorization", bearerHeader_tRESTClient_1);
+	}
+    
+	// if FORM request then capture query parameters into Form, otherwise set them as queries
+	
+		
+	
+
+
+	try {
+		// start send request
+		
+			responseDoc_tRESTClient_1 = webClient_tRESTClient_1.post(requestBody_tRESTClient_1, responseClass_tRESTClient_1);
+		
+
+
+		int webClientResponseStatus_tRESTClient_1 = webClient_tRESTClient_1.getResponse().getStatus();
+		if (webClientResponseStatus_tRESTClient_1 >= 300) {
+			throw new javax.ws.rs.WebApplicationException(webClient_tRESTClient_1.getResponse());
+		}
+
+		
+			if (row5 == null) {
+				row5 = new row5Struct();
+			}
+
+			row5.statusCode = webClientResponseStatus_tRESTClient_1;
+			
+			if (responseDoc_tRESTClient_1 != null) {
+				if (responseClass_tRESTClient_1 == String.class) {
+					row5.string = (String) responseDoc_tRESTClient_1;
 				} else {
-					java.net.URL jsonjsUrl_tFileInputJSON_2 = com.jsonpath.test.ReadJar.class
-							.getResource("json.js");
-					if (jsonjsUrl_tFileInputJSON_2 != null) {
-						jsEngine_tFileInputJSON_2
-								.eval(new java.io.BufferedReader(
-										new java.io.InputStreamReader(
-												jsonjsUrl_tFileInputJSON_2
-														.openStream())));
+					routines.system.Document responseTalendDoc_tRESTClient_1 = null;
+					if (null != responseDoc_tRESTClient_1) {
+						responseTalendDoc_tRESTClient_1 = new routines.system.Document();
+						responseTalendDoc_tRESTClient_1.setDocument((org.dom4j.Document) responseDoc_tRESTClient_1);
 					}
-
-					java.net.URL jsonpathjsUrl_tFileInputJSON_2 = com.jsonpath.test.ReadJar.class
-							.getResource("jsonpath.js");
-					if (jsonpathjsUrl_tFileInputJSON_2 != null) {
-						jsEngine_tFileInputJSON_2
-								.eval(new java.io.BufferedReader(
-										new java.io.InputStreamReader(
-												jsonpathjsUrl_tFileInputJSON_2
-														.openStream())));
-					}
-
-					java.io.BufferedReader fr_tFileInputJSON_2 = null;
-					try {
-
-						fr_tFileInputJSON_2 = new java.io.BufferedReader(
-								new java.io.InputStreamReader(
-										new java.io.FileInputStream(
-												"K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json"),
-										"UTF-8"));
-
-						jsonText_tFileInputJSON_2 = org.json.simple.JSONValue
-								.parse(fr_tFileInputJSON_2);
-						if (jsonText_tFileInputJSON_2 == null) {
-							throw new RuntimeException(
-									"fail to parse the json file : "
-											+ "K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json");
-						}
-					} catch (java.lang.Exception e_tFileInputJSON_2) {
-
-						System.err.println(e_tFileInputJSON_2.getMessage());
-
-					} finally {
-						if (fr_tFileInputJSON_2 != null) {
-							fr_tFileInputJSON_2.close();
-						}
-					}
-
-					if (jsonText_tFileInputJSON_2 != null) {
-						jsEngine_tFileInputJSON_2.eval("var obj="
-								+ jsonText_tFileInputJSON_2.toString());
-
-						javax.script.Invocable invocableEngine_tFileInputJSON_2 = (javax.script.Invocable) jsEngine_tFileInputJSON_2;
-
-						recordMaxSize_tFileInputJSON_2 = jsonUtil_tFileInputJSON_2
-								.getData("$.data[*]",
-										invocableEngine_tFileInputJSON_2,
-										JSONResultList_tFileInputJSON_2,
-										recordMaxSize_tFileInputJSON_2);
-
-					}
+					row5.body = responseTalendDoc_tRESTClient_1;
 				}
-				for (int nbResultArray_tFileInputJSON_2 = 0; nbResultArray_tFileInputJSON_2 < recordMaxSize_tFileInputJSON_2; nbResultArray_tFileInputJSON_2++) {
+			}
+			
 
-					nb_line_tFileInputJSON_2++;
-					row3 = null;
-					boolean whetherReject_tFileInputJSON_2 = false;
-					row3 = new row3Struct();
-					try {
-						jsonUtil_tFileInputJSON_2.setRowValue_0(row3,
-								JSONResultList_tFileInputJSON_2,
-								nbResultArray_tFileInputJSON_2);
-					} catch (java.lang.Exception e) {
-						whetherReject_tFileInputJSON_2 = true;
-						System.err.println(e.getMessage());
-						row3 = null;
-					}
 
-					/**
-					 * [tFileInputJSON_2 begin ] stop
-					 */
+			globalMap.put("tRESTClient_1_HEADERS", webClient_tRESTClient_1.getResponse().getHeaders());
+			
+		
 
-					/**
-					 * [tFileInputJSON_2 main ] start
-					 */
+	} catch (javax.ws.rs.WebApplicationException ex_tRESTClient_1) {
+		
+			if (row6 == null) {
+				row6 = new row6Struct();
+			}
+			row6.errorCode = ex_tRESTClient_1.getResponse().getStatus();
 
-					currentComponent = "tFileInputJSON_2";
-
-					tos_count_tFileInputJSON_2++;
-
-					/**
-					 * [tFileInputJSON_2 main ] stop
-					 */
-					// Start of branch "row3"
-					if (row3 != null) {
-
-						/**
-						 * [tJavaRow_1 main ] start
-						 */
-
-						currentComponent = "tJavaRow_1";
-
-						// row3
-						// row3
-
-						if (execStat) {
-							runStat.updateStatOnConnection("row3" + iterateId,
-									1, 1);
-						}
-
-						// Iterate through input row
-						row1.dataList = row3.dataList;
-						nb_line_tJavaRow_1++;
-
-						tos_count_tJavaRow_1++;
-
-						/**
-						 * [tJavaRow_1 main ] stop
-						 */
-
-						/**
-						 * [tMap_1 main ] start
-						 */
-
-						currentComponent = "tMap_1";
-
-						// row1
-						// row1
-
-						if (execStat) {
-							runStat.updateStatOnConnection("row1" + iterateId,
-									1, 1);
-						}
-
-						boolean hasCasePrimitiveKeyWithNull_tMap_1 = false;
-
-						// ###############################
-						// # Input tables (lookups)
-						boolean rejectedInnerJoin_tMap_1 = false;
-						boolean mainRowRejected_tMap_1 = false;
-
-						// ###############################
-						{ // start of Var scope
-
-							// ###############################
-							// # Vars tables
-
-							Var__tMap_1__Struct Var = Var__tMap_1;// ###############################
-							// ###############################
-							// # Output tables
-
-							output = null;
-
-							// # Output table : 'output'
-							output_tmp.body = null;
-							output_tmp.string = row1.dataList;
-							output = output_tmp;
-							// ###############################
-
-						} // end of Var scope
-
-						rejectedInnerJoin_tMap_1 = false;
-
-						tos_count_tMap_1++;
-
-						/**
-						 * [tMap_1 main ] stop
-						 */
-						// Start of branch "output"
-						if (output != null) {
-
-							/**
-							 * [tRESTClient_1 main ] start
-							 */
-
-							currentComponent = "tRESTClient_1";
-
-							// output
-							// output
-
-							if (execStat) {
-								runStat.updateStatOnConnection("output"
-										+ iterateId, 1, 1);
-							}
-
-							row6 = null;
-							row5 = null;
-
-							// expected response body
-							Object responseDoc_tRESTClient_1 = null;
-
-							try {
-								// request body
-								org.dom4j.Document requestDoc_tRESTClient_1 = null;
-								String requestString_tRESTClient_1 = null;
-								if (null != output.body) {
-									requestDoc_tRESTClient_1 = output.body
-											.getDocument();
-								}
-								requestString_tRESTClient_1 = output.string;
-
-								Object requestBody_tRESTClient_1 = requestDoc_tRESTClient_1 != null ? requestDoc_tRESTClient_1
-										: requestString_tRESTClient_1;
-
-								// resposne class name
-								Class<?> responseClass_tRESTClient_1 = org.dom4j.Document.class;
-
-								// create web client instance
-								org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean factoryBean_tRESTClient_1 = new org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean();
-
-								boolean inOSGi = false;
-								try {
-									inOSGi = (null != factoryBean_tRESTClient_1
-											.getBus()
-											.getExtension(
-													Class.forName("org.osgi.framework.BundleContext")));
-								} catch (ClassNotFoundException e_tRESTClient_1) {
-									; // ignore
-								}
-
-								final java.util.List<org.apache.cxf.feature.Feature> features_tRESTClient_1 = new java.util.ArrayList<org.apache.cxf.feature.Feature>();
-
-								String url = "http://localhost:9200/"
-										+ context.indexName + "/"
-										+ context.indexType + "/";
-								// {baseUri}tRESTClient
-								factoryBean_tRESTClient_1
-										.setServiceName(new javax.xml.namespace.QName(
-												url, "tRESTClient"));
-								factoryBean_tRESTClient_1.setAddress(url);
-
-								factoryBean_tRESTClient_1
-										.setFeatures(features_tRESTClient_1);
-
-								java.util.List<Object> providers_tRESTClient_1 = new java.util.ArrayList<Object>();
-								providers_tRESTClient_1
-										.add(new org.apache.cxf.jaxrs.provider.dom4j.DOM4JProvider() {
-											// workaround for
-											// https://jira.talendforge.org/browse/TESB-7276
-											public org.dom4j.Document readFrom(
-													Class<org.dom4j.Document> cls,
-													java.lang.reflect.Type type,
-													java.lang.annotation.Annotation[] anns,
-													javax.ws.rs.core.MediaType mt,
-													javax.ws.rs.core.MultivaluedMap<String, String> headers,
-													java.io.InputStream is)
-													throws IOException,
-													javax.ws.rs.WebApplicationException {
-												String contentLength = headers
-														.getFirst("Content-Length");
-												if (!org.apache.cxf.common.util.StringUtils
-														.isEmpty(contentLength)
-														&& Integer
-																.valueOf(contentLength) <= 0) {
-													try {
-														return org.dom4j.DocumentHelper
-																.parseText("<root/>");
-													} catch (org.dom4j.DocumentException e_tRESTClient_1) {
-														e_tRESTClient_1
-																.printStackTrace();
-													}
-													return null;
-												}
-												return super.readFrom(cls,
-														type, anns, mt,
-														headers, is);
-											}
-										});
-								org.apache.cxf.jaxrs.provider.json.JSONProvider jsonProvider_tRESTClient_1 = new org.apache.cxf.jaxrs.provider.json.JSONProvider();
-								jsonProvider_tRESTClient_1
-										.setIgnoreNamespaces(true);
-								jsonProvider_tRESTClient_1
-										.setAttributesToElements(true);
-
-								jsonProvider_tRESTClient_1
-										.setSupportUnwrapped(true);
-								jsonProvider_tRESTClient_1
-										.setWrapperName("root");
-
-								jsonProvider_tRESTClient_1
-										.setDropRootElement(false);
-								jsonProvider_tRESTClient_1
-										.setConvertTypesToStrings(false);
-								providers_tRESTClient_1
-										.add(jsonProvider_tRESTClient_1);
-								factoryBean_tRESTClient_1
-										.setProviders(providers_tRESTClient_1);
-								factoryBean_tRESTClient_1
-										.setTransportId("http://cxf.apache.org/transports/http");
-
-								boolean use_auth_tRESTClient_1 = false;
-								if (use_auth_tRESTClient_1
-										&& "SAML".equals("BASIC")) {
-									if (!inOSGi) {
-										throw new IllegalArgumentException(
-												"SAML based security scenarios are not supported in Studio (standalone)");
-									}
-									// set SAML Token authentication
-
-									final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil
-											.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
-
-									org.apache.cxf.ws.security.trust.STSClient stsClient = org.talend.esb.security.saml.STSClientUtils
-											.createSTSClient(
-													factoryBean_tRESTClient_1
-															.getBus(),
-													"username",
-													decryptedPassword_tRESTClient_1);
-
-									org.talend.esb.security.saml.SAMLRESTUtils
-											.configureClient(
-													factoryBean_tRESTClient_1,
-													stsClient);
-								}
-
-								org.apache.cxf.jaxrs.client.WebClient webClient_tRESTClient_1 = factoryBean_tRESTClient_1
-										.createWebClient();
-
-								// set request path
-								webClient_tRESTClient_1.path("");
-
-								// set connection properties
-								org.apache.cxf.jaxrs.client.ClientConfiguration clientConfig_tRESTClient_1 = org.apache.cxf.jaxrs.client.WebClient
-										.getConfig(webClient_tRESTClient_1);
-								org.apache.cxf.transport.http.HTTPConduit conduit_tRESTClient_1 = clientConfig_tRESTClient_1
-										.getHttpConduit();
-
-								if (clientConfig_tRESTClient_1.getEndpoint() != null
-										&& clientConfig_tRESTClient_1
-												.getEndpoint()
-												.getEndpointInfo() != null) {
-									clientConfig_tRESTClient_1
-											.getEndpoint()
-											.getEndpointInfo()
-											.setProperty(
-													"enable.webclient.operation.reporting",
-													true);
-								}
-
-								if (use_auth_tRESTClient_1
-										&& "BASIC".equals("BASIC")) {
-									// set BASIC auth
-
-									final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil
-											.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
-
-									org.apache.cxf.configuration.security.AuthorizationPolicy authPolicy_tRESTClient_1 = new org.apache.cxf.configuration.security.AuthorizationPolicy();
-									authPolicy_tRESTClient_1
-											.setAuthorizationType("Basic");
-									authPolicy_tRESTClient_1
-											.setUserName("username");
-									authPolicy_tRESTClient_1
-											.setPassword(decryptedPassword_tRESTClient_1);
-									conduit_tRESTClient_1
-											.setAuthorization(authPolicy_tRESTClient_1);
-								} else if (use_auth_tRESTClient_1
-										&& "HTTP Digest".equals("BASIC")) {
-									// set Digest auth
-
-									final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil
-											.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
-
-									org.apache.cxf.configuration.security.AuthorizationPolicy authPolicy_tRESTClient_1 = new org.apache.cxf.configuration.security.AuthorizationPolicy();
-									authPolicy_tRESTClient_1
-											.setAuthorizationType("Digest");
-									authPolicy_tRESTClient_1
-											.setUserName("username");
-									authPolicy_tRESTClient_1
-											.setPassword(decryptedPassword_tRESTClient_1);
-									conduit_tRESTClient_1
-											.setAuthorization(authPolicy_tRESTClient_1);
-								}
-
-								if (!inOSGi) {
-									conduit_tRESTClient_1.getClient()
-											.setReceiveTimeout(
-													(long) (60 * 1000L));
-									conduit_tRESTClient_1.getClient()
-											.setConnectionTimeout(
-													(long) (30 * 1000L));
-									boolean use_proxy_tRESTClient_1 = false;
-									if (use_proxy_tRESTClient_1) {
-
-										final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil
-												.decryptPassword("f4f7aba1746784ea");
-
-										conduit_tRESTClient_1.getClient()
-												.setProxyServer("61.163.92.4");
-										conduit_tRESTClient_1.getClient()
-												.setProxyServerPort(
-														Integer.valueOf(8080));
-										conduit_tRESTClient_1
-												.getProxyAuthorization()
-												.setUserName("");
-										conduit_tRESTClient_1
-												.getProxyAuthorization()
-												.setPassword(
-														decryptedPassword_tRESTClient_1);
-									}
-								}
-
-								// set Content-Type
-								webClient_tRESTClient_1
-										.type("application/json");
-
-								// set Accept-Type
-								webClient_tRESTClient_1
-										.accept("application/json");
-
-								// set optional query and header properties if
-								// any
-
-								if (use_auth_tRESTClient_1
-										&& "OAUTH2_BEARER".equals("BASIC")) {
-									// set oAuth2 bearer token
-									webClient_tRESTClient_1.header(
-											"Authorization", "Bearer " + "");
-								}
-
-								if (use_auth_tRESTClient_1
-										&& "OIDC_PASSWORD_GRANT"
-												.equals("BASIC")) {
-
-									final String decryptedPassword_tRESTClient_1 = routines.system.PasswordEncryptUtil
-											.decryptPassword("a54bbfcc1190b7e1f4f7aba1746784ea");
-
-									String username_tRESTClient_1 = "username";
-									String password_tRESTClient_1 = decryptedPassword_tRESTClient_1;
-
-									String bearerHeader_tRESTClient_1 = null;
-
-									try {
-										if (!inOSGi) {
-											org.springframework.context.support.ClassPathXmlApplicationContext context_tRESTClient_1 = new org.springframework.context.support.ClassPathXmlApplicationContext(
-													"META-INF/tesb/oidc-context.xml");
-											org.talend.esb.security.oidc.OidcConfiguration oidcConfiguration_tRESTClient_1 = context_tRESTClient_1
-													.getBean(org.talend.esb.security.oidc.OidcConfiguration.class);
-											bearerHeader_tRESTClient_1 = org.talend.esb.security.oidc.OidcClientUtils
-													.oidcClientBearer(
-															username_tRESTClient_1,
-															password_tRESTClient_1,
-															oidcConfiguration_tRESTClient_1);
-										} else {
-											bearerHeader_tRESTClient_1 = org.talend.esb.security.oidc.OidcClientUtils
-													.oidcClientBearer(
-															username_tRESTClient_1,
-															password_tRESTClient_1);
-										}
-									} catch (Exception ex) {
-										throw new javax.ws.rs.WebApplicationException(
-												"Failed to get OIDC access token: ",
-												ex);
-									}
-
-									webClient_tRESTClient_1.header(
-											"Authorization",
-											bearerHeader_tRESTClient_1);
-								}
-
-								// if FORM request then capture query parameters
-								// into Form, otherwise set them as queries
-
-								try {
-									// start send request
-
-									responseDoc_tRESTClient_1 = webClient_tRESTClient_1
-											.post(requestBody_tRESTClient_1,
-													responseClass_tRESTClient_1);
-
-									int webClientResponseStatus_tRESTClient_1 = webClient_tRESTClient_1
-											.getResponse().getStatus();
-									if (webClientResponseStatus_tRESTClient_1 >= 300) {
-										throw new javax.ws.rs.WebApplicationException(
-												webClient_tRESTClient_1
-														.getResponse());
-									}
-
-									if (row5 == null) {
-										row5 = new row5Struct();
-									}
-
-									row5.statusCode = webClientResponseStatus_tRESTClient_1;
-
-									if (responseDoc_tRESTClient_1 != null) {
-										if (responseClass_tRESTClient_1 == String.class) {
-											row5.string = (String) responseDoc_tRESTClient_1;
-										} else {
-											routines.system.Document responseTalendDoc_tRESTClient_1 = null;
-											if (null != responseDoc_tRESTClient_1) {
-												responseTalendDoc_tRESTClient_1 = new routines.system.Document();
-												responseTalendDoc_tRESTClient_1
-														.setDocument((org.dom4j.Document) responseDoc_tRESTClient_1);
-											}
-											row5.body = responseTalendDoc_tRESTClient_1;
-										}
-									}
-
-									globalMap
-											.put("tRESTClient_1_HEADERS",
-													webClient_tRESTClient_1
-															.getResponse()
-															.getHeaders());
-
-								} catch (javax.ws.rs.WebApplicationException ex_tRESTClient_1) {
-
-									if (row6 == null) {
-										row6 = new row6Struct();
-									}
-									row6.errorCode = ex_tRESTClient_1
-											.getResponse().getStatus();
-
-									String errorMessage_tRESTClient_1 = null;
-									try {
-										errorMessage_tRESTClient_1 = ex_tRESTClient_1
-												.getResponse().readEntity(
-														String.class);
-									} catch (Exception exe_tRESTClient_1) {
-										// ignore
-									}
-									if (null == errorMessage_tRESTClient_1
-											|| 0 == errorMessage_tRESTClient_1
-													.trim().length()) {
-										errorMessage_tRESTClient_1 = ex_tRESTClient_1
-												.getMessage();
-									}
-									row6.errorMessage = errorMessage_tRESTClient_1;
-
-									globalMap.put("tRESTClient_1_HEADERS",
-											ex_tRESTClient_1.getResponse()
-													.getHeaders());
-
-								}
-
-							} catch (Exception e_tRESTClient_1) {
-
-								throw new TalendException(e_tRESTClient_1,
-										currentComponent, globalMap);
-
-							}
-
-							tos_count_tRESTClient_1++;
-
-							/**
-							 * [tRESTClient_1 main ] stop
-							 */
-							// Start of branch "row5"
-							if (row5 != null) {
-
-								/**
-								 * [tLogRow_2 main ] start
-								 */
-
-								currentComponent = "tLogRow_2";
-
-								// row5
-								// row5
-
-								if (execStat) {
-									runStat.updateStatOnConnection("row5"
-											+ iterateId, 1, 1);
-								}
-
-								// /////////////////////
-
-								strBuffer_tLogRow_2 = new StringBuilder();
-
-								if (row5.statusCode != null) { //
-
-									strBuffer_tLogRow_2.append(String
-											.valueOf(row5.statusCode));
-
-								} //
-
-								strBuffer_tLogRow_2.append("|");
-
-								if (row5.body != null) { //
-
-									strBuffer_tLogRow_2.append(String
-											.valueOf(row5.body));
-
-								} //
-
-								strBuffer_tLogRow_2.append("|");
-
-								if (row5.string != null) { //
-
-									strBuffer_tLogRow_2.append(String
-											.valueOf(row5.string));
-
-								} //
-
-								if (globalMap.get("tLogRow_CONSOLE") != null) {
-									consoleOut_tLogRow_2 = (java.io.PrintStream) globalMap
-											.get("tLogRow_CONSOLE");
-								} else {
-									consoleOut_tLogRow_2 = new java.io.PrintStream(
-											new java.io.BufferedOutputStream(
-													System.out));
-									globalMap.put("tLogRow_CONSOLE",
-											consoleOut_tLogRow_2);
-								}
-								consoleOut_tLogRow_2
-										.println(strBuffer_tLogRow_2.toString());
-								consoleOut_tLogRow_2.flush();
-								nb_line_tLogRow_2++;
-								// ////
-
-								// ////
-
-								// /////////////////////
-
-								tos_count_tLogRow_2++;
-
-								/**
-								 * [tLogRow_2 main ] stop
-								 */
-
-							} // End of branch "row5"
-
-							// Start of branch "row6"
-							if (row6 != null) {
-
-								/**
-								 * [tLogRow_3 main ] start
-								 */
-
-								currentComponent = "tLogRow_3";
-
-								// row6
-								// row6
-
-								if (execStat) {
-									runStat.updateStatOnConnection("row6"
-											+ iterateId, 1, 1);
-								}
-
-								// /////////////////////
-
-								strBuffer_tLogRow_3 = new StringBuilder();
-
-								if (row6.errorCode != null) { //
-
-									strBuffer_tLogRow_3.append(String
-											.valueOf(row6.errorCode));
-
-								} //
-
-								strBuffer_tLogRow_3.append("|");
-
-								if (row6.errorMessage != null) { //
-
-									strBuffer_tLogRow_3.append(String
-											.valueOf(row6.errorMessage));
-
-								} //
-
-								if (globalMap.get("tLogRow_CONSOLE") != null) {
-									consoleOut_tLogRow_3 = (java.io.PrintStream) globalMap
-											.get("tLogRow_CONSOLE");
-								} else {
-									consoleOut_tLogRow_3 = new java.io.PrintStream(
-											new java.io.BufferedOutputStream(
-													System.out));
-									globalMap.put("tLogRow_CONSOLE",
-											consoleOut_tLogRow_3);
-								}
-								consoleOut_tLogRow_3
-										.println(strBuffer_tLogRow_3.toString());
-								consoleOut_tLogRow_3.flush();
-								nb_line_tLogRow_3++;
-								// ////
-
-								// ////
-
-								// /////////////////////
-
-								tos_count_tLogRow_3++;
-
-								/**
-								 * [tLogRow_3 main ] stop
-								 */
-
-							} // End of branch "row6"
-
-						} // End of branch "output"
-
-					} // End of branch "row3"
-
-					/**
-					 * [tFileInputJSON_2 end ] start
-					 */
-
-					currentComponent = "tFileInputJSON_2";
-
-				}
-				globalMap.put("tFileInputJSON_2_NB_LINE",
-						nb_line_tFileInputJSON_2);
-
-				ok_Hash.put("tFileInputJSON_2", true);
-				end_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
-
-				/**
-				 * [tFileInputJSON_2 end ] stop
-				 */
-
-				/**
-				 * [tJavaRow_1 end ] start
-				 */
-
-				currentComponent = "tJavaRow_1";
-
-				globalMap.put("tJavaRow_1_NB_LINE", nb_line_tJavaRow_1);
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null
-							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
-						runStat.updateStatOnConnection("row3" + iterateId, 2, 0);
-					}
-				}
-
-				ok_Hash.put("tJavaRow_1", true);
-				end_Hash.put("tJavaRow_1", System.currentTimeMillis());
-
-				/**
-				 * [tJavaRow_1 end ] stop
-				 */
-
-				/**
-				 * [tMap_1 end ] start
-				 */
-
-				currentComponent = "tMap_1";
-
-				// ###############################
-				// # Lookup hashes releasing
-				// ###############################
-
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null
-							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
-						runStat.updateStatOnConnection("row1" + iterateId, 2, 0);
-					}
-				}
-
-				ok_Hash.put("tMap_1", true);
-				end_Hash.put("tMap_1", System.currentTimeMillis());
-
-				/**
-				 * [tMap_1 end ] stop
-				 */
-
-				/**
-				 * [tRESTClient_1 end ] start
-				 */
-
-				currentComponent = "tRESTClient_1";
-
-				// [tRESTCliend_end]
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null
-							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
-						runStat.updateStatOnConnection("output" + iterateId, 2,
-								0);
-					}
-				}
-
-				ok_Hash.put("tRESTClient_1", true);
-				end_Hash.put("tRESTClient_1", System.currentTimeMillis());
-
-				/**
-				 * [tRESTClient_1 end ] stop
-				 */
-
-				/**
-				 * [tLogRow_2 end ] start
-				 */
-
-				currentComponent = "tLogRow_2";
-
-				// ////
-				// ////
-				globalMap.put("tLogRow_2_NB_LINE", nb_line_tLogRow_2);
-
-				// /////////////////////
-
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null
-							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
-						runStat.updateStatOnConnection("row5" + iterateId, 2, 0);
-					}
-				}
-
-				ok_Hash.put("tLogRow_2", true);
-				end_Hash.put("tLogRow_2", System.currentTimeMillis());
-
-				/**
-				 * [tLogRow_2 end ] stop
-				 */
-
-				/**
-				 * [tLogRow_3 end ] start
-				 */
-
-				currentComponent = "tLogRow_3";
-
-				// ////
-				// ////
-				globalMap.put("tLogRow_3_NB_LINE", nb_line_tLogRow_3);
-
-				// /////////////////////
-
-				if (execStat) {
-					if (resourceMap.get("inIterateVComp") == null
-							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
-						runStat.updateStatOnConnection("row6" + iterateId, 2, 0);
-					}
-				}
-
-				ok_Hash.put("tLogRow_3", true);
-				end_Hash.put("tLogRow_3", System.currentTimeMillis());
-
-				/**
-				 * [tLogRow_3 end ] stop
-				 */
-
-			}// end the resume
-
-		} catch (java.lang.Exception e) {
-
-			TalendException te = new TalendException(e, currentComponent,
-					globalMap);
-
-			throw te;
-		} catch (java.lang.Error error) {
-
-			runStat.stopThreadStat();
-
-			throw error;
-		} finally {
-
+			String errorMessage_tRESTClient_1 = null;
 			try {
-
-				/**
-				 * [tFileInputJSON_2 finally ] start
-				 */
-
-				currentComponent = "tFileInputJSON_2";
-
-				/**
-				 * [tFileInputJSON_2 finally ] stop
-				 */
-
-				/**
-				 * [tJavaRow_1 finally ] start
-				 */
-
-				currentComponent = "tJavaRow_1";
-
-				/**
-				 * [tJavaRow_1 finally ] stop
-				 */
-
-				/**
-				 * [tMap_1 finally ] start
-				 */
-
-				currentComponent = "tMap_1";
-
-				/**
-				 * [tMap_1 finally ] stop
-				 */
-
-				/**
-				 * [tRESTClient_1 finally ] start
-				 */
-
-				currentComponent = "tRESTClient_1";
-
-				/**
-				 * [tRESTClient_1 finally ] stop
-				 */
-
-				/**
-				 * [tLogRow_2 finally ] start
-				 */
-
-				currentComponent = "tLogRow_2";
-
-				/**
-				 * [tLogRow_2 finally ] stop
-				 */
-
-				/**
-				 * [tLogRow_3 finally ] start
-				 */
-
-				currentComponent = "tLogRow_3";
-
-				/**
-				 * [tLogRow_3 finally ] stop
-				 */
-
-			} catch (java.lang.Exception e) {
-				// ignore
-			} catch (java.lang.Error error) {
+				errorMessage_tRESTClient_1 = ex_tRESTClient_1.getResponse().readEntity(String.class);
+			} catch (Exception exe_tRESTClient_1) {
 				// ignore
 			}
-			resourceMap = null;
-		}
+			if (null == errorMessage_tRESTClient_1 || 0 == errorMessage_tRESTClient_1.trim().length()) {
+				errorMessage_tRESTClient_1 = ex_tRESTClient_1.getMessage();
+			}
+			row6.errorMessage = errorMessage_tRESTClient_1;
+
+			globalMap.put("tRESTClient_1_HEADERS", ex_tRESTClient_1.getResponse().getHeaders());
+			
+		
+	}
+
+} catch(Exception e_tRESTClient_1) {
+	
+		throw new TalendException(e_tRESTClient_1, currentComponent, globalMap);
+	
+}
+
+
+ 
+
+
+	tos_count_tRESTClient_1++;
+
+/**
+ * [tRESTClient_1 main ] stop
+ */
+// Start of branch "row5"
+if(row5 != null) { 
+
+
+
+	
+	/**
+	 * [tLogRow_2 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_2";
+
+	
+
+			//row5
+			//row5
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row5"+iterateId,1, 1);
+				} 
+			
+
+		
+///////////////////////		
+						
+
+
+
+				strBuffer_tLogRow_2 = new StringBuilder();
+
+
+
+
+   				
+	    		if(row5.statusCode != null) { //              
+                    							
+       
+				strBuffer_tLogRow_2.append(
+				                String.valueOf(row5.statusCode)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_2.append("|");
+    			
+
+
+   				
+	    		if(row5.body != null) { //              
+                    							
+       
+				strBuffer_tLogRow_2.append(
+				                String.valueOf(row5.body)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_2.append("|");
+    			
+
+
+   				
+	    		if(row5.string != null) { //              
+                    							
+       
+				strBuffer_tLogRow_2.append(
+				                String.valueOf(row5.string)							
+				);
+
+
+							
+	    		} //  			
+ 
+
+                    if (globalMap.get("tLogRow_CONSOLE")!=null)
+                    {
+                    	consoleOut_tLogRow_2 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
+                    }
+                    else
+                    {
+                    	consoleOut_tLogRow_2 = new java.io.PrintStream(new java.io.BufferedOutputStream(System.out));
+                    	globalMap.put("tLogRow_CONSOLE",consoleOut_tLogRow_2);
+                    }
+                    consoleOut_tLogRow_2.println(strBuffer_tLogRow_2.toString());
+                    consoleOut_tLogRow_2.flush();
+                    nb_line_tLogRow_2++;
+//////
+
+//////                    
+                    
+///////////////////////    			
+
+ 
+
+
+	tos_count_tLogRow_2++;
+
+/**
+ * [tLogRow_2 main ] stop
+ */
+
+} // End of branch "row5"
+
+
+
+
+// Start of branch "row6"
+if(row6 != null) { 
+
+
+
+	
+	/**
+	 * [tLogRow_3 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_3";
+
+	
+
+			//row6
+			//row6
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row6"+iterateId,1, 1);
+				} 
+			
+
+		
+///////////////////////		
+						
+
+
+
+				strBuffer_tLogRow_3 = new StringBuilder();
+
+
+
+
+   				
+	    		if(row6.errorCode != null) { //              
+                    							
+       
+				strBuffer_tLogRow_3.append(
+				                String.valueOf(row6.errorCode)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_3.append("|");
+    			
+
+
+   				
+	    		if(row6.errorMessage != null) { //              
+                    							
+       
+				strBuffer_tLogRow_3.append(
+				                String.valueOf(row6.errorMessage)							
+				);
+
+
+							
+	    		} //  			
+ 
+
+                    if (globalMap.get("tLogRow_CONSOLE")!=null)
+                    {
+                    	consoleOut_tLogRow_3 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
+                    }
+                    else
+                    {
+                    	consoleOut_tLogRow_3 = new java.io.PrintStream(new java.io.BufferedOutputStream(System.out));
+                    	globalMap.put("tLogRow_CONSOLE",consoleOut_tLogRow_3);
+                    }
+                    consoleOut_tLogRow_3.println(strBuffer_tLogRow_3.toString());
+                    consoleOut_tLogRow_3.flush();
+                    nb_line_tLogRow_3++;
+//////
+
+//////                    
+                    
+///////////////////////    			
+
+ 
+
+
+	tos_count_tLogRow_3++;
+
+/**
+ * [tLogRow_3 main ] stop
+ */
+
+} // End of branch "row6"
+
+
+
+
+
+} // End of branch "output"
+
+
+
+
+
+
+
+
+} // End of branch "row3"
+
+
+
+
+	
+	/**
+	 * [tFileInputJSON_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileInputJSON_2";
+
+	
+
+	}
+	globalMap.put("tFileInputJSON_2_NB_LINE",nb_line_tFileInputJSON_2);
+ 
+
+ok_Hash.put("tFileInputJSON_2", true);
+end_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tFileInputJSON_2 end ] stop
+ */
+
+	
+	/**
+	 * [tJavaRow_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJavaRow_1";
+
+	
+
+globalMap.put("tJavaRow_1_NB_LINE",nb_line_tJavaRow_1);
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row3"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tJavaRow_1", true);
+end_Hash.put("tJavaRow_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tJavaRow_1 end ] stop
+ */
+
+	
+	/**
+	 * [tMap_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_1";
+
+	
+
+
+// ###############################
+// # Lookup hashes releasing
+// ###############################      
+
+
+
+
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row1"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tMap_1", true);
+end_Hash.put("tMap_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tMap_1 end ] stop
+ */
+
+	
+	/**
+	 * [tRESTClient_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tRESTClient_1";
+
+	
+
+
+// [tRESTCliend_end]
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("output"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tRESTClient_1", true);
+end_Hash.put("tRESTClient_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tRESTClient_1 end ] stop
+ */
+
+	
+	/**
+	 * [tLogRow_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_2";
+
+	
+
+
+//////
+//////
+globalMap.put("tLogRow_2_NB_LINE",nb_line_tLogRow_2);
+
+///////////////////////    			
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row5"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tLogRow_2", true);
+end_Hash.put("tLogRow_2", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tLogRow_2 end ] stop
+ */
+
+
+
+
+	
+	/**
+	 * [tLogRow_3 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_3";
+
+	
+
+
+//////
+//////
+globalMap.put("tLogRow_3_NB_LINE",nb_line_tLogRow_3);
+
+///////////////////////    			
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row6"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tLogRow_3", true);
+end_Hash.put("tLogRow_3", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tLogRow_3 end ] stop
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+				}//end the resume
+
+				
+
+
+
+	
+			}catch(java.lang.Exception e){	
+				
+				TalendException te = new TalendException(e, currentComponent, globalMap);
+				
+				throw te;
+			}catch(java.lang.Error error){	
+				
+					runStat.stopThreadStat();
+				
+				throw error;
+			}finally{
+				
+				try{
+					
+	
+	/**
+	 * [tFileInputJSON_2 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileInputJSON_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tFileInputJSON_2 finally ] stop
+ */
+
+	
+	/**
+	 * [tJavaRow_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJavaRow_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tJavaRow_1 finally ] stop
+ */
+
+	
+	/**
+	 * [tMap_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tMap_1 finally ] stop
+ */
+
+	
+	/**
+	 * [tRESTClient_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tRESTClient_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tRESTClient_1 finally ] stop
+ */
+
+	
+	/**
+	 * [tLogRow_2 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tLogRow_2 finally ] stop
+ */
+
+
+
+
+	
+	/**
+	 * [tLogRow_3 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_3";
+
+	
+
+ 
+
+
+
+/**
+ * [tLogRow_3 finally ] stop
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+				}catch(java.lang.Exception e){	
+					//ignore
+				}catch(java.lang.Error error){
+					//ignore
+				}
+				resourceMap = null;
+			}
+		
 
 		globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", 1);
 	}
+	
+    public String resuming_logs_dir_path = null;
+    public String resuming_checkpoint_path = null;
+    public String parent_part_launcher = null;
+    private String resumeEntryMethodName = null;
+    private boolean globalResumeTicket = false;
 
-	public String resuming_logs_dir_path = null;
-	public String resuming_checkpoint_path = null;
-	public String parent_part_launcher = null;
-	private String resumeEntryMethodName = null;
-	private boolean globalResumeTicket = false;
+    public boolean watch = false;
+    // portStats is null, it means don't execute the statistics
+    public Integer portStats = null;
+    public int portTraces = 4334;
+    public String clientHost;
+    public String defaultClientHost = "localhost";
+    public String contextStr = "Default";
+    public boolean isDefaultContext = true;
+    public String pid = "0";
+    public String rootPid = null;
+    public String fatherPid = null;
+    public String fatherNode = null;
+    public long startTime = 0;
+    public boolean isChildJob = false;
+    public String log4jLevel = "";
 
-	public boolean watch = false;
-	// portStats is null, it means don't execute the statistics
-	public Integer portStats = null;
-	public int portTraces = 4334;
-	public String clientHost;
-	public String defaultClientHost = "localhost";
-	public String contextStr = "Default";
-	public boolean isDefaultContext = true;
-	public String pid = "0";
-	public String rootPid = null;
-	public String fatherPid = null;
-	public String fatherNode = null;
-	public long startTime = 0;
-	public boolean isChildJob = false;
-	public String log4jLevel = "";
+    private boolean execStat = true;
 
-	private boolean execStat = true;
+    private ThreadLocal<java.util.Map<String, String>> threadLocal = new ThreadLocal<java.util.Map<String, String>>() {
+        protected java.util.Map<String, String> initialValue() {
+            java.util.Map<String,String> threadRunResultMap = new java.util.HashMap<String, String>();
+            threadRunResultMap.put("errorCode", null);
+            threadRunResultMap.put("status", "");
+            return threadRunResultMap;
+        };
+    };
 
-	private ThreadLocal<java.util.Map<String, String>> threadLocal = new ThreadLocal<java.util.Map<String, String>>() {
-		protected java.util.Map<String, String> initialValue() {
-			java.util.Map<String, String> threadRunResultMap = new java.util.HashMap<String, String>();
-			threadRunResultMap.put("errorCode", null);
-			threadRunResultMap.put("status", "");
-			return threadRunResultMap;
-		};
-	};
 
-	private PropertiesWithType context_param = new PropertiesWithType();
-	public java.util.Map<String, Object> parentContextMap = new java.util.HashMap<String, Object>();
 
-	public String status = "";
+    private PropertiesWithType context_param = new PropertiesWithType();
+    public java.util.Map<String, Object> parentContextMap = new java.util.HashMap<String, Object>();
 
-	public static void main(String[] args) {
-		final step2_genericloadElasticsearch step2_genericloadElasticsearchClass = new step2_genericloadElasticsearch();
+    public String status= "";
 
-		int exitCode = step2_genericloadElasticsearchClass.runJobInTOS(args);
+    public static void main(String[] args){
+        final step2_genericloadElasticsearch step2_genericloadElasticsearchClass = new step2_genericloadElasticsearch();
 
-		System.exit(exitCode);
-	}
+        int exitCode = step2_genericloadElasticsearchClass.runJobInTOS(args);
 
-	public String[][] runJob(String[] args) {
+        System.exit(exitCode);
+    }
 
-		int exitCode = runJobInTOS(args);
-		String[][] bufferValue = new String[][] { { Integer.toString(exitCode) } };
 
-		return bufferValue;
-	}
+    public String[][] runJob(String[] args) {
 
-	public boolean hastBufferOutputComponent() {
+        int exitCode = runJobInTOS(args);
+        String[][] bufferValue = new String[][] { { Integer.toString(exitCode) } };
+
+        return bufferValue;
+    }
+
+    public boolean hastBufferOutputComponent() {
 		boolean hastBufferOutput = false;
+    	
+        return hastBufferOutput;
+    }
 
-		return hastBufferOutput;
-	}
+    public int runJobInTOS(String[] args) {
+	   	// reset status
+	   	status = "";
 
-	public int runJobInTOS(String[] args) {
-		// reset status
-		status = "";
+        String lastStr = "";
+        for (String arg : args) {
+            if (arg.equalsIgnoreCase("--context_param")) {
+                lastStr = arg;
+            } else if (lastStr.equals("")) {
+                evalParam(arg);
+            } else {
+                evalParam(lastStr + " " + arg);
+                lastStr = "";
+            }
+        }
 
-		String lastStr = "";
-		for (String arg : args) {
-			if (arg.equalsIgnoreCase("--context_param")) {
-				lastStr = arg;
-			} else if (lastStr.equals("")) {
-				evalParam(arg);
-			} else {
-				evalParam(lastStr + " " + arg);
-				lastStr = "";
-			}
-		}
 
-		if (clientHost == null) {
-			clientHost = defaultClientHost;
-		}
+        if(clientHost == null) {
+            clientHost = defaultClientHost;
+        }
 
-		if (pid == null || "0".equals(pid)) {
-			pid = TalendString.getAsciiRandomString(6);
-		}
+        if(pid == null || "0".equals(pid)) {
+            pid = TalendString.getAsciiRandomString(6);
+        }
 
-		if (rootPid == null) {
-			rootPid = pid;
-		}
-		if (fatherPid == null) {
-			fatherPid = pid;
-		} else {
-			isChildJob = true;
-		}
+        if (rootPid==null) {
+            rootPid = pid;
+        }
+        if (fatherPid==null) {
+            fatherPid = pid;
+        }else{
+            isChildJob = true;
+        }
 
-		if (portStats != null) {
-			// portStats = -1; //for testing
-			if (portStats < 0 || portStats > 65535) {
-				// issue:10869, the portStats is invalid, so this client socket
-				// can't open
-				System.err.println("The statistics socket port " + portStats
-						+ " is invalid.");
-				execStat = false;
-			}
-		} else {
-			execStat = false;
-		}
+        if (portStats != null) {
+            // portStats = -1; //for testing
+            if (portStats < 0 || portStats > 65535) {
+                // issue:10869, the portStats is invalid, so this client socket can't open
+                System.err.println("The statistics socket port " + portStats + " is invalid.");
+                execStat = false;
+            }
+        } else {
+            execStat = false;
+        }
 
-		try {
-			// call job/subjob with an existing context, like:
-			// --context=production. if without this parameter, there will use
-			// the default context instead.
-			java.io.InputStream inContext = step2_genericloadElasticsearch.class
-					.getClassLoader().getResourceAsStream(
-							"ruleengine_elasticsearch/step2_genericloadelasticsearch_0_1/contexts/"
-									+ contextStr + ".properties");
-			if (isDefaultContext && inContext == null) {
+        try {
+            //call job/subjob with an existing context, like: --context=production. if without this parameter, there will use the default context instead.
+            java.io.InputStream inContext = step2_genericloadElasticsearch.class.getClassLoader().getResourceAsStream("ruleengine_elasticsearch/step2_genericloadelasticsearch_0_1/contexts/"+contextStr+".properties");
+            if(isDefaultContext && inContext ==null) {
 
-			} else {
-				if (inContext != null) {
-					// defaultProps is in order to keep the original context
-					// value
-					defaultProps.load(inContext);
-					inContext.close();
-					context = new ContextProperties(defaultProps);
-				} else {
-					// print info and job continue to run, for case:
-					// context_param is not empty.
-					System.err.println("Could not find the context "
-							+ contextStr);
-				}
-			}
+            } else {
+                if (inContext!=null) {
+                    //defaultProps is in order to keep the original context value
+                    defaultProps.load(inContext);
+                    inContext.close();
+                    context = new ContextProperties(defaultProps);
+                }else{
+                    //print info and job continue to run, for case: context_param is not empty.
+                    System.err.println("Could not find the context " + contextStr);
+                }
+            }
 
-			if (!context_param.isEmpty()) {
-				context.putAll(context_param);
-				// set types for params from parentJobs
-				for (Object key : context_param.keySet()) {
+            if(!context_param.isEmpty()) {
+                context.putAll(context_param);
+				//set types for params from parentJobs
+				for (Object key: context_param.keySet()){
 					String context_key = key.toString();
-					String context_type = context_param
-							.getContextType(context_key);
+					String context_type = context_param.getContextType(context_key);
 					context.setContextType(context_key, context_type);
 
 				}
-			}
-			context.setContextType("indexName", "id_String");
+            }
+				    context.setContextType("indexName", "id_String");
+				
+                context.indexName=(String) context.getProperty("indexName");
+				    context.setContextType("indexType", "id_String");
+				
+                context.indexType=(String) context.getProperty("indexType");
+				    context.setContextType("fileName", "id_String");
+				
+                context.fileName=(String) context.getProperty("fileName");
+        } catch (java.io.IOException ie) {
+            System.err.println("Could not load context "+contextStr);
+            ie.printStackTrace();
+        }
 
-			context.indexName = (String) context.getProperty("indexName");
-			context.setContextType("indexType", "id_String");
 
-			context.indexType = (String) context.getProperty("indexType");
-			context.setContextType("fileName", "id_String");
+        // get context value from parent directly
+        if (parentContextMap != null && !parentContextMap.isEmpty()) {if (parentContextMap.containsKey("indexName")) {
+                context.indexName = (String) parentContextMap.get("indexName");
+            }if (parentContextMap.containsKey("indexType")) {
+                context.indexType = (String) parentContextMap.get("indexType");
+            }if (parentContextMap.containsKey("fileName")) {
+                context.fileName = (String) parentContextMap.get("fileName");
+            }
+        }
 
-			context.fileName = (String) context.getProperty("fileName");
-			context.setContextType("URL", "id_String");
-
-			context.URL = (String) context.getProperty("URL");
-		} catch (java.io.IOException ie) {
-			System.err.println("Could not load context " + contextStr);
-			ie.printStackTrace();
-		}
-
-		// get context value from parent directly
-		if (parentContextMap != null && !parentContextMap.isEmpty()) {
-			if (parentContextMap.containsKey("indexName")) {
-				context.indexName = (String) parentContextMap.get("indexName");
-			}
-			if (parentContextMap.containsKey("indexType")) {
-				context.indexType = (String) parentContextMap.get("indexType");
-			}
-			if (parentContextMap.containsKey("fileName")) {
-				context.fileName = (String) parentContextMap.get("fileName");
-			}
-			if (parentContextMap.containsKey("URL")) {
-				context.URL = (String) parentContextMap.get("URL");
-			}
-		}
-
-		// Resume: init the resumeUtil
-		resumeEntryMethodName = ResumeUtil
-				.getResumeEntryMethodName(resuming_checkpoint_path);
-		resumeUtil = new ResumeUtil(resuming_logs_dir_path, isChildJob, rootPid);
-		resumeUtil.initCommonInfo(pid, rootPid, fatherPid, projectName,
-				jobName, contextStr, jobVersion);
+        //Resume: init the resumeUtil
+        resumeEntryMethodName = ResumeUtil.getResumeEntryMethodName(resuming_checkpoint_path);
+        resumeUtil = new ResumeUtil(resuming_logs_dir_path, isChildJob, rootPid);
+        resumeUtil.initCommonInfo(pid, rootPid, fatherPid, projectName, jobName, contextStr, jobVersion);
 
 		List<String> parametersToEncrypt = new java.util.ArrayList<String>();
-		// Resume: jobStart
-		resumeUtil.addLog("JOB_STARTED", "JOB:" + jobName,
-				parent_part_launcher, Thread.currentThread().getId() + "", "",
-				"", "", "",
-				resumeUtil.convertToJsonText(context, parametersToEncrypt));
+        //Resume: jobStart
+        resumeUtil.addLog("JOB_STARTED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "", "","","","",resumeUtil.convertToJsonText(context,parametersToEncrypt));
 
-		if (execStat) {
-			try {
-				runStat.openSocket(!isChildJob);
-				runStat.setAllPID(rootPid, fatherPid, pid, jobName);
-				runStat.startThreadStat(clientHost, portStats);
-				runStat.updateStatOnJob(RunStat.JOBSTART, fatherNode);
-			} catch (java.io.IOException ioException) {
-				ioException.printStackTrace();
-			}
-		}
+if(execStat) {
+    try {
+        runStat.openSocket(!isChildJob);
+        runStat.setAllPID(rootPid, fatherPid, pid, jobName);
+        runStat.startThreadStat(clientHost, portStats);
+        runStat.updateStatOnJob(RunStat.JOBSTART, fatherNode);
+    } catch (java.io.IOException ioException) {
+        ioException.printStackTrace();
+    }
+}
 
-		java.util.concurrent.ConcurrentHashMap<Object, Object> concurrentHashMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
-		globalMap.put("concurrentHashMap", concurrentHashMap);
 
-		long startUsedMemory = Runtime.getRuntime().totalMemory()
-				- Runtime.getRuntime().freeMemory();
-		long endUsedMemory = 0;
-		long end = 0;
 
-		startTime = System.currentTimeMillis();
+	
+	    java.util.concurrent.ConcurrentHashMap<Object, Object> concurrentHashMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
+	    globalMap.put("concurrentHashMap", concurrentHashMap);
+	
 
-		this.globalResumeTicket = true;// to run tPreJob
+    long startUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+    long endUsedMemory = 0;
+    long end = 0;
 
-		this.globalResumeTicket = false;// to run others jobs
+    startTime = System.currentTimeMillis();
 
-		try {
-			errorCode = null;
-			tFileInputJSON_2Process(globalMap);
-			if (!"failure".equals(status)) {
-				status = "end";
-			}
-		} catch (TalendException e_tFileInputJSON_2) {
-			globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", -1);
 
-			e_tFileInputJSON_2.printStackTrace();
 
-		}
 
-		this.globalResumeTicket = true;// to run tPostJob
+this.globalResumeTicket = true;//to run tPreJob
 
-		end = System.currentTimeMillis();
 
-		if (watch) {
-			System.out.println((end - startTime) + " milliseconds");
-		}
 
-		endUsedMemory = Runtime.getRuntime().totalMemory()
-				- Runtime.getRuntime().freeMemory();
-		if (false) {
-			System.out
-					.println((endUsedMemory - startUsedMemory)
-							+ " bytes memory increase when running : step2_genericloadElasticsearch");
-		}
 
-		if (execStat) {
-			runStat.updateStatOnJob(RunStat.JOBEND, fatherNode);
-			runStat.stopThreadStat();
-		}
-		int returnCode = 0;
-		if (errorCode == null) {
-			returnCode = status != null && status.equals("failure") ? 1 : 0;
-		} else {
-			returnCode = errorCode.intValue();
-		}
-		resumeUtil.addLog("JOB_ENDED", "JOB:" + jobName, parent_part_launcher,
-				Thread.currentThread().getId() + "", "", "" + returnCode, "",
-				"", "");
+this.globalResumeTicket = false;//to run others jobs
 
-		return returnCode;
+try {
+errorCode = null;tFileInputJSON_2Process(globalMap);
+if(!"failure".equals(status)) { status = "end"; }
+}catch (TalendException e_tFileInputJSON_2) {
+globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", -1);
 
-	}
+e_tFileInputJSON_2.printStackTrace();
 
-	// only for OSGi env
-	public void destroy() {
+}
 
-	}
+this.globalResumeTicket = true;//to run tPostJob
 
-	private java.util.Map<String, Object> getSharedConnections4REST() {
-		java.util.Map<String, Object> connections = new java.util.HashMap<String, Object>();
 
-		return connections;
-	}
 
-	private void evalParam(String arg) {
-		if (arg.startsWith("--resuming_logs_dir_path")) {
-			resuming_logs_dir_path = arg.substring(25);
-		} else if (arg.startsWith("--resuming_checkpoint_path")) {
-			resuming_checkpoint_path = arg.substring(27);
-		} else if (arg.startsWith("--parent_part_launcher")) {
-			parent_part_launcher = arg.substring(23);
-		} else if (arg.startsWith("--watch")) {
-			watch = true;
-		} else if (arg.startsWith("--stat_port=")) {
-			String portStatsStr = arg.substring(12);
-			if (portStatsStr != null && !portStatsStr.equals("null")) {
-				portStats = Integer.parseInt(portStatsStr);
-			}
-		} else if (arg.startsWith("--trace_port=")) {
-			portTraces = Integer.parseInt(arg.substring(13));
-		} else if (arg.startsWith("--client_host=")) {
-			clientHost = arg.substring(14);
-		} else if (arg.startsWith("--context=")) {
-			contextStr = arg.substring(10);
-			isDefaultContext = false;
-		} else if (arg.startsWith("--father_pid=")) {
-			fatherPid = arg.substring(13);
-		} else if (arg.startsWith("--root_pid=")) {
-			rootPid = arg.substring(11);
-		} else if (arg.startsWith("--father_node=")) {
-			fatherNode = arg.substring(14);
-		} else if (arg.startsWith("--pid=")) {
-			pid = arg.substring(6);
-		} else if (arg.startsWith("--context_type")) {
-			String keyValue = arg.substring(15);
+
+        end = System.currentTimeMillis();
+
+        if (watch) {
+            System.out.println((end-startTime)+" milliseconds");
+        }
+
+        endUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        if (false) {
+            System.out.println((endUsedMemory - startUsedMemory) + " bytes memory increase when running : step2_genericloadElasticsearch");
+        }
+
+
+
+
+
+if (execStat) {
+    runStat.updateStatOnJob(RunStat.JOBEND, fatherNode);
+    runStat.stopThreadStat();
+}
+    int returnCode = 0;
+    if(errorCode == null) {
+         returnCode = status != null && status.equals("failure") ? 1 : 0;
+    } else {
+         returnCode = errorCode.intValue();
+    }
+    resumeUtil.addLog("JOB_ENDED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "", "","" + returnCode,"","","");
+
+    return returnCode;
+
+  }
+
+    // only for OSGi env
+    public void destroy() {
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private java.util.Map<String, Object> getSharedConnections4REST() {
+        java.util.Map<String, Object> connections = new java.util.HashMap<String, Object>();
+
+
+
+
+
+
+
+        return connections;
+    }
+
+    private void evalParam(String arg) {
+        if (arg.startsWith("--resuming_logs_dir_path")) {
+            resuming_logs_dir_path = arg.substring(25);
+        } else if (arg.startsWith("--resuming_checkpoint_path")) {
+            resuming_checkpoint_path = arg.substring(27);
+        } else if (arg.startsWith("--parent_part_launcher")) {
+            parent_part_launcher = arg.substring(23);
+        } else if (arg.startsWith("--watch")) {
+            watch = true;
+        } else if (arg.startsWith("--stat_port=")) {
+            String portStatsStr = arg.substring(12);
+            if (portStatsStr != null && !portStatsStr.equals("null")) {
+                portStats = Integer.parseInt(portStatsStr);
+            }
+        } else if (arg.startsWith("--trace_port=")) {
+            portTraces = Integer.parseInt(arg.substring(13));
+        } else if (arg.startsWith("--client_host=")) {
+            clientHost = arg.substring(14);
+        } else if (arg.startsWith("--context=")) {
+            contextStr = arg.substring(10);
+            isDefaultContext = false;
+        } else if (arg.startsWith("--father_pid=")) {
+            fatherPid = arg.substring(13);
+        } else if (arg.startsWith("--root_pid=")) {
+            rootPid = arg.substring(11);
+        } else if (arg.startsWith("--father_node=")) {
+            fatherNode = arg.substring(14);
+        } else if (arg.startsWith("--pid=")) {
+            pid = arg.substring(6);
+        } else if (arg.startsWith("--context_type")) {
+            String keyValue = arg.substring(15);
 			int index = -1;
-			if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-				if (fatherPid == null) {
-					context_param.setContextType(keyValue.substring(0, index),
-							replaceEscapeChars(keyValue.substring(index + 1)));
-				} else { // the subjob won't escape the especial chars
-					context_param.setContextType(keyValue.substring(0, index),
-							keyValue.substring(index + 1));
-				}
+            if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
+                if (fatherPid==null) {
+                    context_param.setContextType(keyValue.substring(0, index), replaceEscapeChars(keyValue.substring(index + 1)));
+                } else { // the subjob won't escape the especial chars
+                    context_param.setContextType(keyValue.substring(0, index), keyValue.substring(index + 1) );
+                }
 
-			}
+            }
 
 		} else if (arg.startsWith("--context_param")) {
-			String keyValue = arg.substring(16);
-			int index = -1;
-			if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-				if (fatherPid == null) {
-					context_param.put(keyValue.substring(0, index),
-							replaceEscapeChars(keyValue.substring(index + 1)));
-				} else { // the subjob won't escape the especial chars
-					context_param.put(keyValue.substring(0, index),
-							keyValue.substring(index + 1));
-				}
-			}
-		} else if (arg.startsWith("--log4jLevel=")) {
-			log4jLevel = arg.substring(13);
+            String keyValue = arg.substring(16);
+            int index = -1;
+            if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
+                if (fatherPid==null) {
+                    context_param.put(keyValue.substring(0, index), replaceEscapeChars(keyValue.substring(index + 1)));
+                } else { // the subjob won't escape the especial chars
+                    context_param.put(keyValue.substring(0, index), keyValue.substring(index + 1) );
+                }
+            }
+        }else if (arg.startsWith("--log4jLevel=")) {
+            log4jLevel = arg.substring(13);
 		}
 
-	}
+    }
+    
+    private static final String NULL_VALUE_EXPRESSION_IN_COMMAND_STRING_FOR_CHILD_JOB_ONLY = "<TALEND_NULL>";
 
-	private static final String NULL_VALUE_EXPRESSION_IN_COMMAND_STRING_FOR_CHILD_JOB_ONLY = "<TALEND_NULL>";
-
-	private final String[][] escapeChars = { { "\\\\", "\\" }, { "\\n", "\n" },
-			{ "\\'", "\'" }, { "\\r", "\r" }, { "\\f", "\f" }, { "\\b", "\b" },
-			{ "\\t", "\t" } };
-
-	private String replaceEscapeChars(String keyValue) {
+    private final String[][] escapeChars = {
+        {"\\\\","\\"},{"\\n","\n"},{"\\'","\'"},{"\\r","\r"},
+        {"\\f","\f"},{"\\b","\b"},{"\\t","\t"}
+        };
+    private String replaceEscapeChars (String keyValue) {
 
 		if (keyValue == null || ("").equals(keyValue.trim())) {
 			return keyValue;
@@ -2682,18 +2995,15 @@ public class step2_genericloadElasticsearch implements TalendJob {
 			int index = -1;
 			// judege if the left string includes escape chars
 			for (String[] strArray : escapeChars) {
-				index = keyValue.indexOf(strArray[0], currIndex);
-				if (index >= 0) {
+				index = keyValue.indexOf(strArray[0],currIndex);
+				if (index>=0) {
 
-					result.append(keyValue.substring(currIndex,
-							index + strArray[0].length()).replace(strArray[0],
-							strArray[1]));
+					result.append(keyValue.substring(currIndex, index + strArray[0].length()).replace(strArray[0], strArray[1]));
 					currIndex = index + strArray[0].length();
 					break;
 				}
 			}
-			// if the left string doesn't include escape chars, append the left
-			// into the result
+			// if the left string doesn't include escape chars, append the left into the result
 			if (index < 0) {
 				result.append(keyValue.substring(currIndex));
 				currIndex = currIndex + keyValue.length();
@@ -2701,19 +3011,20 @@ public class step2_genericloadElasticsearch implements TalendJob {
 		}
 
 		return result.toString();
-	}
+    }
 
-	public Integer getErrorCode() {
-		return errorCode;
-	}
+    public Integer getErrorCode() {
+        return errorCode;
+    }
 
-	public String getStatus() {
-		return status;
-	}
 
-	ResumeUtil resumeUtil = null;
+    public String getStatus() {
+        return status;
+    }
+
+    ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- * 76595 characters generated by Talend Open Studio for Big Data on the January
- * 16, 2018 2:08:22 AM EST
+ *     76186 characters generated by Talend Open Studio for Big Data 
+ *     on the January 16, 2018 8:08:49 PM EST
  ************************************************************************************************/

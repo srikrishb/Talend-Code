@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_U_PAsPXHEeeFntyWCsid_g" confirmationNeeded="false" name="Default">
-  <contextParameter xmi:id="_U_PnwPXHEeeFntyWCsid_g" comment="" name="DataLine" prompt="DataLine?" promptNeeded="false" type="id_String" value=""/>
-  <contextParameter xmi:id="_U_PnwfXHEeeFntyWCsid_g" comment="" name="inputRows" prompt="inputRows?" promptNeeded="false" type="id_String" value=""/>
-</talendfile:ContextType>

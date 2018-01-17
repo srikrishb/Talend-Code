@@ -4,7 +4,6 @@
     <contextParameter comment="" name="indexName" prompt="indexName?" promptNeeded="true" type="id_String" value=""/>
     <contextParameter comment="" name="indexType" prompt="indexType?" promptNeeded="true" type="id_String" value=""/>
     <contextParameter comment="" name="fileName" prompt="fileName?" promptNeeded="true" type="id_String" value=""/>
-    <contextParameter comment="" name="URL" prompt="URL?" promptNeeded="true" type="id_String" value=""/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>

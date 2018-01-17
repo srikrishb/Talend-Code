@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<assembly
-	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 	<id>bin</id>
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<formats>
@@ -32,7 +29,8 @@
 	</files>
 
 	<fileSets>
-		<fileSet><!-- templates -->
+		<fileSet>
+<!-- templates -->
 			<directory>${templates.dir}</directory>
 			<outputDirectory>${talend.job.name}/src/main/templates/
 			</outputDirectory>
@@ -40,7 +38,8 @@
 				<include>**</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- log4j resources -->
+		<fileSet>
+<!-- log4j resources -->
 			<directory>${log4j.resources.dir}</directory>
 			<outputDirectory>${output.resources.dir}/
 			</outputDirectory>
@@ -48,14 +47,16 @@
 				<include>log4j.xml</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- log4j.xml for running -->
+		<fileSet>
+<!-- log4j.xml for running -->
 			<directory>${log4j.running.dir}</directory>
 			<outputDirectory>${talend.job.name}</outputDirectory>
 			<includes>
 				<include>log4j.xml</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- xmlMappings resources -->
+		<fileSet>
+<!-- xmlMappings resources -->
 			<directory>${xmlMappings.resources.dir}</directory>
 			<outputDirectory>${output.resources.dir}/xmlMappings/
 			</outputDirectory>
@@ -63,7 +64,8 @@
 				<include>**/*.*</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- xmlMappings for running -->
+		<fileSet>
+<!-- xmlMappings for running -->
 			<directory>${xmlMappings.running.dir}</directory>
 			<outputDirectory>${talend.job.name}/xmlMappings/
 			</outputDirectory>
@@ -71,7 +73,8 @@
 				<include>**/*.*</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- rules resources -->
+		<fileSet>
+<!-- rules resources -->
 			<directory>${rules.resources.dir}</directory>
 			<outputDirectory>${output.resources.dir}/rules/
 			</outputDirectory>
@@ -79,7 +82,8 @@
 				<include>**/*.*</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- assembly_*.xml -->
+		<fileSet>
+<!-- assembly_*.xml -->
 			<directory>${assemblies.dir}</directory>
 			<outputDirectory>${talend.job.name}/src/main/assemblies/
 			</outputDirectory>
@@ -87,7 +91,8 @@
 				<include>assembly_${talend.job.name}_${talend.job.version}.xml</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- pom_*.xml -->
+		<fileSet>
+<!-- pom_*.xml -->
 			<directory>${poms.dir}</directory>
 			<outputDirectory>${talend.job.name}</outputDirectory>
 			<includes>
@@ -97,7 +102,8 @@
 				<include>pom_${talend.job.name}_${talend.job.version}.xml</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- pom_pigudfs.xml -->
+		<fileSet>
+<!-- pom_pigudfs.xml -->
 			<directory>${pigudfs.poms.dir}</directory>
 			<outputDirectory>${talend.job.name}</outputDirectory>
 			<includes>
@@ -127,7 +133,8 @@
 				<include>pigudf/**</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- add context resources -->
+		<fileSet>
+<!-- add context resources -->
 			<directory>${resources.dir}</directory>
 			<outputDirectory>${output.resources.dir}/
 			</outputDirectory>
@@ -135,14 +142,16 @@
 				<include>${talend.job.path}/**</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- add test source codes -->
+		<fileSet>
+<!-- add test source codes -->
 			<directory>${test.sourcecodes.dir}</directory>
 			<outputDirectory>${talend.job.name}/src/test/java/</outputDirectory>
 			<includes>
 				<include>${talend.job.path}/**</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- add test context resources -->
+		<fileSet>
+<!-- add test context resources -->
 			<directory>${test.resources.dir}</directory>
 			<outputDirectory>${talend.job.name}/src/test/resources/
 			</outputDirectory>
@@ -150,14 +159,16 @@
 				<include>${talend.job.path}/**</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- junits reports -->
+		<fileSet>
+<!-- junits reports -->
 			<directory>${test.reports.dir}</directory>
 			<outputDirectory>sunfire-reports</outputDirectory>
 			<includes>
 				<include>**/*.*</include>
 			</includes>
 		</fileSet>
-		<fileSet><!-- add context resources for running -->
+		<fileSet>
+<!-- add context resources for running -->
 			<directory>${contexts.running.dir}</directory>
 			<outputDirectory>${talend.job.name}</outputDirectory>
 			<includes>
@@ -165,27 +176,66 @@
 			</includes>
 		</fileSet>
 		<!-- If have children jobs, will add here -->
-		 <fileSet><!-- microservice config files -->
+		 <fileSet>
+<!-- microservice config files -->
             <directory>${microservice.configs.dir}</directory>
             <outputDirectory>${output.resources.dir}/</outputDirectory>
             <includes>
                 <include>config/**</include>
             </includes>
         </fileSet>
-        <fileSet><!-- microservice running config files -->
+        <fileSet>
+<!-- microservice running config files -->
             <directory>${microservice.running.configs.dir}</directory>
             <outputDirectory>${talend.job.name}</outputDirectory>
             <includes>
                 <include>config/**</include>
             </includes>
         </fileSet>
-       <fileSet><!-- survivorship rules -->
+       <fileSet>
+<!-- survivorship rules -->
 			<directory>${survivorship.rules.dir}</directory>
 			<outputDirectory>${talend.job.name}/items/${talend.project.name.lowercase}/metadata/survivorship/</outputDirectory>
 			<includes>
 			</includes>
 		</fileSet>
-	</fileSets>
+	<fileSet>
+<!--add children pom files.-->
+<outputDirectory>${talend.job.name}</outputDirectory>
+<directory>${poms.dir}</directory>
+<includes>
+<include>pom_step2_genericloadElasticsearch_0.1.xml</include>
+<include>pom_step1_loadElasticsearch_0.1.xml</include>
+</includes>
+</fileSet>
+<fileSet>
+<!--add children src resources files.-->
+<outputDirectory>${talend.job.name}/src/main/java/</outputDirectory>
+<directory>${sourcecodes.dir}</directory>
+<includes>
+<include>ruleengine_elasticsearch/step2_genericloadelasticsearch_0_1/**</include>
+<include>ruleengine_elasticsearch/step1_loadelasticsearch_0_1/**</include>
+</includes>
+</fileSet>
+<fileSet>
+<!--add children context files to resources.-->
+<outputDirectory>${talend.job.name}/src/main/resources/</outputDirectory>
+<directory>${resources.dir}</directory>
+<includes>
+<include>ruleengine_elasticsearch/step2_genericloadelasticsearch_0_1/**</include>
+<include>ruleengine_elasticsearch/step1_loadelasticsearch_0_1/**</include>
+</includes>
+</fileSet>
+<fileSet>
+<!--add children context files for running.-->
+<outputDirectory>${talend.job.name}</outputDirectory>
+<directory>${contexts.running.dir}</directory>
+<includes>
+<include>ruleengine_elasticsearch/step2_genericloadelasticsearch_0_1/**</include>
+<include>ruleengine_elasticsearch/step1_loadelasticsearch_0_1/**</include>
+</includes>
+</fileSet>
+</fileSets>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
