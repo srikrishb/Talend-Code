@@ -46,9 +46,11 @@ import java.util.Comparator;
 
 
 
-	//the import part of tJavaRow_1
+	//the import part of tJava_1
 	//import java.util.List;
 
+	//the import part of tJavaFlex_1
+	//import java.util.List;
 
 
 @SuppressWarnings("unused")
@@ -136,6 +138,12 @@ public class step2_genericloadElasticsearch implements TalendJob {
 				
 			}
 			
+			if(finalBodyString != null){
+				
+					this.setProperty("finalBodyString", finalBodyString.toString());
+				
+			}
+			
 		}
 
 public String indexName;
@@ -149,6 +157,10 @@ public String getIndexType(){
 public String fileName;
 public String getFileName(){
 	return this.fileName;
+}
+public String finalBodyString;
+public String getFinalBodyString(){
+	return this.finalBodyString;
 }
 	}
 	private ContextProperties context = new ContextProperties();
@@ -286,6 +298,15 @@ private class TalendException extends Exception {
 	}
 }
 
+			public void tJava_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tJava_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
 			public void tFileInputJSON_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 				
 				end_Hash.put(errorComponent, System.currentTimeMillis());
@@ -295,7 +316,7 @@ private class TalendException extends Exception {
 					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
-			public void tJavaRow_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+			public void tJavaFlex_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 				
 				end_Hash.put(errorComponent, System.currentTimeMillis());
 				
@@ -322,7 +343,13 @@ private class TalendException extends Exception {
 					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
-			public void tLogRow_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+			public void tAggregateRow_1_AGGOUT_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+							tAggregateRow_1_AGGIN_error(exception, errorComponent, globalMap);
+						
+						}
+					
+			public void tAggregateRow_1_AGGIN_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 				
 				end_Hash.put(errorComponent, System.currentTimeMillis());
 				
@@ -331,15 +358,11 @@ private class TalendException extends Exception {
 					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
-			public void tLogRow_3_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_2_onSubJobError(exception, errorComponent, globalMap);
+			public void tJava_1_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+
+resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
+
 			}
-			
 			public void tFileInputJSON_2_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 
 resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
@@ -351,350 +374,180 @@ resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThrea
 
 
 
+public void tJava_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+	globalMap.put("tJava_1_SUBPROCESS_STATE", 0);
 
-public static class row5Struct implements routines.system.IPersistableRow<row5Struct> {
-    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+ final boolean execStat = this.execStat;
+	
+		String iterateId = "";
+	
+	
+	String currentComponent = "";
+	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+	try {
+
+			String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
+			boolean resumeIt = currentMethodName.equals(resumeEntryMethodName);
+			if( resumeEntryMethodName == null || resumeIt || globalResumeTicket){//start the resume
+				globalResumeTicket = true;
+
+
+
+		
+
 
 	
-			    public Integer statusCode;
-
-				public Integer getStatusCode () {
-					return this.statusCode;
-				}
-				
-			    public routines.system.Document body;
-
-				public routines.system.Document getBody () {
-					return this.body;
-				}
-				
-			    public String string;
-
-				public String getString () {
-					return this.string;
-				}
-				
-
-
-	private Integer readInteger(ObjectInputStream dis) throws IOException{
-		Integer intReturn;
-        int length = 0;
-        length = dis.readByte();
-		if (length == -1) {
-			intReturn = null;
-		} else {
-	    	intReturn = dis.readInt();
-		}
-		return intReturn;
-	}
-
-	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
-		if(intNum == null) {
-            dos.writeByte(-1);
-		} else {
-			dos.writeByte(0);
-	    	dos.writeInt(intNum);
-    	}
-	}
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-				} else {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-   				}
-			}
-			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
-			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
-		}
-		return strReturn;
-	}
-
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
-
-    public void readData(ObjectInputStream dis) {
-
-		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-        	try {
-
-        		int length = 0;
-		
-						this.statusCode = readInteger(dis);
-					
-						this.body = (routines.system.Document) dis.readObject();
-					
-					this.string = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-
-		
-			} catch(ClassNotFoundException eCNFE) {
-				 throw new RuntimeException(eCNFE);
-		
-
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// Integer
-				
-						writeInteger(this.statusCode,dos);
-					
-					// Document
-				
-       			    	dos.writeObject(this.body);
-					
-					// String
-				
-						writeString(this.string,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("statusCode="+String.valueOf(statusCode));
-		sb.append(",body="+String.valueOf(body));
-		sb.append(",string="+string);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row5Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row6Struct implements routines.system.IPersistableRow<row6Struct> {
-    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+	/**
+	 * [tJava_1 begin ] start
+	 */
 
 	
-			    public Integer errorCode;
 
-				public Integer getErrorCode () {
-					return this.errorCode;
-				}
-				
-			    public String errorMessage;
+	
+		
+		ok_Hash.put("tJava_1", false);
+		start_Hash.put("tJava_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tJava_1";
 
-				public String getErrorMessage () {
-					return this.errorMessage;
-				}
-				
-
-
-	private Integer readInteger(ObjectInputStream dis) throws IOException{
-		Integer intReturn;
-        int length = 0;
-        length = dis.readByte();
-		if (length == -1) {
-			intReturn = null;
-		} else {
-	    	intReturn = dis.readInt();
-		}
-		return intReturn;
-	}
-
-	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
-		if(intNum == null) {
-            dos.writeByte(-1);
-		} else {
-			dos.writeByte(0);
-	    	dos.writeInt(intNum);
+	
+		int tos_count_tJava_1 = 0;
+		
+    	class BytesLimit65535_tJava_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
     	}
-	}
+    	
+        new BytesLimit65535_tJava_1().limitLog4jByte();
 
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-				} else {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-   				}
+
+Date date = new Date();
+String str = String.format("%1$tY-%1$td-%1$tm", date );
+
+context.indexName=context.indexName+str;
+
+System.out.println(context.indexName);
+ 
+
+
+
+/**
+ * [tJava_1 begin ] stop
+ */
+	
+	/**
+	 * [tJava_1 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJava_1";
+
+	
+
+ 
+
+
+	tos_count_tJava_1++;
+
+/**
+ * [tJava_1 main ] stop
+ */
+	
+	/**
+	 * [tJava_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJava_1";
+
+	
+
+ 
+
+ok_Hash.put("tJava_1", true);
+end_Hash.put("tJava_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tJava_1 end ] stop
+ */
+				}//end the resume
+
+				
+				    			if(resumeEntryMethodName == null || globalResumeTicket){
+				    				resumeUtil.addLog("CHECKPOINT", "CONNECTION:SUBJOB_OK:tJava_1:OnSubjobOk", "", Thread.currentThread().getId() + "", "", "", "", "", "");
+								}	    				    			
+					    	
+								if(execStat){    	
+									runStat.updateStatOnConnection("OnSubjobOk1", 0, "ok");
+								} 
+							
+							tFileInputJSON_2Process(globalMap); 
+						
+
+
+
+	
+			}catch(java.lang.Exception e){	
+				
+				TalendException te = new TalendException(e, currentComponent, globalMap);
+				
+				throw te;
+			}catch(java.lang.Error error){	
+				
+					runStat.stopThreadStat();
+				
+				throw error;
+			}finally{
+				
+				try{
+					
+	
+	/**
+	 * [tJava_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJava_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tJava_1 finally ] stop
+ */
+				}catch(java.lang.Exception e){	
+					//ignore
+				}catch(java.lang.Error error){
+					//ignore
+				}
+				resourceMap = null;
 			}
-			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
-			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
-		}
-		return strReturn;
+		
+
+		globalMap.put("tJava_1_SUBPROCESS_STATE", 1);
 	}
-
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
-
-    public void readData(ObjectInputStream dis) {
-
-		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-        	try {
-
-        		int length = 0;
-		
-						this.errorCode = readInteger(dis);
-					
-					this.errorMessage = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-
-		
-
-        }
-
-		
-
-      }
+	
 
 
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// Integer
-				
-						writeInteger(this.errorCode,dos);
-					
-					// String
-				
-						writeString(this.errorMessage,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("errorCode="+String.valueOf(errorCode));
-		sb.append(",errorMessage="+errorMessage);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row6Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class outputStruct implements routines.system.IPersistableRow<outputStruct> {
+public static class outStruct implements routines.system.IPersistableRow<outStruct> {
     final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
     static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
 
@@ -808,137 +661,7 @@ public static class outputStruct implements routines.system.IPersistableRow<outp
     /**
      * Compare keys
      */
-    public int compareTo(outputStruct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
-    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
-
-	
-			    public String dataList;
-
-				public String getDataList () {
-					return this.dataList;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
-				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
-				} else {
-   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
-   				}
-			}
-			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
-			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
-		}
-		return strReturn;
-	}
-
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
-
-    public void readData(ObjectInputStream dis) {
-
-		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
-
-        	try {
-
-        		int length = 0;
-		
-					this.dataList = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-
-		
-
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.dataList,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("dataList="+dataList);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row1Struct other) {
+    public int compareTo(outStruct other) {
 
 		int returnValue = -1;
 		
@@ -1099,10 +822,401 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 
 
 }
+
+public static class OnRowsEndStructtAggregateRow_1 implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_1> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public String dataList;
+
+				public String getDataList () {
+					return this.dataList;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.dataList = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.dataList,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("dataList="+dataList);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(OnRowsEndStructtAggregateRow_1 other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row2Struct implements routines.system.IPersistableRow<row2Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public String dataList;
+
+				public String getDataList () {
+					return this.dataList;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.dataList = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.dataList,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("dataList="+dataList);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row2Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[0];
+
+	
+			    public String dataList;
+
+				public String getDataList () {
+					return this.dataList;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step2_genericloadElasticsearch) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.dataList = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.dataList,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("dataList="+dataList);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row1Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
 public void tFileInputJSON_2Process(final java.util.Map<String, Object> globalMap) throws TalendException {
 	globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", 0);
 
  final boolean execStat = this.execStat;
+		String currentVirtualComponent = null;
 	
 		String iterateId = "";
 	
@@ -1119,13 +1233,10 @@ public void tFileInputJSON_2Process(final java.util.Map<String, Object> globalMa
 
 
 
-		row3Struct row3 = new row3Struct();
-row1Struct row1 = new row1Struct();
-outputStruct output = new outputStruct();
-row5Struct row5 = new row5Struct();
-row6Struct row6 = new row6Struct();
-
-
+		row1Struct row1 = new row1Struct();
+row2Struct row2 = new row2Struct();
+row3Struct row3 = new row3Struct();
+outStruct out = new outStruct();
 
 
 
@@ -1133,176 +1244,236 @@ row6Struct row6 = new row6Struct();
 
 	
 	/**
-	 * [tLogRow_2 begin ] start
+	 * [tAggregateRow_1_AGGOUT begin ] start
 	 */
 
 	
 
 	
 		
-		ok_Hash.put("tLogRow_2", false);
-		start_Hash.put("tLogRow_2", System.currentTimeMillis());
+		ok_Hash.put("tAggregateRow_1_AGGOUT", false);
+		start_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
 		
 	
-	currentComponent="tLogRow_2";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 			if (execStat) {
 				if(resourceMap.get("inIterateVComp") == null){
 					
-						runStat.updateStatOnConnection("row5" + iterateId, 0, 0);
+						runStat.updateStatOnConnection("row2" + iterateId, 0, 0);
 					
 				}
 			} 
 
 		
-		int tos_count_tLogRow_2 = 0;
+		int tos_count_tAggregateRow_1_AGGOUT = 0;
 		
-    	class BytesLimit65535_tLogRow_2{
+    	class BytesLimit65535_tAggregateRow_1_AGGOUT{
     		public void limitLog4jByte() throws Exception{
     			
     		}
     	}
     	
-        new BytesLimit65535_tLogRow_2().limitLog4jByte();
+        new BytesLimit65535_tAggregateRow_1_AGGOUT().limitLog4jByte();
 
-	///////////////////////
+// ------------ Seems it is not used
+
+java.util.Map hashAggreg_tAggregateRow_1 = new java.util.HashMap(); 
+
+// ------------
+
+	class UtilClass_tAggregateRow_1 { // G_OutBegin_AggR_144
+
+		public double sd(Double[] data) {
+	        final int n = data.length;
+        	if (n < 2) {
+	            return Double.NaN;
+        	}
+        	double d1 = 0d;
+        	double d2 =0d;
+	        
+	        for (int i = 0; i < data.length; i++) {
+            	d1 += (data[i]*data[i]);
+            	d2 += data[i];
+        	}
+        
+	        return Math.sqrt((n*d1 - d2*d2)/n/(n-1));
+	    }
+	    
+		public void checkedIADD(byte a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    byte r = (byte) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'short/Short'", "'byte/Byte'"));
+		    }
+		}
+		
+		public void checkedIADD(short a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    short r = (short) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'int/Integer'", "'short/Short'"));
+		    }
+		}
+		
+		public void checkedIADD(int a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    int r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'long/Long'", "'int/Integer'"));
+		    }
+		}
+		
+		public void checkedIADD(long a, long b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    long r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'long/Long'"));
+		    }
+		}
+		
+		public void checkedIADD(float a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    float minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+			    }
+			}
+			
+		    if (checkTypeOverFlow && ((double) a + (double) b > (double) Float.MAX_VALUE) || ((double) a + (double) b < (double) -Float.MAX_VALUE)) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, double b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		private String buildOverflowMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "Type overflow when adding " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+		
+		private String buildPrecisionMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "The double precision is unsufficient to add the value " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+
+	} // G_OutBegin_AggR_144
+
+	UtilClass_tAggregateRow_1 utilClass_tAggregateRow_1 = new UtilClass_tAggregateRow_1();
+
 	
-		final String OUTPUT_FIELD_SEPARATOR_tLogRow_2 = "|";
-		java.io.PrintStream consoleOut_tLogRow_2 = null;	
 
- 		StringBuilder strBuffer_tLogRow_2 = null;
-		int nb_line_tLogRow_2 = 0;
-///////////////////////    			
+	class AggOperationStruct_tAggregateRow_1 { // G_OutBegin_AggR_100
 
+		private static final int DEFAULT_HASHCODE = 1;
+	    private static final int PRIME = 31;
+	    private int hashCode = DEFAULT_HASHCODE;
+	    public boolean hashCodeDirty = true;
 
+         			String dataList_last;
+        
+	    @Override
+		public int hashCode() {
+			if (this.hashCodeDirty) {
+				final int prime = PRIME;
+				int result = DEFAULT_HASHCODE;
+		
+	    		this.hashCode = result;
+	    		this.hashCodeDirty = false;		
+			}
+			return this.hashCode;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (obj == null) return false;
+			if (getClass() != obj.getClass()) return false;
+			final AggOperationStruct_tAggregateRow_1 other = (AggOperationStruct_tAggregateRow_1) obj;
+			
+			
+			return true;
+		}
+  
+        
+	} // G_OutBegin_AggR_100
+
+	AggOperationStruct_tAggregateRow_1 operation_result_tAggregateRow_1 = null;
+	AggOperationStruct_tAggregateRow_1 operation_finder_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+	java.util.Map<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1> hash_tAggregateRow_1 = new java.util.HashMap<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1>();
+	
 
  
 
 
 
 /**
- * [tLogRow_2 begin ] stop
- */
-
-
-
-
-	
-	/**
-	 * [tLogRow_3 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tLogRow_3", false);
-		start_Hash.put("tLogRow_3", System.currentTimeMillis());
-		
-	
-	currentComponent="tLogRow_3";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						runStat.updateStatOnConnection("row6" + iterateId, 0, 0);
-					
-				}
-			} 
-
-		
-		int tos_count_tLogRow_3 = 0;
-		
-    	class BytesLimit65535_tLogRow_3{
-    		public void limitLog4jByte() throws Exception{
-    			
-    		}
-    	}
-    	
-        new BytesLimit65535_tLogRow_3().limitLog4jByte();
-
-	///////////////////////
-	
-		final String OUTPUT_FIELD_SEPARATOR_tLogRow_3 = "|";
-		java.io.PrintStream consoleOut_tLogRow_3 = null;	
-
- 		StringBuilder strBuffer_tLogRow_3 = null;
-		int nb_line_tLogRow_3 = 0;
-///////////////////////    			
-
-
-
- 
-
-
-
-/**
- * [tLogRow_3 begin ] stop
+ * [tAggregateRow_1_AGGOUT begin ] stop
  */
 
 
 
 	
 	/**
-	 * [tRESTClient_1 begin ] start
+	 * [tJavaFlex_1 begin ] start
 	 */
 
 	
 
 	
 		
-		ok_Hash.put("tRESTClient_1", false);
-		start_Hash.put("tRESTClient_1", System.currentTimeMillis());
+		ok_Hash.put("tJavaFlex_1", false);
+		start_Hash.put("tJavaFlex_1", System.currentTimeMillis());
 		
 	
-	currentComponent="tRESTClient_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						runStat.updateStatOnConnection("output" + iterateId, 0, 0);
-					
-				}
-			} 
-
-		
-		int tos_count_tRESTClient_1 = 0;
-		
-    	class BytesLimit65535_tRESTClient_1{
-    		public void limitLog4jByte() throws Exception{
-    			
-    		}
-    	}
-    	
-        new BytesLimit65535_tRESTClient_1().limitLog4jByte();
-
- 
-
-
-
-/**
- * [tRESTClient_1 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tMap_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tMap_1", false);
-		start_Hash.put("tMap_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tMap_1";
+	currentComponent="tJavaFlex_1";
 
 	
 			if (execStat) {
@@ -1314,47 +1485,24 @@ row6Struct row6 = new row6Struct();
 			} 
 
 		
-		int tos_count_tMap_1 = 0;
+		int tos_count_tJavaFlex_1 = 0;
 		
-    	class BytesLimit65535_tMap_1{
+    	class BytesLimit65535_tJavaFlex_1{
     		public void limitLog4jByte() throws Exception{
     			
     		}
     	}
     	
-        new BytesLimit65535_tMap_1().limitLog4jByte();
+        new BytesLimit65535_tJavaFlex_1().limitLog4jByte();
 
 
+// start part of your Java code
+//{ "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
 
-
-// ###############################
-// # Lookup's keys initialization
-// ###############################        
-
-// ###############################
-// # Vars initialization
-class  Var__tMap_1__Struct  {
-}
-Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
-// ###############################
-
-// ###############################
-// # Outputs initialization
-outputStruct output_tmp = new outputStruct();
-// ###############################
-
-        
-        
-
-
-
-        
-
-
-
-
-
-
+//String bodyStr = "{ \"index"\" : { \"_index"\" : "+ context.indexName +", \"_type"\" : "+context.indexType+" } }";
+String lineHead = "{ \"index\" : { \"_index\" : " + "\"" + context.indexName + "\" " + ", \"_type\" : " + "\"" + context.indexType + "\" " + " } }";
+String bodyStr = "";
+int i =0;
 
 
 
@@ -1363,54 +1511,7 @@ outputStruct output_tmp = new outputStruct();
 
 
 /**
- * [tMap_1 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tJavaRow_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tJavaRow_1", false);
-		start_Hash.put("tJavaRow_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tJavaRow_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						runStat.updateStatOnConnection("row3" + iterateId, 0, 0);
-					
-				}
-			} 
-
-		
-		int tos_count_tJavaRow_1 = 0;
-		
-    	class BytesLimit65535_tJavaRow_1{
-    		public void limitLog4jByte() throws Exception{
-    			
-    		}
-    	}
-    	
-        new BytesLimit65535_tJavaRow_1().limitLog4jByte();
-
-int nb_line_tJavaRow_1 = 0;
-
- 
-
-
-
-/**
- * [tJavaRow_1 begin ] stop
+ * [tJavaFlex_1 begin ] stop
  */
 
 
@@ -1469,12 +1570,12 @@ int nb_line_tJavaRow_1 = 0;
           return recordMaxSize;
       }
 
-	                   void setRowValue_0(row3Struct row3, java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2, int nbResultArray_tFileInputJSON_2) throws java.io.UnsupportedEncodingException{
+	                   void setRowValue_0(row1Struct row1, java.util.List<org.json.simple.JSONArray> JSONResultList_tFileInputJSON_2, int nbResultArray_tFileInputJSON_2) throws java.io.UnsupportedEncodingException{
 							        if(JSONResultList_tFileInputJSON_2.get(0) != null && nbResultArray_tFileInputJSON_2<JSONResultList_tFileInputJSON_2.get(0).size() && JSONResultList_tFileInputJSON_2.get(0).get(nbResultArray_tFileInputJSON_2)!=null){		
-			                                row3.dataList = JSONResultList_tFileInputJSON_2.get(0).get(nbResultArray_tFileInputJSON_2).toString();
+			                                row1.dataList = JSONResultList_tFileInputJSON_2.get(0).get(nbResultArray_tFileInputJSON_2).toString();
 							        }else{
 
-		                                    row3.dataList = null;
+		                                    row1.dataList = null;
 		
 		                             }
                     }
@@ -1505,11 +1606,11 @@ if (jsEngine_tFileInputJSON_2 == null) {
 	java.io.BufferedReader fr_tFileInputJSON_2 = null;
 	try{
 	
-		fr_tFileInputJSON_2 = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream("K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json"),"UTF-8"));
+		fr_tFileInputJSON_2 = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(context.fileName),"UTF-8"));
 	
 		jsonText_tFileInputJSON_2 = org.json.simple.JSONValue.parse(fr_tFileInputJSON_2);
 		if(jsonText_tFileInputJSON_2 == null) {
-			throw new RuntimeException("fail to parse the json file : " +  "K:/TOS_BD-20170623_1246-V6.4.1/workspace/RULEENGINE_ELASTICSEARCH/out.json" );
+			throw new RuntimeException("fail to parse the json file : " +  context.fileName );
 		}
 	} catch(java.lang.Exception e_tFileInputJSON_2) {
 	
@@ -1535,15 +1636,15 @@ recordMaxSize_tFileInputJSON_2=jsonUtil_tFileInputJSON_2.getData("$.data[*]",inv
 	for(int nbResultArray_tFileInputJSON_2 = 0; nbResultArray_tFileInputJSON_2 < recordMaxSize_tFileInputJSON_2; nbResultArray_tFileInputJSON_2++){
 	
 		nb_line_tFileInputJSON_2++;
-					row3 = null;			
+					row1 = null;			
                 	boolean whetherReject_tFileInputJSON_2 = false;
-                	row3 = new row3Struct();
+                	row1 = new row1Struct();
                 	try{
-                            jsonUtil_tFileInputJSON_2.setRowValue_0(row3,JSONResultList_tFileInputJSON_2,nbResultArray_tFileInputJSON_2);
+                            jsonUtil_tFileInputJSON_2.setRowValue_0(row1,JSONResultList_tFileInputJSON_2,nbResultArray_tFileInputJSON_2);
                     } catch (java.lang.Exception e) {
                         whetherReject_tFileInputJSON_2 = true;
                                 System.err.println(e.getMessage());
-                                row3 = null;
+                                row1 = null;
                     }
 
  
@@ -1574,47 +1675,428 @@ recordMaxSize_tFileInputJSON_2=jsonUtil_tFileInputJSON_2.getData("$.data[*]",inv
 /**
  * [tFileInputJSON_2 main ] stop
  */
-// Start of branch "row3"
-if(row3 != null) { 
+// Start of branch "row1"
+if(row1 != null) { 
 
 
 
 	
 	/**
-	 * [tJavaRow_1 main ] start
+	 * [tJavaFlex_1 main ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tJavaRow_1";
+	currentComponent="tJavaFlex_1";
 
 	
 
-			//row3
-			//row3
+			//row1
+			//row1
 
 
 			
 				if(execStat){
-					runStat.updateStatOnConnection("row3"+iterateId,1, 1);
+					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
 				} 
 			
 
 		
 
-    // Iterate through input row 
-row1.dataList = row3.dataList;
-    nb_line_tJavaRow_1++;   
+
+	        				row2.dataList = row1.dataList;
+
+// here is the main part of the component,
+// a piece of code executed in the row
+// loop
+if(i == 0)
+{
+	bodyStr = lineHead + "\n" + row1.dataList + "\n";
+	i++;
+}
+else
+{
+	bodyStr = bodyStr + lineHead + "\n" + row1.dataList + "\n";
+	i++;
+
+}
 
  
 
 
-	tos_count_tJavaRow_1++;
+	tos_count_tJavaFlex_1++;
 
 /**
- * [tJavaRow_1 main ] stop
+ * [tJavaFlex_1 main ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGOUT main ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+			//row2
+			//row2
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row2"+iterateId,1, 1);
+				} 
+			
+
+		
+	
+
+
+	operation_finder_tAggregateRow_1.hashCodeDirty = true;
+	
+	operation_result_tAggregateRow_1 = hash_tAggregateRow_1.get(operation_finder_tAggregateRow_1);
+
+	
+		boolean isFirstAdd_tAggregateRow_1 = false;
+	
+
+	if(operation_result_tAggregateRow_1 == null) { // G_OutMain_AggR_001
+
+		operation_result_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+
+		
+		
+		
+			isFirstAdd_tAggregateRow_1 = true;
+		
+
+		hash_tAggregateRow_1.put(operation_result_tAggregateRow_1, operation_result_tAggregateRow_1);
+	
+	} // G_OutMain_AggR_001
+
+
+	
+					operation_result_tAggregateRow_1.dataList_last = row2.dataList;
+				
+
+
+ 
+
+
+	tos_count_tAggregateRow_1_AGGOUT++;
+
+/**
+ * [tAggregateRow_1_AGGOUT main ] stop
+ */
+
+
+
+
+} // End of branch "row1"
+
+
+
+
+	
+	/**
+	 * [tFileInputJSON_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileInputJSON_2";
+
+	
+
+	}
+	globalMap.put("tFileInputJSON_2_NB_LINE",nb_line_tFileInputJSON_2);
+ 
+
+ok_Hash.put("tFileInputJSON_2", true);
+end_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tFileInputJSON_2 end ] stop
+ */
+
+	
+	/**
+	 * [tJavaFlex_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tJavaFlex_1";
+
+	
+
+
+// end of the component, outside/closing the loop
+System.out.println("Final Body");
+
+globalMap.put("finalBodyString", bodyStr);
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row1"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tJavaFlex_1", true);
+end_Hash.put("tJavaFlex_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tJavaFlex_1 end ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGOUT end ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row2"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tAggregateRow_1_AGGOUT", true);
+end_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT end ] stop
+ */
+
+
+
+	
+	/**
+	 * [tRESTClient_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tRESTClient_1", false);
+		start_Hash.put("tRESTClient_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tRESTClient_1";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
+						runStat.updateStatOnConnection("out" + iterateId, 0, 0);
+					
+				}
+			} 
+
+		
+		int tos_count_tRESTClient_1 = 0;
+		
+    	class BytesLimit65535_tRESTClient_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tRESTClient_1().limitLog4jByte();
+
+ 
+
+
+
+/**
+ * [tRESTClient_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMap_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tMap_1", false);
+		start_Hash.put("tMap_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tMap_1";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
+						runStat.updateStatOnConnection("row3" + iterateId, 0, 0);
+					
+				}
+			} 
+
+		
+		int tos_count_tMap_1 = 0;
+		
+    	class BytesLimit65535_tMap_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tMap_1().limitLog4jByte();
+
+
+
+
+// ###############################
+// # Lookup's keys initialization
+// ###############################        
+
+// ###############################
+// # Vars initialization
+class  Var__tMap_1__Struct  {
+	String var1;
+}
+Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
+// ###############################
+
+// ###############################
+// # Outputs initialization
+outStruct out_tmp = new outStruct();
+// ###############################
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+/**
+ * [tMap_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tAggregateRow_1_AGGIN", false);
+		start_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
+		
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+		int tos_count_tAggregateRow_1_AGGIN = 0;
+		
+    	class BytesLimit65535_tAggregateRow_1_AGGIN{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tAggregateRow_1_AGGIN().limitLog4jByte();
+
+java.util.Collection<AggOperationStruct_tAggregateRow_1> values_tAggregateRow_1 = hash_tAggregateRow_1.values();
+
+globalMap.put("tAggregateRow_1_NB_LINE", values_tAggregateRow_1.size());
+
+for(AggOperationStruct_tAggregateRow_1 aggregated_row_tAggregateRow_1 : values_tAggregateRow_1) { // G_AggR_600
+
+
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN begin ] stop
+ */
+	
+	/**
+	 * [tAggregateRow_1_AGGIN main ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+                                row3.dataList = aggregated_row_tAggregateRow_1.dataList_last;
+
+ 
+
+
+	tos_count_tAggregateRow_1_AGGIN++;
+
+/**
+ * [tAggregateRow_1_AGGIN main ] stop
  */
 
 	
@@ -1630,13 +2112,13 @@ row1.dataList = row3.dataList;
 
 	
 
-			//row1
-			//row1
+			//row3
+			//row3
 
 
 			
 				if(execStat){
-					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
+					runStat.updateStatOnConnection("row3"+iterateId,1, 1);
 				} 
 			
 
@@ -1657,17 +2139,18 @@ row1.dataList = row3.dataList;
 	        // ###############################
         	// # Vars tables
         
-Var__tMap_1__Struct Var = Var__tMap_1;// ###############################
+Var__tMap_1__Struct Var = Var__tMap_1;
+Var.var1 = (String)globalMap.get("finalBodyString") ;// ###############################
         // ###############################
         // # Output tables
 
-output = null;
+out = null;
 
 
-// # Output table : 'output'
-output_tmp.body = null;
-output_tmp.string = row1.dataList ;
-output = output_tmp;
+// # Output table : 'out'
+out_tmp.body = null;
+out_tmp.string = Var.var1 ;
+out = out_tmp;
 // ###############################
 
 } // end of Var scope
@@ -1691,8 +2174,8 @@ rejectedInnerJoin_tMap_1 = false;
 /**
  * [tMap_1 main ] stop
  */
-// Start of branch "output"
-if(output != null) { 
+// Start of branch "out"
+if(out != null) { 
 
 
 
@@ -1709,18 +2192,18 @@ if(output != null) {
 
 	
 
-			//output
-			//output
+			//out
+			//out
 
 
 			
 				if(execStat){
-					runStat.updateStatOnConnection("output"+iterateId,1, 1);
+					runStat.updateStatOnConnection("out"+iterateId,1, 1);
 				} 
 			
 
 		
-	row6 = null;	row5 = null;
+
 
 // expected response body
 Object responseDoc_tRESTClient_1 = null;
@@ -1729,10 +2212,10 @@ try {
 	// request body
 	org.dom4j.Document requestDoc_tRESTClient_1 = null;
 	String requestString_tRESTClient_1 = null;
-			if (null != output.body) {
-				requestDoc_tRESTClient_1 = output.body.getDocument();
+			if (null != out.body) {
+				requestDoc_tRESTClient_1 = out.body.getDocument();
 			}
-			requestString_tRESTClient_1 = output.string;
+			requestString_tRESTClient_1 = out.string;
 
 	Object requestBody_tRESTClient_1 = requestDoc_tRESTClient_1 != null ? requestDoc_tRESTClient_1 : requestString_tRESTClient_1;
 
@@ -1757,7 +2240,7 @@ try {
 			new java.util.ArrayList<org.apache.cxf.feature.Feature>();
 
 	
-		String url = "http://localhost:9200/"+context.indexName+"/"+context.indexType+"/";
+		String url = "http://localhost:9200/_bulk?pretty";
 		// {baseUri}tRESTClient
 		factoryBean_tRESTClient_1.setServiceName(new javax.xml.namespace.QName(url, "tRESTClient"));
 		factoryBean_tRESTClient_1.setAddress(url);
@@ -1951,51 +2434,10 @@ try {
 		}
 
 		
-			if (row5 == null) {
-				row5 = new row5Struct();
-			}
-
-			row5.statusCode = webClientResponseStatus_tRESTClient_1;
-			
-			if (responseDoc_tRESTClient_1 != null) {
-				if (responseClass_tRESTClient_1 == String.class) {
-					row5.string = (String) responseDoc_tRESTClient_1;
-				} else {
-					routines.system.Document responseTalendDoc_tRESTClient_1 = null;
-					if (null != responseDoc_tRESTClient_1) {
-						responseTalendDoc_tRESTClient_1 = new routines.system.Document();
-						responseTalendDoc_tRESTClient_1.setDocument((org.dom4j.Document) responseDoc_tRESTClient_1);
-					}
-					row5.body = responseTalendDoc_tRESTClient_1;
-				}
-			}
-			
-
-
-			globalMap.put("tRESTClient_1_HEADERS", webClient_tRESTClient_1.getResponse().getHeaders());
-			
-		
 
 	} catch (javax.ws.rs.WebApplicationException ex_tRESTClient_1) {
 		
-			if (row6 == null) {
-				row6 = new row6Struct();
-			}
-			row6.errorCode = ex_tRESTClient_1.getResponse().getStatus();
-
-			String errorMessage_tRESTClient_1 = null;
-			try {
-				errorMessage_tRESTClient_1 = ex_tRESTClient_1.getResponse().readEntity(String.class);
-			} catch (Exception exe_tRESTClient_1) {
-				// ignore
-			}
-			if (null == errorMessage_tRESTClient_1 || 0 == errorMessage_tRESTClient_1.trim().length()) {
-				errorMessage_tRESTClient_1 = ex_tRESTClient_1.getMessage();
-			}
-			row6.errorMessage = errorMessage_tRESTClient_1;
-
-			globalMap.put("tRESTClient_1_HEADERS", ex_tRESTClient_1.getResponse().getHeaders());
-			
+			throw ex_tRESTClient_1;
 		
 	}
 
@@ -2014,294 +2456,42 @@ try {
 /**
  * [tRESTClient_1 main ] stop
  */
-// Start of branch "row5"
-if(row5 != null) { 
+
+} // End of branch "out"
+
+
+
+
 
 
 
 	
 	/**
-	 * [tLogRow_2 main ] start
+	 * [tAggregateRow_1_AGGIN end ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tLogRow_2";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
 
 	
 
-			//row5
-			//row5
-
-
-			
-				if(execStat){
-					runStat.updateStatOnConnection("row5"+iterateId,1, 1);
-				} 
-			
-
-		
-///////////////////////		
-						
-
-
-
-				strBuffer_tLogRow_2 = new StringBuilder();
-
-
-
-
-   				
-	    		if(row5.statusCode != null) { //              
-                    							
-       
-				strBuffer_tLogRow_2.append(
-				                String.valueOf(row5.statusCode)							
-				);
-
-
-							
-	    		} //  			
-
-    			strBuffer_tLogRow_2.append("|");
-    			
-
-
-   				
-	    		if(row5.body != null) { //              
-                    							
-       
-				strBuffer_tLogRow_2.append(
-				                String.valueOf(row5.body)							
-				);
-
-
-							
-	    		} //  			
-
-    			strBuffer_tLogRow_2.append("|");
-    			
-
-
-   				
-	    		if(row5.string != null) { //              
-                    							
-       
-				strBuffer_tLogRow_2.append(
-				                String.valueOf(row5.string)							
-				);
-
-
-							
-	    		} //  			
- 
-
-                    if (globalMap.get("tLogRow_CONSOLE")!=null)
-                    {
-                    	consoleOut_tLogRow_2 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
-                    }
-                    else
-                    {
-                    	consoleOut_tLogRow_2 = new java.io.PrintStream(new java.io.BufferedOutputStream(System.out));
-                    	globalMap.put("tLogRow_CONSOLE",consoleOut_tLogRow_2);
-                    }
-                    consoleOut_tLogRow_2.println(strBuffer_tLogRow_2.toString());
-                    consoleOut_tLogRow_2.flush();
-                    nb_line_tLogRow_2++;
-//////
-
-//////                    
-                    
-///////////////////////    			
+} // G_AggR_600
 
  
 
-
-	tos_count_tLogRow_2++;
-
-/**
- * [tLogRow_2 main ] stop
- */
-
-} // End of branch "row5"
-
-
-
-
-// Start of branch "row6"
-if(row6 != null) { 
-
-
-
-	
-	/**
-	 * [tLogRow_3 main ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tLogRow_3";
-
-	
-
-			//row6
-			//row6
-
-
-			
-				if(execStat){
-					runStat.updateStatOnConnection("row6"+iterateId,1, 1);
-				} 
-			
-
-		
-///////////////////////		
-						
-
-
-
-				strBuffer_tLogRow_3 = new StringBuilder();
-
-
-
-
-   				
-	    		if(row6.errorCode != null) { //              
-                    							
-       
-				strBuffer_tLogRow_3.append(
-				                String.valueOf(row6.errorCode)							
-				);
-
-
-							
-	    		} //  			
-
-    			strBuffer_tLogRow_3.append("|");
-    			
-
-
-   				
-	    		if(row6.errorMessage != null) { //              
-                    							
-       
-				strBuffer_tLogRow_3.append(
-				                String.valueOf(row6.errorMessage)							
-				);
-
-
-							
-	    		} //  			
- 
-
-                    if (globalMap.get("tLogRow_CONSOLE")!=null)
-                    {
-                    	consoleOut_tLogRow_3 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
-                    }
-                    else
-                    {
-                    	consoleOut_tLogRow_3 = new java.io.PrintStream(new java.io.BufferedOutputStream(System.out));
-                    	globalMap.put("tLogRow_CONSOLE",consoleOut_tLogRow_3);
-                    }
-                    consoleOut_tLogRow_3.println(strBuffer_tLogRow_3.toString());
-                    consoleOut_tLogRow_3.flush();
-                    nb_line_tLogRow_3++;
-//////
-
-//////                    
-                    
-///////////////////////    			
-
- 
-
-
-	tos_count_tLogRow_3++;
-
-/**
- * [tLogRow_3 main ] stop
- */
-
-} // End of branch "row6"
-
-
-
-
-
-} // End of branch "output"
-
-
-
-
-
-
-
-
-} // End of branch "row3"
-
-
-
-
-	
-	/**
-	 * [tFileInputJSON_2 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileInputJSON_2";
-
-	
-
-	}
-	globalMap.put("tFileInputJSON_2_NB_LINE",nb_line_tFileInputJSON_2);
- 
-
-ok_Hash.put("tFileInputJSON_2", true);
-end_Hash.put("tFileInputJSON_2", System.currentTimeMillis());
+ok_Hash.put("tAggregateRow_1_AGGIN", true);
+end_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
 
 
 
 
 /**
- * [tFileInputJSON_2 end ] stop
- */
-
-	
-	/**
-	 * [tJavaRow_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tJavaRow_1";
-
-	
-
-globalMap.put("tJavaRow_1_NB_LINE",nb_line_tJavaRow_1);
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row3"+iterateId,2, 0); 
-			 	}
-			}
-		
- 
-
-ok_Hash.put("tJavaRow_1", true);
-end_Hash.put("tJavaRow_1", System.currentTimeMillis());
-
-
-
-
-/**
- * [tJavaRow_1 end ] stop
+ * [tAggregateRow_1_AGGIN end ] stop
  */
 
 	
@@ -2328,7 +2518,7 @@ end_Hash.put("tJavaRow_1", System.currentTimeMillis());
 
 			if(execStat){
 				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row1"+iterateId,2, 0); 
+			 		runStat.updateStatOnConnection("row3"+iterateId,2, 0); 
 			 	}
 			}
 		
@@ -2361,7 +2551,7 @@ end_Hash.put("tMap_1", System.currentTimeMillis());
 // [tRESTCliend_end]
 			if(execStat){
 				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("output"+iterateId,2, 0); 
+			 		runStat.updateStatOnConnection("out"+iterateId,2, 0); 
 			 	}
 			}
 		
@@ -2377,84 +2567,8 @@ end_Hash.put("tRESTClient_1", System.currentTimeMillis());
  * [tRESTClient_1 end ] stop
  */
 
-	
-	/**
-	 * [tLogRow_2 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tLogRow_2";
-
-	
 
 
-//////
-//////
-globalMap.put("tLogRow_2_NB_LINE",nb_line_tLogRow_2);
-
-///////////////////////    			
-
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row5"+iterateId,2, 0); 
-			 	}
-			}
-		
- 
-
-ok_Hash.put("tLogRow_2", true);
-end_Hash.put("tLogRow_2", System.currentTimeMillis());
-
-
-
-
-/**
- * [tLogRow_2 end ] stop
- */
-
-
-
-
-	
-	/**
-	 * [tLogRow_3 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tLogRow_3";
-
-	
-
-
-//////
-//////
-globalMap.put("tLogRow_3_NB_LINE",nb_line_tLogRow_3);
-
-///////////////////////    			
-
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row6"+iterateId,2, 0); 
-			 	}
-			}
-		
- 
-
-ok_Hash.put("tLogRow_3", true);
-end_Hash.put("tLogRow_3", System.currentTimeMillis());
-
-
-
-
-/**
- * [tLogRow_3 end ] stop
- */
 
 
 
@@ -2478,6 +2592,8 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
 				
 				TalendException te = new TalendException(e, currentComponent, globalMap);
 				
+					te.setVirtualComponentName(currentVirtualComponent);
+				
 				throw te;
 			}catch(java.lang.Error error){	
 				
@@ -2486,6 +2602,9 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
 				throw error;
 			}finally{
 				
+							//free memory for "tAggregateRow_1_AGGIN"
+							globalMap.remove("tAggregateRow_1");
+						
 				try{
 					
 	
@@ -2511,14 +2630,14 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
 
 	
 	/**
-	 * [tJavaRow_1 finally ] start
+	 * [tJavaFlex_1 finally ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tJavaRow_1";
+	currentComponent="tJavaFlex_1";
 
 	
 
@@ -2527,7 +2646,53 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
 
 
 /**
- * [tJavaRow_1 finally ] stop
+ * [tJavaFlex_1 finally ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGOUT finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT finally ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN finally ] stop
  */
 
 	
@@ -2572,50 +2737,8 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
  * [tRESTClient_1 finally ] stop
  */
 
-	
-	/**
-	 * [tLogRow_2 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tLogRow_2";
-
-	
-
- 
 
 
-
-/**
- * [tLogRow_2 finally ] stop
- */
-
-
-
-
-	
-	/**
-	 * [tLogRow_3 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tLogRow_3";
-
-	
-
- 
-
-
-
-/**
- * [tLogRow_3 finally ] stop
- */
 
 
 
@@ -2784,6 +2907,9 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
 				    context.setContextType("fileName", "id_String");
 				
                 context.fileName=(String) context.getProperty("fileName");
+				    context.setContextType("finalBodyString", "id_String");
+				
+                context.finalBodyString=(String) context.getProperty("finalBodyString");
         } catch (java.io.IOException ie) {
             System.err.println("Could not load context "+contextStr);
             ie.printStackTrace();
@@ -2797,6 +2923,8 @@ end_Hash.put("tLogRow_3", System.currentTimeMillis());
                 context.indexType = (String) parentContextMap.get("indexType");
             }if (parentContextMap.containsKey("fileName")) {
                 context.fileName = (String) parentContextMap.get("fileName");
+            }if (parentContextMap.containsKey("finalBodyString")) {
+                context.finalBodyString = (String) parentContextMap.get("finalBodyString");
             }
         }
 
@@ -2844,12 +2972,12 @@ this.globalResumeTicket = true;//to run tPreJob
 this.globalResumeTicket = false;//to run others jobs
 
 try {
-errorCode = null;tFileInputJSON_2Process(globalMap);
+errorCode = null;tJava_1Process(globalMap);
 if(!"failure".equals(status)) { status = "end"; }
-}catch (TalendException e_tFileInputJSON_2) {
-globalMap.put("tFileInputJSON_2_SUBPROCESS_STATE", -1);
+}catch (TalendException e_tJava_1) {
+globalMap.put("tJava_1_SUBPROCESS_STATE", -1);
 
-e_tFileInputJSON_2.printStackTrace();
+e_tJava_1.printStackTrace();
 
 }
 
@@ -3025,6 +3153,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     76186 characters generated by Talend Open Studio for Big Data 
- *     on the January 16, 2018 8:08:49 PM EST
+ *     81894 characters generated by Talend Open Studio for Big Data 
+ *     on the January 18, 2018 4:30:30 AM EST
  ************************************************************************************************/

@@ -1,0 +1,6 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<expression:EMFExpression xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore" id="tMap_1=>" expression="(String)globalMap.get(&quot;finalBodyString&quot;)">
+  <variables name="row2.dataList" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row3.dataList" value="null" talendType="id_String" nullable="true"/>
+  <variables name="globalMap.get(&quot;finalBodyString&quot;) " value="null" talendType="id_String"/>
+</expression:EMFExpression>

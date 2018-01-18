@@ -4,8 +4,8 @@
     <contextParameter comment="" name="inputFileName" prompt="Please specify the input file name." promptNeeded="false" type="id_String" value="&quot;C:\Users\User\Downloads\out.csv&quot;"/>
     <contextParameter comment="" name="outputFileName" prompt="Please specify the output file name." promptNeeded="false" type="id_String" value="&quot;C:\Users\User\Downloads\outCSV.csv&quot;"/>
     <contextParameter comment="" name="JSONFileName" prompt="Please specify the json file name." promptNeeded="false" type="id_String" value="&quot;C:\Users\User\Downloads\outJSON.json&quot;"/>
-    <contextParameter comment="" name="indexName" prompt="What is the Index name?" promptNeeded="false" type="id_String" value="rule"/>
     <contextParameter comment="" name="indexType" prompt="What is the Index type?" promptNeeded="false" type="id_String" value="rule"/>
+    <contextParameter comment="" name="indexName" prompt="indexName?" promptNeeded="false" type="id_String" value="rule"/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>

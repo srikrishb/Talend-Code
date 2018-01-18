@@ -331,6 +331,21 @@ private class TalendException extends Exception {
 					tJava_1_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
+			public void tAggregateRow_1_AGGOUT_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+							tAggregateRow_1_AGGIN_error(exception, errorComponent, globalMap);
+						
+						}
+					
+			public void tAggregateRow_1_AGGIN_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tFileInputDelimited_2_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
 			public void tFileInputDelimited_2_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 
 resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
@@ -347,6 +362,488 @@ resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThrea
 
 
 
+
+public static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[0];
+
+	
+			    public Integer ruleid;
+
+				public Integer getRuleid () {
+					return this.ruleid;
+				}
+				
+			    public Integer rule_execution_id;
+
+				public Integer getRule_execution_id () {
+					return this.rule_execution_id;
+				}
+				
+			    public Integer id;
+
+				public Integer getId () {
+					return this.id;
+				}
+				
+			    public String result;
+
+				public String getResult () {
+					return this.result;
+				}
+				
+			    public Integer salary;
+
+				public Integer getSalary () {
+					return this.salary;
+				}
+				
+			    public Integer tax;
+
+				public Integer getTax () {
+					return this.tax;
+				}
+				
+			    public Integer gross_sal;
+
+				public Integer getGross_sal () {
+					return this.gross_sal;
+				}
+				
+			    public String email;
+
+				public String getEmail () {
+					return this.email;
+				}
+				
+
+
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch) {
+
+        	try {
+
+        		int length = 0;
+		
+						this.ruleid = readInteger(dis);
+					
+						this.rule_execution_id = readInteger(dis);
+					
+						this.id = readInteger(dis);
+					
+					this.result = readString(dis);
+					
+						this.salary = readInteger(dis);
+					
+						this.tax = readInteger(dis);
+					
+						this.gross_sal = readInteger(dis);
+					
+					this.email = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// Integer
+				
+						writeInteger(this.ruleid,dos);
+					
+					// Integer
+				
+						writeInteger(this.rule_execution_id,dos);
+					
+					// Integer
+				
+						writeInteger(this.id,dos);
+					
+					// String
+				
+						writeString(this.result,dos);
+					
+					// Integer
+				
+						writeInteger(this.salary,dos);
+					
+					// Integer
+				
+						writeInteger(this.tax,dos);
+					
+					// Integer
+				
+						writeInteger(this.gross_sal,dos);
+					
+					// String
+				
+						writeString(this.email,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("ruleid="+String.valueOf(ruleid));
+		sb.append(",rule_execution_id="+String.valueOf(rule_execution_id));
+		sb.append(",id="+String.valueOf(id));
+		sb.append(",result="+result);
+		sb.append(",salary="+String.valueOf(salary));
+		sb.append(",tax="+String.valueOf(tax));
+		sb.append(",gross_sal="+String.valueOf(gross_sal));
+		sb.append(",email="+email);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row3Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class OnRowsEndStructtAggregateRow_1 implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_1> {
+    final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[0];
+    static byte[] commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[0];
+
+	
+			    public Integer ruleid;
+
+				public Integer getRuleid () {
+					return this.ruleid;
+				}
+				
+			    public Integer rule_execution_id;
+
+				public Integer getRule_execution_id () {
+					return this.rule_execution_id;
+				}
+				
+			    public Integer id;
+
+				public Integer getId () {
+					return this.id;
+				}
+				
+			    public String result;
+
+				public String getResult () {
+					return this.result;
+				}
+				
+			    public Integer salary;
+
+				public Integer getSalary () {
+					return this.salary;
+				}
+				
+			    public Integer tax;
+
+				public Integer getTax () {
+					return this.tax;
+				}
+				
+			    public Integer gross_sal;
+
+				public Integer getGross_sal () {
+					return this.gross_sal;
+				}
+				
+			    public String email;
+
+				public String getEmail () {
+					return this.email;
+				}
+				
+
+
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch.length) {
+				if(length < 1024 && commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch.length == 0) {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[1024];
+				} else {
+   					commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch, 0, length);
+			strReturn = new String(commonByteArray_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch) {
+
+        	try {
+
+        		int length = 0;
+		
+						this.ruleid = readInteger(dis);
+					
+						this.rule_execution_id = readInteger(dis);
+					
+						this.id = readInteger(dis);
+					
+					this.result = readString(dis);
+					
+						this.salary = readInteger(dis);
+					
+						this.tax = readInteger(dis);
+					
+						this.gross_sal = readInteger(dis);
+					
+					this.email = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// Integer
+				
+						writeInteger(this.ruleid,dos);
+					
+					// Integer
+				
+						writeInteger(this.rule_execution_id,dos);
+					
+					// Integer
+				
+						writeInteger(this.id,dos);
+					
+					// String
+				
+						writeString(this.result,dos);
+					
+					// Integer
+				
+						writeInteger(this.salary,dos);
+					
+					// Integer
+				
+						writeInteger(this.tax,dos);
+					
+					// Integer
+				
+						writeInteger(this.gross_sal,dos);
+					
+					// String
+				
+						writeString(this.email,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("ruleid="+String.valueOf(ruleid));
+		sb.append(",rule_execution_id="+String.valueOf(rule_execution_id));
+		sb.append(",id="+String.valueOf(id));
+		sb.append(",result="+result);
+		sb.append(",salary="+String.valueOf(salary));
+		sb.append(",tax="+String.valueOf(tax));
+		sb.append(",gross_sal="+String.valueOf(gross_sal));
+		sb.append(",email="+email);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(OnRowsEndStructtAggregateRow_1 other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
 
 public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
     final static byte[] commonByteArrayLock_RULEENGINE_ELASTICSEARCH_step1_loadElasticsearch = new byte[0];
@@ -833,6 +1330,7 @@ public void tFileInputDelimited_2Process(final java.util.Map<String, Object> glo
 	globalMap.put("tFileInputDelimited_2_SUBPROCESS_STATE", 0);
 
  final boolean execStat = this.execStat;
+		String currentVirtualComponent = null;
 	
 		String iterateId = "";
 	
@@ -851,6 +1349,7 @@ public void tFileInputDelimited_2Process(final java.util.Map<String, Object> glo
 
 		row2Struct row2 = new row2Struct();
 row2Struct row1 = row2;
+row3Struct row3 = new row3Struct();
 
 
 
@@ -858,18 +1357,20 @@ row2Struct row1 = row2;
 
 	
 	/**
-	 * [tRunJob_1 begin ] start
+	 * [tAggregateRow_1_AGGOUT begin ] start
 	 */
 
 	
 
 	
 		
-		ok_Hash.put("tRunJob_1", false);
-		start_Hash.put("tRunJob_1", System.currentTimeMillis());
+		ok_Hash.put("tAggregateRow_1_AGGOUT", false);
+		start_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
 		
 	
-	currentComponent="tRunJob_1";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 			if (execStat) {
@@ -881,23 +1382,201 @@ row2Struct row1 = row2;
 			} 
 
 		
-		int tos_count_tRunJob_1 = 0;
+		int tos_count_tAggregateRow_1_AGGOUT = 0;
 		
-    	class BytesLimit65535_tRunJob_1{
+    	class BytesLimit65535_tAggregateRow_1_AGGOUT{
     		public void limitLog4jByte() throws Exception{
     			
     		}
     	}
     	
-        new BytesLimit65535_tRunJob_1().limitLog4jByte();
+        new BytesLimit65535_tAggregateRow_1_AGGOUT().limitLog4jByte();
 
+// ------------ Seems it is not used
+
+java.util.Map hashAggreg_tAggregateRow_1 = new java.util.HashMap(); 
+
+// ------------
+
+	class UtilClass_tAggregateRow_1 { // G_OutBegin_AggR_144
+
+		public double sd(Double[] data) {
+	        final int n = data.length;
+        	if (n < 2) {
+	            return Double.NaN;
+        	}
+        	double d1 = 0d;
+        	double d2 =0d;
+	        
+	        for (int i = 0; i < data.length; i++) {
+            	d1 += (data[i]*data[i]);
+            	d2 += data[i];
+        	}
+        
+	        return Math.sqrt((n*d1 - d2*d2)/n/(n-1));
+	    }
+	    
+		public void checkedIADD(byte a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    byte r = (byte) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'short/Short'", "'byte/Byte'"));
+		    }
+		}
+		
+		public void checkedIADD(short a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    short r = (short) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'int/Integer'", "'short/Short'"));
+		    }
+		}
+		
+		public void checkedIADD(int a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    int r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'long/Long'", "'int/Integer'"));
+		    }
+		}
+		
+		public void checkedIADD(long a, long b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    long r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'long/Long'"));
+		    }
+		}
+		
+		public void checkedIADD(float a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    float minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+			    }
+			}
+			
+		    if (checkTypeOverFlow && ((double) a + (double) b > (double) Float.MAX_VALUE) || ((double) a + (double) b < (double) -Float.MAX_VALUE)) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, double b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		private String buildOverflowMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "Type overflow when adding " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+		
+		private String buildPrecisionMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "The double precision is unsufficient to add the value " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+
+	} // G_OutBegin_AggR_144
+
+	UtilClass_tAggregateRow_1 utilClass_tAggregateRow_1 = new UtilClass_tAggregateRow_1();
+
+	
+
+	class AggOperationStruct_tAggregateRow_1 { // G_OutBegin_AggR_100
+
+		private static final int DEFAULT_HASHCODE = 1;
+	    private static final int PRIME = 31;
+	    private int hashCode = DEFAULT_HASHCODE;
+	    public boolean hashCodeDirty = true;
+
+         			Integer salary_last;
+         			Integer tax_last;
+         			Integer gross_sal_last;
+        
+	    @Override
+		public int hashCode() {
+			if (this.hashCodeDirty) {
+				final int prime = PRIME;
+				int result = DEFAULT_HASHCODE;
+		
+	    		this.hashCode = result;
+	    		this.hashCodeDirty = false;		
+			}
+			return this.hashCode;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (obj == null) return false;
+			if (getClass() != obj.getClass()) return false;
+			final AggOperationStruct_tAggregateRow_1 other = (AggOperationStruct_tAggregateRow_1) obj;
+			
+			
+			return true;
+		}
+  
+        
+	} // G_OutBegin_AggR_100
+
+	System.err.println(
+	
+		"Warning:the operation 'last' for the output column 'result' can't be processed because of incompatible input and/or output types"
+		 + "\n" + "Warning:the operation 'last' for the output column 'email' can't be processed because of incompatible input and/or output types"
+	);
+	
+	AggOperationStruct_tAggregateRow_1 operation_result_tAggregateRow_1 = null;
+	AggOperationStruct_tAggregateRow_1 operation_finder_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+	java.util.Map<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1> hash_tAggregateRow_1 = new java.util.HashMap<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1>();
+	
 
  
 
 
 
 /**
- * [tRunJob_1 begin ] stop
+ * [tAggregateRow_1_AGGOUT begin ] stop
  */
 
 
@@ -1316,6 +1995,311 @@ nb_line_tFileOutputJSON_1++;
 
 	
 	/**
+	 * [tAggregateRow_1_AGGOUT main ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+			//row1
+			//row1
+
+
+			
+				if(execStat){
+					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
+				} 
+			
+
+		
+	
+
+
+	operation_finder_tAggregateRow_1.hashCodeDirty = true;
+	
+	operation_result_tAggregateRow_1 = hash_tAggregateRow_1.get(operation_finder_tAggregateRow_1);
+
+	
+		boolean isFirstAdd_tAggregateRow_1 = false;
+	
+
+	if(operation_result_tAggregateRow_1 == null) { // G_OutMain_AggR_001
+
+		operation_result_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+
+		
+		
+		
+			isFirstAdd_tAggregateRow_1 = true;
+		
+
+		hash_tAggregateRow_1.put(operation_result_tAggregateRow_1, operation_result_tAggregateRow_1);
+	
+	} // G_OutMain_AggR_001
+
+
+	
+					operation_result_tAggregateRow_1.salary_last = row1.ruleid;
+				
+					operation_result_tAggregateRow_1.tax_last = row1.ruleid;
+				
+					operation_result_tAggregateRow_1.gross_sal_last = row1.ruleid;
+				
+
+
+ 
+
+
+	tos_count_tAggregateRow_1_AGGOUT++;
+
+/**
+ * [tAggregateRow_1_AGGOUT main ] stop
+ */
+
+
+
+
+} // End of branch "row2"
+
+
+
+
+	
+	/**
+	 * [tFileInputDelimited_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileInputDelimited_2";
+
+	
+
+
+
+            }
+            }finally{
+                if(!((Object)(context.inputFileName) instanceof java.io.InputStream)){
+                	if(fid_tFileInputDelimited_2!=null){
+                		fid_tFileInputDelimited_2.close();
+                	}
+                }
+                if(fid_tFileInputDelimited_2!=null){
+                	globalMap.put("tFileInputDelimited_2_NB_LINE", fid_tFileInputDelimited_2.getRowNumber());
+					
+                }
+			}
+			  
+
+ 
+
+ok_Hash.put("tFileInputDelimited_2", true);
+end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tFileInputDelimited_2 end ] stop
+ */
+
+	
+	/**
+	 * [tFileOutputJSON_1 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tFileOutputJSON_1";
+
+	
+
+	outtFileOutputJSON_1.print("]}");
+outtFileOutputJSON_1.close();
+globalMap.put("tFileOutputJSON_1_NB_LINE",nb_line_tFileOutputJSON_1);
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row2"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tFileOutputJSON_1", true);
+end_Hash.put("tFileOutputJSON_1", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tFileOutputJSON_1 end ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGOUT end ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+			if(execStat){
+				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
+			 		runStat.updateStatOnConnection("row1"+iterateId,2, 0); 
+			 	}
+			}
+		
+ 
+
+ok_Hash.put("tAggregateRow_1_AGGOUT", true);
+end_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT end ] stop
+ */
+
+
+	
+	/**
+	 * [tRunJob_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tRunJob_1", false);
+		start_Hash.put("tRunJob_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tRunJob_1";
+
+	
+			if (execStat) {
+				if(resourceMap.get("inIterateVComp") == null){
+					
+						runStat.updateStatOnConnection("row3" + iterateId, 0, 0);
+					
+				}
+			} 
+
+		
+		int tos_count_tRunJob_1 = 0;
+		
+    	class BytesLimit65535_tRunJob_1{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tRunJob_1().limitLog4jByte();
+
+
+ 
+
+
+
+/**
+ * [tRunJob_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tAggregateRow_1_AGGIN", false);
+		start_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
+		
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+		int tos_count_tAggregateRow_1_AGGIN = 0;
+		
+    	class BytesLimit65535_tAggregateRow_1_AGGIN{
+    		public void limitLog4jByte() throws Exception{
+    			
+    		}
+    	}
+    	
+        new BytesLimit65535_tAggregateRow_1_AGGIN().limitLog4jByte();
+
+java.util.Collection<AggOperationStruct_tAggregateRow_1> values_tAggregateRow_1 = hash_tAggregateRow_1.values();
+
+globalMap.put("tAggregateRow_1_NB_LINE", values_tAggregateRow_1.size());
+
+for(AggOperationStruct_tAggregateRow_1 aggregated_row_tAggregateRow_1 : values_tAggregateRow_1) { // G_AggR_600
+
+
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN begin ] stop
+ */
+	
+	/**
+	 * [tAggregateRow_1_AGGIN main ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+                                row3.salary = aggregated_row_tAggregateRow_1.salary_last;
+                                row3.tax = aggregated_row_tAggregateRow_1.tax_last;
+                                row3.gross_sal = aggregated_row_tAggregateRow_1.gross_sal_last;
+
+ 
+
+
+	tos_count_tAggregateRow_1_AGGIN++;
+
+/**
+ * [tAggregateRow_1_AGGIN main ] stop
+ */
+
+	
+	/**
 	 * [tRunJob_1 main ] start
 	 */
 
@@ -1327,13 +2311,13 @@ nb_line_tFileOutputJSON_1++;
 
 	
 
-			//row1
-			//row1
+			//row3
+			//row3
 
 
 			
 				if(execStat){
-					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
+					runStat.updateStatOnConnection("row3"+iterateId,1, 1);
 				} 
 			
 
@@ -1447,86 +2431,33 @@ nb_line_tFileOutputJSON_1++;
 
 
 
-
-} // End of branch "row2"
-
-
-
-
 	
 	/**
-	 * [tFileInputDelimited_2 end ] start
+	 * [tAggregateRow_1_AGGIN end ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tFileInputDelimited_2";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
 
 	
 
-
-
-            }
-            }finally{
-                if(!((Object)(context.inputFileName) instanceof java.io.InputStream)){
-                	if(fid_tFileInputDelimited_2!=null){
-                		fid_tFileInputDelimited_2.close();
-                	}
-                }
-                if(fid_tFileInputDelimited_2!=null){
-                	globalMap.put("tFileInputDelimited_2_NB_LINE", fid_tFileInputDelimited_2.getRowNumber());
-					
-                }
-			}
-			  
+} // G_AggR_600
 
  
 
-ok_Hash.put("tFileInputDelimited_2", true);
-end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
+ok_Hash.put("tAggregateRow_1_AGGIN", true);
+end_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
 
 
 
 
 /**
- * [tFileInputDelimited_2 end ] stop
- */
-
-	
-	/**
-	 * [tFileOutputJSON_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileOutputJSON_1";
-
-	
-
-	outtFileOutputJSON_1.print("]}");
-outtFileOutputJSON_1.close();
-globalMap.put("tFileOutputJSON_1_NB_LINE",nb_line_tFileOutputJSON_1);
-
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row2"+iterateId,2, 0); 
-			 	}
-			}
-		
- 
-
-ok_Hash.put("tFileOutputJSON_1", true);
-end_Hash.put("tFileOutputJSON_1", System.currentTimeMillis());
-
-
-
-
-/**
- * [tFileOutputJSON_1 end ] stop
+ * [tAggregateRow_1_AGGIN end ] stop
  */
 
 	
@@ -1544,7 +2475,7 @@ end_Hash.put("tFileOutputJSON_1", System.currentTimeMillis());
 
 			if(execStat){
 				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-			 		runStat.updateStatOnConnection("row1"+iterateId,2, 0); 
+			 		runStat.updateStatOnConnection("row3"+iterateId,2, 0); 
 			 	}
 			}
 		
@@ -1559,6 +2490,12 @@ end_Hash.put("tRunJob_1", System.currentTimeMillis());
 /**
  * [tRunJob_1 end ] stop
  */
+
+
+
+
+
+
 
 
 
@@ -1586,6 +2523,8 @@ end_Hash.put("tRunJob_1", System.currentTimeMillis());
 				
 				TalendException te = new TalendException(e, currentComponent, globalMap);
 				
+					te.setVirtualComponentName(currentVirtualComponent);
+				
 				throw te;
 			}catch(java.lang.Error error){	
 				
@@ -1594,6 +2533,9 @@ end_Hash.put("tRunJob_1", System.currentTimeMillis());
 				throw error;
 			}finally{
 				
+							//free memory for "tAggregateRow_1_AGGIN"
+							globalMap.remove("tAggregateRow_1");
+						
 				try{
 					
 	
@@ -1640,6 +2582,52 @@ end_Hash.put("tRunJob_1", System.currentTimeMillis());
 
 	
 	/**
+	 * [tAggregateRow_1_AGGOUT finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT finally ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN finally ] stop
+ */
+
+	
+	/**
 	 * [tRunJob_1 finally ] start
 	 */
 
@@ -1658,6 +2646,12 @@ end_Hash.put("tRunJob_1", System.currentTimeMillis());
 /**
  * [tRunJob_1 finally ] stop
  */
+
+
+
+
+
+
 
 
 
@@ -2225,6 +3219,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     57776 characters generated by Talend Open Studio for Big Data 
- *     on the January 16, 2018 8:08:49 PM EST
+ *     82389 characters generated by Talend Open Studio for Big Data 
+ *     on the January 18, 2018 4:30:31 AM EST
  ************************************************************************************************/

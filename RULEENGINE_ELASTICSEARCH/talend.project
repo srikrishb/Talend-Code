@@ -123,6 +123,18 @@
       <relatedItems xmi:id="_hOeLSfqJEeeeHLnh03GAyQ" id="TalendDate" version="Latest" type="routine"/>
       <relatedItems xmi:id="_hOeLSvqJEeeeHLnh03GAyQ" id="Mathematical" version="Latest" type="routine"/>
     </ItemsRelations>
+    <ItemsRelations xmi:id="_oBArYPwQEeesh_HAc-h6_A">
+      <baseItem xmi:id="_oBArYfwQEeesh_HAc-h6_A" id="_lgTCIPwQEeesh_HAc-h6_A" version="0.1" type="job"/>
+      <relatedItems xmi:id="_oBArYvwQEeesh_HAc-h6_A" id="Numeric" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArY_wQEeesh_HAc-h6_A" id="Relational" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArZPwQEeesh_HAc-h6_A" id="TalendString" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArZfwQEeesh_HAc-h6_A" id="TalendStringUtil" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArZvwQEeesh_HAc-h6_A" id="DataOperation" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArZ_wQEeesh_HAc-h6_A" id="StringHandling" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBAraPwQEeesh_HAc-h6_A" id="TalendDataGenerator" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBArafwQEeesh_HAc-h6_A" id="TalendDate" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_oBAravwQEeesh_HAc-h6_A" id="Mathematical" version="Latest" type="routine"/>
+    </ItemsRelations>
     <deletedFolders>process/Archive</deletedFolders>
     <migrationTask xmi:id="_Yc3BIPqIEeeeHLnh03GAyQ" id="org.talend.designer.core.ui.preferences.migration.ChangeMysqlVersionForProjectSetting" breaks="5.2.0" version="5.1.3" status="ok"/>
     <migrationTask xmi:id="_Yc3BIfqIEeeeHLnh03GAyQ" id="org.talend.designer.core.ui.preferences.migration.ChangeOracleVersionForProjectSetting" breaks="5.2.0" version="5.2.1" status="ok"/>
