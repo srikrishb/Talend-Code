@@ -1295,3 +1295,533 @@ There may be some other errors caused by JVM compatibility. Make sure your JVM s
 !ENTRY org.talend.platform.logging 1 0 2018-01-18 04:30:33.920
 !MESSAGE 2018-01-18 04:30:33,920 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
 
+!SESSION 2018-01-18 10:34:41.228 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.jdt.launching.macosx 4 0 2018-01-18 10:34:44.021
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.launching.macosx [326]
+  Unresolved requirement: Require-Capability: eclipse.platform; filter:="(osgi.os=macosx)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.jdt.launching.ui.macosx 4 0 2018-01-18 10:34:44.027
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.launching.ui.macosx [328]
+  Unresolved requirement: Require-Capability: eclipse.platform; filter:="(osgi.os=macosx)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-01-18 10:34:49.194
+!MESSAGE Both 'org.talend.model' and 'org.talend.model' register a package for 'platform:/resource/org.talend.model/model/TalendFile.xsd'
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:51.537
+!MESSAGE 2018-01-18 10:34:51,535 INFO  org.talend.repository.ui.login.LoginProjectPage  - validate updatesite...
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.330
+!MESSAGE 2018-01-18 10:34:57,330 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Azure Storage(org.talend.components.azurestorage.AzureStorageFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.331
+!MESSAGE 2018-01-18 10:34:57,331 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageConnection
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.331
+!MESSAGE 2018-01-18 10:34:57,331 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageContainerExist
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.332
+!MESSAGE 2018-01-18 10:34:57,332 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageContainerCreate
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.332
+!MESSAGE 2018-01-18 10:34:57,332 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageContainerDelete
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.333
+!MESSAGE 2018-01-18 10:34:57,332 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageContainerList
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.333
+!MESSAGE 2018-01-18 10:34:57,333 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageList
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.333
+!MESSAGE 2018-01-18 10:34:57,333 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageDelete
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.334
+!MESSAGE 2018-01-18 10:34:57,334 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageGet
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.334
+!MESSAGE 2018-01-18 10:34:57,334 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStoragePut
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.335
+!MESSAGE 2018-01-18 10:34:57,334 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageInputTable
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.335
+!MESSAGE 2018-01-18 10:34:57,335 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageOutputTable
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.335
+!MESSAGE 2018-01-18 10:34:57,335 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueCreate
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.336
+!MESSAGE 2018-01-18 10:34:57,336 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueDelete
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.336
+!MESSAGE 2018-01-18 10:34:57,336 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueList
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.337
+!MESSAGE 2018-01-18 10:34:57,336 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.337
+!MESSAGE 2018-01-18 10:34:57,337 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.337
+!MESSAGE 2018-01-18 10:34:57,337 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueuePurge
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.337
+!MESSAGE 2018-01-18 10:34:57,337 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tAzureStorageQueueInputLoop
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.338
+!MESSAGE 2018-01-18 10:34:57,338 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :azurestorage
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.338
+!MESSAGE 2018-01-18 10:34:57,338 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :azurestorage.edit
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.458
+!MESSAGE 2018-01-18 10:34:57,457 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Jira(org.talend.components.jira.JiraFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.458
+!MESSAGE 2018-01-18 10:34:57,458 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tJIRAInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.459
+!MESSAGE 2018-01-18 10:34:57,459 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tJIRAOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.540
+!MESSAGE 2018-01-18 10:34:57,540 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Marketo(org.talend.components.marketo.MarketoFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.542
+!MESSAGE 2018-01-18 10:34:57,541 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tMarketoConnection
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.543
+!MESSAGE 2018-01-18 10:34:57,542 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tMarketoInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.544
+!MESSAGE 2018-01-18 10:34:57,543 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tMarketoListOperation
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.545
+!MESSAGE 2018-01-18 10:34:57,544 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tMarketoOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.546
+!MESSAGE 2018-01-18 10:34:57,545 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tMarketoBulkExec
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.547
+!MESSAGE 2018-01-18 10:34:57,546 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :marketo
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.548
+!MESSAGE 2018-01-18 10:34:57,547 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :marketo.edit
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.581
+!MESSAGE 2018-01-18 10:34:57,580 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$NetSuite(org.talend.components.netsuite.NetSuiteFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.583
+!MESSAGE 2018-01-18 10:34:57,582 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tNetsuiteConnection
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.584
+!MESSAGE 2018-01-18 10:34:57,583 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tNetsuiteInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.585
+!MESSAGE 2018-01-18 10:34:57,585 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tNetsuiteOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.705
+!MESSAGE 2018-01-18 10:34:57,705 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Salesforce(org.talend.components.salesforce.SalesforceFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.706
+!MESSAGE 2018-01-18 10:34:57,706 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceBulkExec
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.707
+!MESSAGE 2018-01-18 10:34:57,707 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceConnection
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.708
+!MESSAGE 2018-01-18 10:34:57,707 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceGetDeleted
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.708
+!MESSAGE 2018-01-18 10:34:57,708 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceGetServerTimestamp
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.709
+!MESSAGE 2018-01-18 10:34:57,709 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceGetUpdated
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.710
+!MESSAGE 2018-01-18 10:34:57,709 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.710
+!MESSAGE 2018-01-18 10:34:57,710 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.711
+!MESSAGE 2018-01-18 10:34:57,711 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceOutputBulk
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.712
+!MESSAGE 2018-01-18 10:34:57,712 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSalesforceOutputBulkExec
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.713
+!MESSAGE 2018-01-18 10:34:57,712 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :salesforce.edit
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.714
+!MESSAGE 2018-01-18 10:34:57,713 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :salesforce
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.715
+!MESSAGE 2018-01-18 10:34:57,714 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :salesforce.module
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.716
+!MESSAGE 2018-01-18 10:34:57,715 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :SalesforceDatastore
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.717
+!MESSAGE 2018-01-18 10:34:57,716 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :SalesforceDataset
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.718
+!MESSAGE 2018-01-18 10:34:57,717 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :DataPrepSalesforceInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.810
+!MESSAGE 2018-01-18 10:34:57,810 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Snowflake(org.talend.components.snowflake.SnowflakeFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.811
+!MESSAGE 2018-01-18 10:34:57,811 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSnowflakeConnection
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.812
+!MESSAGE 2018-01-18 10:34:57,811 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSnowflakeInput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.812
+!MESSAGE 2018-01-18 10:34:57,812 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSnowflakeOutput
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.813
+!MESSAGE 2018-01-18 10:34:57,813 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSnowflakeClose
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.814
+!MESSAGE 2018-01-18 10:34:57,813 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :snowflake
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.814
+!MESSAGE 2018-01-18 10:34:57,814 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :snowflake.edit
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.815
+!MESSAGE 2018-01-18 10:34:57,815 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :snowflake.table
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.839
+!MESSAGE 2018-01-18 10:34:57,838 INFO  org.talend.components.api.service.internal.osgi.DefinitionRegistryOsgi  - Registered the component: installer$$Splunk(org.talend.components.splunk.SplunkFamilyDefinition)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.840
+!MESSAGE 2018-01-18 10:34:57,840 INFO  org.talend.components.api.service.common.DefinitionRegistry  - Talend Definition registered :tSplunkEventCollector
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:34:57.853
+!MESSAGE 2018-01-18 10:34:57,852 INFO  org.talend.components.api.service.context.osgi.GlobalContextOsgi  - Activated i18n messages (org.talend.components.api.service.i18n.osgi.I18nMessageProviderOsgi@2445a914).
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:07.554
+!MESSAGE 2018-01-18 10:35:07,493 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:11.651
+!MESSAGE 2018-01-18 10:35:11,651 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:14.077
+!MESSAGE 2018-01-18 10:35:14,070 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:15.512
+!MESSAGE 2018-01-18 10:35:15,511 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:15.774
+!MESSAGE 2018-01-18 10:35:15,774 INFO  org.talend.core.repository.model.ProxyRepositoryFactory  - user@talend.com logged on RuleEngine-Elasticsearch
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:35:20.189
+!MESSAGE 2018-01-18 10:35:20,188 INFO  org.talend.core.repository.logintask.ReadOnlyProjectConfirm  - ReadOnly confirm
+
+
+!ENTRY org.eclipse.ui 2 2 2018-01-18 10:36:20.856
+!MESSAGE Invalid preference category path: org.talend.designer.runtime.visualization.internal.ui.JavaMonitorPreferencePage (bundle: org.talend.designer.runtime.visualization.tools, page: org.talend.designer.runtime.visualization.internal.tools.ToolsPreferencePage)
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.790
+!MESSAGE 2018-01-18 10:37:01,790 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for jersey-multipart-1.19.jar is not available (mvn:org.talend.libraries/jersey-multipart-1.19/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.791
+!MESSAGE 2018-01-18 10:37:01,791 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-flume-assembly_2.11-2.1.0.jar is not available (mvn:org.talend.libraries/spark-streaming-flume-assembly_2.11-2.1.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.792
+!MESSAGE 2018-01-18 10:37:01,792 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for flume-ng-core-1.5.2.2.6.0.3-8.jar is not available (mvn:org.talend.libraries/flume-ng-core-1.5.2.2.6.0.3-8/6.4.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.792
+!MESSAGE 2018-01-18 10:37:01,792 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for kite-data-mapreduce-1.0.0-cdh5.7.0.jar is not available (mvn:org.talend.libraries/kite-data-mapreduce-1.0.0-cdh5.7.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.793
+!MESSAGE 2018-01-18 10:37:01,793 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-flume-assembly_2.11-2.0.0.jar is not available (mvn:org.talend.libraries/spark-streaming-flume-assembly_2.11-2.0.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.794
+!MESSAGE 2018-01-18 10:37:01,794 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-io-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-io-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.794
+!MESSAGE 2018-01-18 10:37:01,794 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-graph-algo-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-graph-algo-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.795
+!MESSAGE 2018-01-18 10:37:01,795 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-primitive-collections-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-primitive-collections-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.796
+!MESSAGE 2018-01-18 10:37:01,795 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for concurrentlinkedhashmap-lru-1.4.2.jar is not available (mvn:org.talend.libraries/concurrentlinkedhashmap-lru-1.4.2/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.796
+!MESSAGE 2018-01-18 10:37:01,796 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for talend-bigdata-launcher-1.0.0-20150922.jar is not available (mvn:org.talend.libraries/talend-bigdata-launcher-1.0.0-20150922/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.797
+!MESSAGE 2018-01-18 10:37:01,796 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for kite-hadoop-compatibility-1.0.0-cdh5.7.0.jar is not available (mvn:org.talend.libraries/kite-hadoop-compatibility-1.0.0-cdh5.7.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.797
+!MESSAGE 2018-01-18 10:37:01,797 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for maprdb-5.2.0-mapr.jar is not available (mvn:org.talend.libraries/maprdb-5.2.0-mapr/6.3.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.798
+!MESSAGE 2018-01-18 10:37:01,797 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-cypher-frontend-2.3-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-cypher-frontend-2.3-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.798
+!MESSAGE 2018-01-18 10:37:01,798 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for parquet-pig-bundle-1.2.5-cdh5.0.4.jar is not available (mvn:org.talend.libraries/parquet-pig-bundle-1.2.5-cdh5.0.4/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.799
+!MESSAGE 2018-01-18 10:37:01,798 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-kafka-0-8_2.11-2.1.0.cloudera1.jar is not available (mvn:org.talend.libraries/spark-streaming-kafka-0-8_2.11-2.1.0.cloudera1/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.799
+!MESSAGE 2018-01-18 10:37:01,799 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for hadoop-archives-2.7.3-amzn-2.jar is not available (mvn:org.talend.libraries/hadoop-archives-2.7.3-amzn-2/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.800
+!MESSAGE 2018-01-18 10:37:01,800 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-graph-matching-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-graph-matching-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.800
+!MESSAGE 2018-01-18 10:37:01,800 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for mapr-hbase-5.1.0-mapr.jar is not available (mvn:org.talend.libraries/mapr-hbase-5.1.0-mapr/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.801
+!MESSAGE 2018-01-18 10:37:01,801 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spring-data-neo4j-3.4.4.RELEASE.jar is not available (mvn:org.talend.libraries/spring-data-neo4j-3.4.4.RELEASE/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.802
+!MESSAGE 2018-01-18 10:37:01,802 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for kite-data-core-1.0.0-cdh5.7.0.jar is not available (mvn:org.talend.libraries/kite-data-core-1.0.0-cdh5.7.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.802
+!MESSAGE 2018-01-18 10:37:01,802 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for hive-hbase-handler-2.1.1-amzn-0.jar is not available (mvn:org.talend.libraries/hive-hbase-handler-2.1.1-amzn-0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.803
+!MESSAGE 2018-01-18 10:37:01,803 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-mllib_2.11-2.0.0.cloudera1.jar is not available (mvn:org.talend.libraries/spark-mllib_2.11-2.0.0.cloudera1/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.803
+!MESSAGE 2018-01-18 10:37:01,803 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-kafka-assembly_2.10-1.6.3.2.6.0.3-8.jar is not available (mvn:org.talend.libraries/spark-streaming-kafka-assembly_2.10-1.6.3.2.6.0.3-8/6.4.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.804
+!MESSAGE 2018-01-18 10:37:01,803 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for maprfs-5.1.0-mapr.jar is not available (mvn:org.talend.libraries/maprfs-5.1.0-mapr/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.804
+!MESSAGE 2018-01-18 10:37:01,804 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for jersey-servlet-1.19.jar is not available (mvn:org.talend.libraries/jersey-servlet-1.19/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.805
+!MESSAGE 2018-01-18 10:37:01,804 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for hadoop-ant-2.7.3-amzn-2.jar is not available (mvn:org.talend.libraries/hadoop-ant-2.7.3-amzn-2/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.805
+!MESSAGE 2018-01-18 10:37:01,805 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for mapr-streams-5.2.0-mapr.jar is not available (mvn:org.talend.libraries/mapr-streams-5.2.0-mapr/6.3.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.806
+!MESSAGE 2018-01-18 10:37:01,805 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spring-data-neo4j-rest-3.4.4.RELEASE.jar is not available (mvn:org.talend.libraries/spring-data-neo4j-rest-3.4.4.RELEASE/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.806
+!MESSAGE 2018-01-18 10:37:01,806 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-kafka-0-10_2.11-2.0.0.cloudera1.jar is not available (mvn:org.talend.libraries/spark-streaming-kafka-0-10_2.11-2.0.0.cloudera1/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.807
+!MESSAGE 2018-01-18 10:37:01,807 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for mapr-streams-5.1.0-mapr.jar is not available (mvn:org.talend.libraries/mapr-streams-5.1.0-mapr/6.3.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.808
+!MESSAGE 2018-01-18 10:37:01,807 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-lucene-index-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-lucene-index-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.808
+!MESSAGE 2018-01-18 10:37:01,808 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for flume-ng-sdk-1.5.2.2.6.0.3-8.jar is not available (mvn:org.talend.libraries/flume-ng-sdk-1.5.2.2.6.0.3-8/6.4.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.809
+!MESSAGE 2018-01-18 10:37:01,808 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-kernel-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-kernel-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.809
+!MESSAGE 2018-01-18 10:37:01,809 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-function-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-function-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.810
+!MESSAGE 2018-01-18 10:37:01,810 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-cypher-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-cypher-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.810
+!MESSAGE 2018-01-18 10:37:01,810 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-unsafe-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-unsafe-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.811
+!MESSAGE 2018-01-18 10:37:01,810 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-flume-sink_2.10-1.6.0-cdh5.10.1.jar is not available (mvn:org.talend.libraries/spark-streaming-flume-sink_2.10-1.6.0-cdh5.10.1/6.1.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.811
+!MESSAGE 2018-01-18 10:37:01,811 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-flume-assembly_2.10-1.6.3.2.6.0.3-8.jar is not available (mvn:org.talend.libraries/spark-streaming-flume-assembly_2.10-1.6.3.2.6.0.3-8/6.4.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.811
+!MESSAGE 2018-01-18 10:37:01,811 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for amazon-kinesis-client-1.6.0.jar is not available (mvn:org.talend.libraries/amazon-kinesis-client-1.6.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.812
+!MESSAGE 2018-01-18 10:37:01,811 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for hive-hbase-handler-2.1.0-amzn-0.jar is not available (mvn:org.talend.libraries/hive-hbase-handler-2.1.0-amzn-0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.812
+!MESSAGE 2018-01-18 10:37:01,812 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for avro-compiler-1.7.7.jar is not available (mvn:org.talend.libraries/avro-compiler-1.7.7/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.812
+!MESSAGE 2018-01-18 10:37:01,812 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for maprfs-5.2.0-mapr.jar is not available (mvn:org.talend.libraries/maprfs-5.2.0-mapr/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.813
+!MESSAGE 2018-01-18 10:37:01,813 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for spark-streaming-kinesis-asl-assembly_2.11-2.1.0.jar is not available (mvn:org.talend.libraries/spark-streaming-kinesis-asl-assembly_2.11-2.1.0/6.0.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.813
+!MESSAGE 2018-01-18 10:37:01,813 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for scala-library-2.11.7.jar is not available (mvn:org.talend.libraries/scala-library-2.11.7/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.814
+!MESSAGE 2018-01-18 10:37:01,813 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for jersey-server-1.19.jar is not available (mvn:org.talend.libraries/jersey-server-1.19/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.814
+!MESSAGE 2018-01-18 10:37:01,814 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-cypher-compiler-1.9_2.11-2.0.5.jar is not available (mvn:org.talend.libraries/neo4j-cypher-compiler-1.9_2.11-2.0.5/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.814
+!MESSAGE 2018-01-18 10:37:01,814 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-cypher-compiler-2.2_2.11-2.2.9.jar is not available (mvn:org.talend.libraries/neo4j-cypher-compiler-2.2_2.11-2.2.9/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.815
+!MESSAGE 2018-01-18 10:37:01,814 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-logging-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-logging-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 10:37:01.815
+!MESSAGE 2018-01-18 10:37:01,815 INFO  org.talend.commons.exception.CommonExceptionHandler  - The download URL for neo4j-cypher-compiler-2.3-2.3.4.jar is not available (mvn:org.talend.libraries/neo4j-cypher-compiler-2.3-2.3.4/6.2.0/jar)
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 11:36:52.550
+!MESSAGE 2018-01-18 11:36:52,550 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 11:38:01.769
+!MESSAGE 2018-01-18 11:38:01,769 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
+
+!ENTRY org.talend.platform.logging 1 0 2018-01-18 20:07:48.629
+!MESSAGE 2018-01-18 20:07:48,605 INFO  org.eclipse.m2e.core.internal.lifecyclemapping.LifecycleMappingFactory  - Using NULL lifecycle mapping for MavenProject: org.talend.master.ruleengine_elasticsearch:code.Master:6.4.1 @ K:\TOS_BD-20170623_1246-V6.4.1\workspace\.Java\pom.xml.
+
